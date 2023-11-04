@@ -167,7 +167,7 @@ class TraineeDaoSpringTest {
         var r = dao.create(t);
 
         // assert
-        assertEquals(1, r.getId());
+        assertEquals(1001, r.getId());
     }
 
     @Test
@@ -178,7 +178,7 @@ class TraineeDaoSpringTest {
         // assert
         assertNotNull(t);
         assertEquals(1, t.getId());
-        assertEquals("Somewhere 123", t.getAddress());
+        assertEquals("17213 Dottie Terrace", t.getAddress());
     }
 
     @Test
