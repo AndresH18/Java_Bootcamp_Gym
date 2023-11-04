@@ -313,10 +313,6 @@ class InMemoryDataSourceTest {
     private static class ModelType2 implements IModel {
         private int id;
 
-        ModelType2(int id) {
-            this.id = id;
-        }
-
         public ModelType2() {
         }
 
