@@ -53,7 +53,9 @@ public interface IDao<T extends IModel> {
      * @param id The entity id
      * @return True if the entity exists in the data source
      */
-    boolean exists(int id);
+    default boolean exists(int id) {
+        return getById(id) != null;
+    }
 
     default long count(Predicate<T> predicate) {
         return 0;

@@ -69,15 +69,4 @@ public class TrainerDao implements IDao<Trainer> {
         return dataSource.delete(trainer, Trainer.class);
 //        throw new UnsupportedOperationException("This operation is not supported");
     }
-
-    /**
-     * Checks if the entity with the id exists in the datasource
-     *
-     * @param id The entity id
-     * @return True if the entity exists in the data source
-     */
-    @Override
-    public boolean exists(int id) {
-        return getById(id) != null;
-    }
 }

@@ -72,11 +72,6 @@ public class UserDao implements IDao<User> {
     }
 
     @Override
-    public boolean exists(int id) {
-        return getById(id) != null;
-    }
-
-    @Override
     public long count(Predicate<User> predicate) {
         var stream = dataSource.search(predicate, User.class);
 
