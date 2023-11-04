@@ -53,7 +53,6 @@ public class TrainingDao implements IDao<Training> {
      */
     @Override
     public boolean update(Training training) {
-//        throw new UnsupportedOperationException("This operation is not supported");
         return dataSource.update(training, Training.class);
     }
 
@@ -65,7 +64,6 @@ public class TrainingDao implements IDao<Training> {
      */
     @Override
     public boolean delete(Training training) {
-//        throw new UnsupportedOperationException("This operation is not supported");
         return dataSource.delete(training, Training.class);
     }
 }
