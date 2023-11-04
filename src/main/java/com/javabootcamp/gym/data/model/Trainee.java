@@ -24,6 +24,21 @@ public class Trainee implements IModel {
         this.address = address;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Trainee trainee = (Trainee) o;
+
+        return id == trainee.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
     public int getId() {
         return id;
     }
@@ -56,4 +71,6 @@ public class Trainee implements IModel {
     public void setAddress(String address) {
         this.address = address;
     }
+
+
 }

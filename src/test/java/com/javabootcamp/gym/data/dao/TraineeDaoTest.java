@@ -4,6 +4,7 @@ import com.javabootcamp.gym.data.model.Trainee;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -15,6 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class TraineeDaoTest {
+
+    @Value("${data.mock.user}")
+    private String string;
     private final TraineeDao dao;
 
     @Autowired
@@ -24,6 +28,7 @@ class TraineeDaoTest {
 
     @Test
     void create() {
+        System.out.println(string);
         // arrange
         var t = new Trainee(1, new Date(), "Somewhere 123");
 

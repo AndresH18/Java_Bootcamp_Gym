@@ -18,6 +18,21 @@ public class Trainer implements IModel {
         this.specialization = specialization;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Trainer trainer = (Trainer) o;
+
+        return id == trainer.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
     public int getId() {
         return id;
     }
@@ -42,4 +57,5 @@ public class Trainer implements IModel {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
 }

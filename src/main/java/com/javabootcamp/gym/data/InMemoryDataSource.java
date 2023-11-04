@@ -89,8 +89,12 @@ public class InMemoryDataSource implements IDataSource {
     }
 
     @PostConstruct
-    private void init() {
-//        loader.loadUsers();
+    private void loadData() {
+        loader.loadUsers();
+        loader.loadTrainingTypes();
+        loader.loadTrainers();
+        loader.loadTrainees();
+        loader.loadTrainings();
     }
 }
 

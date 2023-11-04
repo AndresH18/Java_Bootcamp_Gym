@@ -59,7 +59,8 @@ public class TraineeService {
         if (isNotValidDate(dateOfBirth)) return null;
 
         var user = new User(firstName, lastName);
-        var username = firstName.split(" ")[0] + lastName.split(" ")[0];
+        var username = firstName.split(" ")[0].toLowerCase()
+                + lastName.split(" ")[0].toLowerCase();
 
         var count = userDao.count(u -> u.getUsername().matches(username + "\\d*"));
 
