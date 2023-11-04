@@ -1,4 +1,4 @@
-id,traineeId,trainerId,trainingTypeId,name,data,duration
+id,traineeId,trainerId,trainingTypeId,name,date,duration
 1,389,760,916,Cuscutaceae,3/14/2023,5
 2,948,705,297,Polygonaceae,10/12/2022,5
 3,546,344,901,Onagraceae,2/23/2021,1
