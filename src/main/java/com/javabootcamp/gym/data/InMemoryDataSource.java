@@ -1,13 +1,18 @@
 package com.javabootcamp.gym.data;
 
-import com.javabootcamp.gym.data.model.IModel;
+import com.javabootcamp.gym.data.model.*;
+import jakarta.annotation.PostConstruct;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -15,8 +20,16 @@ import java.util.stream.Stream;
 public class InMemoryDataSource implements IDataSource {
     private final Map<Class<? extends IModel>, Set<?>> data;
 
+    private InMemoryDataLoader loader;
+
     public InMemoryDataSource() {
         data = new HashMap<>();
+    }
+
+    @Autowired
+    InMemoryDataSource(InMemoryDataLoader loader) {
+        this();
+        this.loader = loader;
     }
 
     protected InMemoryDataSource(Map<Class<? extends IModel>, Set<?>> data) {
@@ -74,4 +87,179 @@ public class InMemoryDataSource implements IDataSource {
 
         return set.stream().filter(searchPredicate);
     }
+
+    @PostConstruct
+    private void loadData() {
+        loader.loadUsers();
+        loader.loadTrainingTypes();
+        loader.loadTrainers();
+        loader.loadTrainees();
+        loader.loadTrainings();
+    }
+}
+
+@Component
+class InMemoryDataLoader {
+    private final ResourceLoader resourceLoader;
+    @Value("${data.mock.user}")
+    private String userResourceName;
+    @Value("${data.mock.training_type}")
+    private String trainingTypeResourceName;
+    @Value("${data.mock.trainee}")
+    private String traineeResourceName;
+    @Value("${data.mock.trainer}")
+    private String trainerResourceName;
+    @Value("${data.mock.training}")
+    private String trainingResourceName;
+
+    @Autowired
+    public InMemoryDataLoader(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
+    Set<User> loadUsers() {
+        var users = new HashSet<User>();
+        var resource = resourceLoader.getResource(userResourceName);
+        try (InputStream inputStream = resource.getInputStream();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+
+            reader.readLine();
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] row = line.split(",");
+
+                int id = Integer.parseInt(row[0]);
+                String firstName = row[1];
+                String lastName = row[2];
+                String username = row[3];
+                String password = row[4];
+                boolean isActive = Boolean.parseBoolean(row[5]);
+
+                var user = new User(id, firstName, lastName, username, password, isActive);
+
+                users.add(user);
+            }
+        } catch (Exception ignored) {
+
+        }
+        return users;
+    }
+
+    Set<TrainingType> loadTrainingTypes() {
+        var types = new HashSet<TrainingType>();
+        var resource = resourceLoader.getResource(trainingTypeResourceName);
+        try (InputStream inputStream = resource.getInputStream();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+
+            reader.readLine();
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] row = line.split(",");
+
+                int id = Integer.parseInt(row[0]);
+                String name = row[1];
+
+                var type = new TrainingType(id, name);
+
+                types.add(type);
+            }
+        } catch (Exception ignored) {
+
+        }
+        return types;
+    }
+
+    Set<Trainee> loadTrainees() {
+        var trainees = new HashSet<Trainee>();
+        var formatter = new SimpleDateFormat("M/dd/yyy");
+        var resource = resourceLoader.getResource(traineeResourceName);
+        try (InputStream inputStream = resource.getInputStream();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+
+            reader.readLine();
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] row = line.split(",");
+
+                int id = Integer.parseInt(row[0]);
+                int userId = Integer.parseInt(row[1]);
+                Date dateOfBirth = formatter.parse(row[2]);
+                String address = row[3];
+
+                var trainee = new Trainee(id, userId, dateOfBirth, address);
+
+                trainees.add(trainee);
+            }
+        } catch (Exception ignored) {
+
+        }
+        return trainees;
+    }
+
+    Set<Trainer> loadTrainers() {
+        var trainers = new HashSet<Trainer>();
+
+        var resource = resourceLoader.getResource(trainerResourceName);
+        try (InputStream inputStream = resource.getInputStream();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+
+            reader.readLine();
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] row = line.split(",");
+
+                int id = Integer.parseInt(row[0]);
+                int userId = Integer.parseInt(row[1]);
+                int specializationId = Integer.parseInt(row[2]);
+
+                var trainee = new Trainer(id, userId, specializationId);
+
+                trainers.add(trainee);
+            }
+        } catch (Exception ignored) {
+
+        }
+        return trainers;
+    }
+
+    Set<Training> loadTrainings() {
+        var trainings = new HashSet<Training>();
+        var formatter = new SimpleDateFormat("M/dd/yyy");
+        var resource = resourceLoader.getResource(trainingResourceName);
+        try (InputStream inputStream = resource.getInputStream();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+
+            reader.readLine();
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] row = line.split(",");
+
+                int id = Integer.parseInt(row[0]);
+                int traineeId = Integer.parseInt(row[1]);
+                int trainerId = Integer.parseInt(row[2]);
+                int trainingTypeId = Integer.parseInt(row[3]);
+                String name = row[4];
+                Date date = formatter.parse(row[5]);
+                int duration = Integer.parseInt(row[6]);
+
+                var training = new Training(id, traineeId, trainerId, trainingTypeId, name, date, duration);
+
+                trainings.add(training);
+            }
+        } catch (Exception ignored) {
+
+        }
+        return trainings;
+    }
+
 }

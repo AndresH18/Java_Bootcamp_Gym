@@ -1,0 +1,1001 @@
+id,userId,dateOfBirth,address
+1,753,3/4/1995,17213 Dottie Terrace
+2,454,1/26/1983,21 Hooker Circle
+3,718,10/5/1992,258 Briar Crest Hill
+4,603,3/26/1985,199 Oneill Street
+5,450,7/2/2002,720 Esch Junction
+6,755,3/8/1996,3 Pankratz Hill
+7,628,2/8/1997,207 Sachtjen Place
+8,248,2/20/1997,012 Sugar Trail
+9,586,10/6/1996,79 Lerdahl Street
+10,390,6/24/1984,63 Loeprich Alley
+11,673,11/17/1993,33 Corry Drive
+12,739,9/12/2004,79 1st Point
+13,687,5/9/2005,2704 3rd Lane
+14,549,10/14/1991,02499 Hanover Court
+15,49,1/15/1988,1 Holy Cross Parkway
+16,562,10/17/1981,896 Service Circle
+17,204,11/19/1987,978 Chinook Hill
+18,772,5/3/1982,953 Monument Center
+19,324,2/18/2000,92 Carberry Alley
+20,809,6/19/1981,6 Dovetail Road
+21,509,8/2/1991,8220 Susan Center
+22,620,12/22/2001,6966 Browning Junction
+23,368,6/29/1990,1280 Service Alley
+24,209,5/8/1982,22 Bartillon Pass
+25,799,11/30/1990,833 Graceland Lane
+26,298,9/18/1995,4507 Kropf Avenue
+27,612,6/29/2003,4157 Menomonie Avenue
+28,803,4/29/1982,53 South Drive
+29,186,12/27/1998,86 Armistice Road
+30,358,4/1/1990,22480 Merrick Avenue
+31,961,11/15/1996,7990 Almo Crossing
+32,133,6/18/1987,5 Dixon Place
+33,105,7/23/1982,4 Pierstorff Way
+34,495,2/16/1985,999 Del Sol Street
+35,394,4/18/1986,120 Hintze Way
+36,259,8/6/1991,69839 Forest Crossing
+37,384,6/28/1988,76 Forest Run Point
+38,915,9/18/1984,53 Canary Hill
+39,639,9/19/1987,42183 Nevada Circle
+40,179,6/1/2005,35265 Jenna Lane
+41,880,4/4/1996,56346 Upham Street
+42,886,9/5/2000,7977 Holmberg Way
+43,120,9/25/2001,125 Burrows Avenue
+44,318,5/12/1993,510 Texas Plaza
+45,308,5/23/2001,348 Thackeray Park
+46,469,8/14/2005,79 Porter Trail
+47,631,11/9/2000,77 Mitchell Way
+48,504,3/26/1984,964 Oxford Park
+49,664,9/24/1986,2079 Forest Run Avenue
+50,716,6/4/1985,60 Sauthoff Way
+51,42,6/22/1992,9036 Karstens Parkway
+52,304,1/5/2002,025 Iowa Junction
+53,874,12/22/1996,9909 Bluejay Park
+54,460,5/7/1988,3 Maple Wood Road
+55,256,12/8/1989,40 2nd Road
+56,477,7/12/1989,51 Northfield Park
+57,808,11/4/1981,29594 Norway Maple Avenue
+58,732,7/18/2000,3 Northwestern Point
+59,490,10/12/1999,3 Hoard Avenue
+60,699,2/4/1998,351 Kim Drive
+61,236,10/1/1994,13 Melody Center
+62,963,5/19/1989,4 Montana Park
+63,636,6/6/1998,772 Alpine Junction
+64,964,10/29/1992,13 Kings Hill
+65,354,9/18/1984,63 Bartillon Alley
+66,704,7/18/1996,3961 Acker Road
+67,467,12/6/1987,7243 Boyd Place
+68,614,7/20/1987,3359 Randy Parkway
+69,669,8/24/2004,5 Huxley Parkway
+70,170,12/1/1999,2 Carberry Center
+71,816,2/29/1992,750 Dunning Street
+72,81,6/19/1985,705 Acker Street
+73,857,5/22/2002,71 Monterey Court
+74,78,10/29/2003,1 Dexter Lane
+75,140,11/1/2003,0457 Hollow Ridge Center
+76,824,9/30/1997,68 Grasskamp Park
+77,571,3/17/1986,52096 Bellgrove Avenue
+78,745,7/10/1999,355 Hagan Junction
+79,226,3/13/2001,1 Ridgeway Terrace
+80,297,10/20/2005,82 Veith Junction
+81,708,7/22/1995,5 Johnson Terrace
+82,921,7/11/1996,751 Karstens Lane
+83,947,12/27/1984,3 Cherokee Avenue
+84,498,7/30/1994,320 Morningstar Park
+85,894,11/10/1984,06392 Delaware Lane
+86,759,1/21/1995,2 Union Crossing
+87,230,6/5/2003,055 Bayside Point
+88,66,12/2/1986,80 Crowley Crossing
+89,522,5/10/1994,827 Village Parkway
+90,484,10/1/1987,5103 Columbus Junction
+91,711,6/23/1999,395 Nevada Way
+92,749,10/5/1987,2 Saint Paul Point
+93,400,4/30/2004,7 Pearson Terrace
+94,671,7/20/1998,4961 Morningstar Trail
+95,890,7/30/2005,9576 Kim Trail
+96,84,9/22/1994,20086 Erie Terrace
+97,338,7/6/1990,357 Bellgrove Circle
+98,856,8/14/1993,31 Elka Street
+99,512,10/25/1998,052 Bluestem Circle
+100,52,4/24/1990,896 Spohn Plaza
+101,355,12/12/1992,98 Birchwood Court
+102,694,10/30/1981,54840 Sage Circle
+103,910,6/15/2001,58234 Spaight Terrace
+104,130,11/28/1985,77479 Scoville Plaza
+105,178,12/8/2004,140 Brentwood Street
+106,301,9/2/1985,26816 Nevada Street
+107,114,12/22/1996,61560 Merchant Road
+108,606,8/2/2002,931 Barnett Trail
+109,751,4/1/2001,01 East Circle
+110,474,1/15/1994,744 Mesta Park
+111,559,1/2/1997,5 Sachs Road
+112,385,11/10/1999,43800 Esker Center
+113,934,7/4/1988,0 Stang Circle
+114,423,5/28/2001,60600 Sutherland Road
+115,873,11/8/1981,977 Schlimgen Street
+116,438,8/9/1993,5 Macpherson Avenue
+117,997,7/4/1990,62469 Little Fleur Terrace
+118,419,11/14/1993,3271 Autumn Leaf Trail
+119,834,9/15/2002,590 Kenwood Hill
+120,118,9/16/1992,82296 Maple Wood Junction
+121,129,10/23/1994,99 Spohn Avenue
+122,758,10/22/2000,4194 Dahle Trail
+123,778,7/15/1981,6 Forster Parkway
+124,849,12/1/1994,54270 Reindahl Drive
+125,597,3/6/1985,05 Roth Court
+126,164,3/9/1996,314 Upham Court
+127,670,1/17/1988,5751 Lindbergh Avenue
+128,754,4/12/2001,33142 Cardinal Terrace
+129,35,12/6/2003,90652 Village Green Pass
+130,251,1/17/1992,84656 La Follette Plaza
+131,182,4/14/2003,44207 Golf Lane
+132,282,11/27/1989,80583 Burrows Place
+133,238,12/26/1982,459 Ramsey Court
+134,741,7/12/2002,29332 Westridge Way
+135,206,9/14/1987,53464 Dakota Junction
+136,160,8/26/1988,596 Vera Way
+137,254,10/25/1994,97 Carioca Terrace
+138,970,11/6/1980,1 Alpine Junction
+139,884,3/12/1987,3 Hauk Place
+140,242,9/15/1998,8591 Reindahl Terrace
+141,435,11/4/1983,31 Oneill Drive
+142,295,6/16/1985,73094 Meadow Valley Park
+143,431,3/23/2000,9415 Heffernan Place
+144,261,7/15/1984,8 Iowa Hill
+145,487,1/12/2005,33 Red Cloud Point
+146,987,2/21/1996,24 Kropf Avenue
+147,200,9/14/1996,2 Red Cloud Parkway
+148,907,2/24/2004,94769 Maywood Court
+149,541,8/13/1981,8 Heath Trail
+150,88,10/30/1981,65 Bonner Pass
+151,845,10/31/2003,96 Declaration Lane
+152,489,4/7/2000,55 Debs Lane
+153,197,2/28/1986,3 Evergreen Avenue
+154,190,9/6/1985,3 Lien Trail
+155,103,9/4/2000,007 Bay Junction
+156,693,1/11/1981,095 Susan Avenue
+157,448,8/24/1991,2530 Novick Place
+158,929,9/27/1988,1790 Rigney Trail
+159,812,3/17/1992,62971 Kedzie Park
+160,572,10/8/1994,585 Myrtle Hill
+161,905,3/20/2000,647 Bluejay Pass
+162,748,1/4/1992,04515 Carpenter Road
+163,47,12/16/1981,394 Colorado Parkway
+164,642,5/4/1985,7 Burning Wood Place
+165,683,2/6/1982,03 South Circle
+166,940,6/22/2005,45 International Terrace
+167,953,5/28/1984,113 Lunder Street
+168,273,10/31/2000,7 Fair Oaks Center
+169,742,10/29/1982,40 Anhalt Road
+170,63,2/24/1996,53 Schurz Court
+171,518,1/22/1998,954 Ramsey Avenue
+172,296,2/1/1984,0 Washington Hill
+173,415,3/1/1997,39 Northland Road
+174,191,6/7/1991,7 Ridgeview Park
+175,115,8/11/2001,95 Tomscot Circle
+176,39,5/6/1997,42385 Fulton Point
+177,797,10/3/1988,14 Mallard Junction
+178,761,6/14/1995,708 West Court
+179,177,1/7/1997,76414 Autumn Leaf Way
+180,212,1/5/1984,42 Meadow Valley Hill
+181,675,12/19/2002,2545 Stoughton Terrace
+182,548,12/16/1997,210 Valley Edge Lane
+183,830,3/29/1981,7057 Tennessee Street
+184,50,4/27/1987,5933 Stephen Plaza
+185,433,4/8/1986,48 Bowman Place
+186,37,4/25/2000,635 Bluestem Place
+187,154,8/27/1986,60 Anthes Drive
+188,557,12/9/2002,0563 Nancy Street
+189,952,7/29/2000,00993 Pearson Hill
+190,602,6/29/2003,5456 6th Trail
+191,951,12/27/1993,45598 Goodland Street
+192,371,10/8/2001,429 Talmadge Trail
+193,314,11/24/1981,88 Magdeline Court
+194,328,2/13/2004,5 Butternut Street
+195,333,12/11/2003,73 Burrows Pass
+196,703,10/21/1983,99421 Ronald Regan Way
+197,31,3/7/2005,6604 Comanche Hill
+198,325,4/18/1995,4 Birchwood Point
+199,878,7/3/1999,3 Comanche Junction
+200,233,1/28/1989,191 Ryan Trail
+201,995,9/28/1996,17155 Granby Place
+202,62,5/30/1998,36351 Holy Cross Center
+203,128,3/26/1994,39 Longview Lane
+204,514,8/6/1987,66 Lighthouse Bay Center
+205,224,11/5/1981,78345 Novick Circle
+206,593,2/25/1988,572 Rowland Pass
+207,515,6/6/1988,39330 Fieldstone Parkway
+208,536,12/16/1992,2 Service Parkway
+209,106,2/8/2000,18273 Green Drive
+210,644,11/29/1981,30 Hauk Trail
+211,979,9/20/1996,78 Petterle Avenue
+212,885,5/12/1997,487 Florence Point
+213,168,7/16/1990,637 Hanson Street
+214,793,8/9/1995,97 School Lane
+215,681,3/27/1984,42 Claremont Pass
+216,608,9/14/1997,3 Bay Terrace
+217,203,11/9/1987,29574 Arkansas Terrace
+218,171,12/10/1989,52 Erie Crossing
+219,505,2/21/1996,576 Upham Center
+220,94,7/19/1983,067 Blaine Point
+221,427,2/29/2000,9033 Mccormick Hill
+222,388,9/16/2004,44008 Rockefeller Way
+223,925,5/20/1996,12 Hoffman Place
+224,730,3/23/2001,49 Crowley Street
+225,977,4/21/2005,953 Springview Pass
+226,426,11/23/1981,443 Namekagon Place
+227,959,3/12/1984,2228 Schmedeman Crossing
+228,624,10/14/1991,0 Westerfield Terrace
+229,74,4/3/2005,65 Spohn Point
+230,869,11/19/1992,69683 Carioca Alley
+231,855,11/2/1991,5705 International Crossing
+232,348,5/16/1983,32151 Glacier Hill Place
+233,790,12/18/1981,259 Harper Alley
+234,398,6/14/2000,27 Kipling Way
+235,731,12/23/1997,50 Carioca Pass
+236,158,11/6/2003,8027 Heffernan Point
+237,98,11/6/2003,0528 Mitchell Lane
+238,551,8/13/1981,03 Forest Point
+239,655,6/19/2001,003 Huxley Plaza
+240,25,10/30/1982,84530 Service Crossing
+241,712,10/5/2003,474 Reindahl Trail
+242,146,7/21/1987,4968 Scoville Plaza
+243,56,7/16/2004,7305 Mitchell Circle
+244,992,10/7/1989,65612 Mifflin Center
+245,352,11/20/2002,523 Namekagon Drive
+246,249,9/29/1991,37984 Caliangt Hill
+247,253,3/3/1989,80 Hagan Park
+248,34,4/22/1987,93460 Iowa Avenue
+249,192,3/24/1981,8 Bayside Lane
+250,877,3/26/1989,7 American Crossing
+251,117,1/22/1984,0623 Mesta Avenue
+252,351,9/4/1984,716 Carey Trail
+253,483,6/23/2003,50 Division Court
+254,246,1/23/1994,685 Declaration Park
+255,582,10/24/1991,023 Onsgard Lane
+256,150,11/16/1981,3 Barby Alley
+257,257,5/12/1998,10399 Blackbird Drive
+258,807,1/8/2003,14870 Golden Leaf Terrace
+259,791,10/15/2001,6 Dixon Avenue
+260,588,10/17/1997,7 Kedzie Lane
+261,698,1/18/1986,8228 Schlimgen Plaza
+262,912,10/20/1985,4069 Nevada Hill
+263,126,12/17/1999,7145 Meadow Vale Alley
+264,331,11/6/1999,35698 Scoville Junction
+265,523,6/11/1999,54317 Linden Avenue
+266,453,6/21/1997,02403 Maple Crossing
+267,269,11/14/1986,82 Graceland Point
+268,76,9/18/1998,1 3rd Parkway
+269,944,7/10/1984,5 Randy Hill
+270,815,10/19/1992,6 Utah Street
+271,696,12/20/2002,54 Arapahoe Plaza
+272,981,6/10/1988,2290 Merry Road
+273,494,5/22/1995,0270 Mccormick Lane
+274,521,8/9/1981,5416 Butterfield Lane
+275,760,10/18/1996,74 South Pass
+276,843,10/26/1987,9850 Lighthouse Bay Trail
+277,839,10/12/1996,5626 Canary Drive
+278,418,11/5/1989,9099 Starling Crossing
+279,285,6/20/1990,0 Carberry Point
+280,851,2/3/1989,78 Badeau Road
+281,19,6/2/1985,8767 Sachs Plaza
+282,818,9/13/1992,6 Kings Center
+283,8,3/8/1992,04 Dwight Parkway
+284,58,1/3/2003,8678 Fallview Parkway
+285,578,5/26/1981,32 Gina Terrace
+286,326,12/3/1997,212 Donald Street
+287,155,8/20/2005,136 Sutteridge Crossing
+288,456,11/20/1990,81 Graceland Plaza
+289,109,4/3/1992,5431 Porter Way
+290,954,5/24/1985,04 Bobwhite Parkway
+291,340,7/24/2003,41 Barby Parkway
+292,623,11/11/1991,28 Montana Avenue
+293,668,12/3/1992,8888 Evergreen Avenue
+294,865,3/20/1997,372 Annamark Parkway
+295,829,11/29/1986,50534 Memorial Court
+296,278,1/4/1987,25 Grasskamp Lane
+297,752,4/8/1991,9 Brentwood Place
+298,221,1/25/1992,05448 Meadow Valley Court
+299,802,8/19/2004,878 Ridgeway Trail
+300,262,7/31/1984,086 Fordem Trail
+301,173,1/16/1988,9 Waywood Road
+302,429,2/21/2000,33 Basil Court
+303,715,3/1/1981,7 Birchwood Hill
+304,457,1/31/2004,441 Anthes Pass
+305,955,11/5/1988,976 Delladonna Park
+306,736,6/25/2000,57 Meadow Ridge Alley
+307,309,10/6/2002,2 American Ash Court
+308,148,9/14/1986,20 Badeau Alley
+309,629,1/21/1993,2959 Calypso Street
+310,619,9/16/1984,57 Susan Pass
+311,611,3/10/1997,4536 Maple Circle
+312,405,5/18/1981,386 Maple Court
+313,24,12/12/1982,7 Blue Bill Park Lane
+314,214,10/8/2005,4 Cardinal Crossing
+315,380,9/22/1995,5 Fisk Park
+316,998,3/23/1985,75 Leroy Lane
+317,247,7/28/2005,0 Spenser Park
+318,45,2/6/2001,6717 Marquette Drive
+319,733,1/11/1997,88 Barnett Drive
+320,307,1/29/1983,79 Fair Oaks Hill
+321,666,4/13/1997,43 Swallow Street
+322,727,11/25/1984,466 Express Road
+323,971,11/3/1999,12 Burrows Place
+324,577,3/25/1989,25 Caliangt Trail
+325,680,10/19/2000,64 Kim Center
+326,459,7/27/1982,49535 Hoepker Plaza
+327,989,5/7/1983,058 Monica Terrace
+328,143,1/27/1990,141 Washington Street
+329,592,6/6/1987,62068 Warner Trail
+330,91,9/19/1986,68785 Arapahoe Way
+331,892,5/24/1987,09 Norway Maple Circle
+332,397,2/4/1988,0215 Scofield Avenue
+333,244,9/8/1985,93704 Melby Park
+334,188,10/6/2002,09664 Anhalt Crossing
+335,805,3/25/1984,818 Granby Terrace
+336,302,4/3/2003,8 Ronald Regan Lane
+337,90,2/24/1990,5373 Elmside Road
+338,770,10/16/1992,357 Westerfield Parkway
+339,225,3/25/1993,62488 Knutson Way
+340,404,6/28/1984,6076 Milwaukee Center
+341,958,5/4/1983,77359 Express Parkway
+342,547,3/16/1991,456 Lotheville Center
+343,766,2/12/1985,554 Milwaukee Parkway
+344,167,5/1/1986,25 Walton Parkway
+345,87,5/19/1986,2267 Westend Road
+346,709,1/23/2003,3 Commercial Center
+347,124,10/10/1987,33 Springs Place
+348,275,3/22/2000,51 Lunder Court
+349,142,6/4/1993,412 Valley Edge Crossing
+350,270,7/10/1996,64 Clemons Pass
+351,780,2/7/1991,07 Packers Drive
+352,16,3/26/1981,87 Northport Terrace
+353,322,3/14/1987,72884 Miller Place
+354,695,4/26/1994,64805 Kensington Lane
+355,508,12/7/1985,543 Vidon Pass
+356,939,8/24/2002,1 Ridge Oak Lane
+357,746,9/29/1987,675 6th Road
+358,4,1/16/1996,83130 Sachs Park
+359,968,5/11/1997,92 Westend Avenue
+360,707,9/25/2000,92 Montana Point
+361,926,12/16/1983,0445 Anniversary Court
+362,29,8/23/1998,3 Gerald Avenue
+363,312,11/3/1982,3 Redwing Hill
+364,399,9/8/1987,9 Glacier Hill Center
+365,414,3/18/1997,37 Elka Trail
+366,476,10/15/1994,405 Leroy Way
+367,55,5/2/1997,4826 Fisk Place
+368,689,4/21/2002,692 Morningstar Pass
+369,440,11/17/1993,644 Ronald Regan Crossing
+370,909,3/13/1992,825 Lighthouse Bay Avenue
+371,72,7/13/1990,8 Manley Alley
+372,853,4/30/2004,74 Ryan Drive
+373,941,6/1/1997,4 Scoville Junction
+374,677,10/1/2001,2 Westport Trail
+375,691,8/22/1989,8527 Gulseth Center
+376,180,3/18/1985,1 Pearson Point
+377,89,9/11/1989,10821 Northwestern Avenue
+378,134,3/17/2001,287 Fairfield Alley
+379,313,10/19/1984,49 Cambridge Lane
+380,516,1/28/1987,9399 Michigan Plaza
+381,481,5/13/1992,8047 Bultman Avenue
+382,598,5/24/1997,82478 Rockefeller Junction
+383,684,7/20/1985,77621 Messerschmidt Center
+384,565,10/4/2000,42759 Village Green Hill
+385,290,8/12/1990,9 Walton Alley
+386,825,2/24/1988,3952 Bartillon Alley
+387,788,10/14/1988,7 Longview Trail
+388,960,5/12/1992,0 Rutledge Place
+389,903,1/2/1991,91 Birchwood Way
+390,260,9/6/1982,829 Warner Parkway
+391,613,9/24/1993,6 Brickson Park Street
+392,838,12/13/1985,4 Amoth Avenue
+393,990,2/1/1987,065 Mesta Court
+394,908,8/2/1986,8 Steensland Avenue
+395,616,6/12/1989,87493 Mesta Alley
+396,635,6/28/2004,0 Lakewood Center
+397,436,8/15/1998,3 Lindbergh Avenue
+398,967,7/4/1996,3397 Fordem Parkway
+399,458,12/5/1989,1 Surrey Drive
+400,652,3/28/1991,145 Farwell Trail
+401,289,12/27/1984,0 Clarendon Street
+402,653,4/3/2001,44532 Haas Way
+403,283,1/4/1985,0 Declaration Point
+404,506,4/15/1987,2 Marquette Trail
+405,659,7/19/1988,8687 Atwood Junction
+406,895,6/6/1992,7350 Heath Avenue
+407,166,4/10/1990,1 Rigney Avenue
+408,475,1/23/1993,4255 Loftsgordon Circle
+409,407,5/8/1987,686 5th Point
+410,550,12/23/1994,4 Farmco Crossing
+411,445,10/22/1989,1 Merchant Lane
+412,743,12/8/1991,3606 Thackeray Place
+413,11,8/15/1992,17897 Cody Avenue
+414,112,2/6/2005,754 Old Gate Park
+415,852,6/1/1998,86 Harper Plaza
+416,999,2/20/2002,54343 Brickson Park Circle
+417,526,10/5/2003,70 Toban Junction
+418,153,6/27/1998,5 Anzinger Way
+419,728,8/11/2004,91 Rutledge Junction
+420,617,3/28/1985,77217 Hudson Street
+421,157,12/25/1991,9559 Kensington Plaza
+422,724,11/25/1997,7 Delaware Lane
+423,685,5/3/2001,72167 Scofield Parkway
+424,633,3/22/1991,4770 Badeau Drive
+425,3,10/18/1993,71 North Junction
+426,774,1/23/1991,8632 Mallard Park
+427,159,8/31/1986,1 Badeau Pass
+428,339,7/23/1996,2486 Summit Crossing
+429,452,2/12/1994,658 Harper Hill
+430,867,8/29/1990,4 Westend Road
+431,102,1/23/1998,7 Transport Parkway
+432,564,10/27/2001,0 Granby Park
+433,439,9/12/2005,28 Jenifer Trail
+434,377,12/14/1987,9816 Nancy Terrace
+435,420,6/3/1988,8 Warner Place
+436,359,11/7/1982,55 Jackson Trail
+437,365,8/30/1986,50 Banding Junction
+438,15,12/15/2000,2 Main Road
+439,85,8/15/2000,28057 Oakridge Park
+440,67,2/25/1998,34228 Evergreen Parkway
+441,527,7/15/1999,0308 Carioca Junction
+442,993,11/30/1990,6 La Follette Street
+443,300,11/21/1989,184 Lakeland Street
+444,615,5/5/1994,4433 Petterle Hill
+445,553,4/25/1982,83 Everett Terrace
+446,341,5/3/2001,8 Spenser Crossing
+447,268,2/19/1991,2 Bashford Drive
+448,22,9/15/1995,207 Meadow Vale Center
+449,640,9/6/1989,965 3rd Trail
+450,985,4/21/2005,1 Manitowish Park
+451,165,10/14/1987,50 Sage Drive
+452,994,10/28/1985,8128 7th Pass
+453,996,10/18/1982,1 Shopko Pass
+454,641,8/5/1997,8934 Sunnyside Junction
+455,41,3/26/1996,604 Hermina Parkway
+456,500,9/25/1982,5 Knutson Alley
+457,176,9/14/1989,1 Roth Parkway
+458,868,4/18/1987,9 Lakewood Pass
+459,627,1/16/1991,6299 Onsgard Trail
+460,768,10/23/1994,55 Sachtjen Pass
+461,156,5/25/1998,3 Oriole Lane
+462,410,6/20/1997,82 Union Drive
+463,444,4/18/1997,2118 Bunker Hill Pass
+464,193,3/14/2005,035 Hoard Trail
+465,789,4/15/1992,1181 Kings Trail
+466,266,10/12/1998,52 Mcguire Place
+467,195,6/28/1983,06 Main Trail
+468,595,2/24/1985,87906 Waubesa Circle
+469,650,6/28/1990,3114 Rieder Drive
+470,387,1/13/1989,4 Old Gate Point
+471,590,1/9/1996,3 Melby Avenue
+472,525,8/6/1988,18 Declaration Place
+473,777,9/15/1984,1683 Sachtjen Point
+474,303,7/11/1990,29983 Westport Junction
+475,202,12/10/2002,02795 Springs Center
+476,315,4/1/1990,97 Butterfield Pass
+477,900,7/26/2004,61 Hermina Parkway
+478,946,6/19/1982,7332 Nova Circle
+479,978,9/21/1991,8424 Moland Center
+480,194,1/14/1984,1 Boyd Circle
+481,841,8/2/2004,1813 Darwin Street
+482,305,9/14/1983,56843 Knutson Lane
+483,568,7/5/2005,68770 Huxley Trail
+484,286,6/3/2005,4196 Independence Circle
+485,21,6/8/1996,6464 Emmet Trail
+486,38,7/16/2003,911 Surrey Park
+487,847,1/4/1993,20 Bultman Road
+488,480,7/9/1984,2577 Dexter Hill
+489,402,11/3/1981,384 Chive Avenue
+490,888,9/10/2005,5 Artisan Pass
+491,360,12/17/1981,2593 Hoard Avenue
+492,13,9/2/1998,9 Morningstar Alley
+493,245,9/21/1981,1 Heffernan Trail
+494,545,4/5/1983,8368 Toban Park
+495,710,12/23/1983,30 Westridge Drive
+496,700,5/17/2000,72559 Sachtjen Parkway
+497,723,4/16/2003,884 Ridgeway Junction
+498,876,5/30/1994,1 Center Point
+499,310,1/26/1987,6 Fallview Parkway
+500,258,2/3/1990,195 Anderson Alley
+501,327,2/25/1985,4260 Killdeer Pass
+502,835,8/18/1982,32731 Banding Trail
+503,395,4/5/1982,9 Continental Drive
+504,757,3/28/1997,82 Dovetail Park
+505,347,12/20/1999,973 Hintze Avenue
+506,823,10/17/1992,49684 Armistice Way
+507,208,3/17/1982,78 Waubesa Drive
+508,872,2/14/1997,06 Del Sol Plaza
+509,637,12/18/1999,800 Sunfield Plaza
+510,794,5/31/1986,6781 International Court
+511,532,10/4/1993,332 Granby Place
+512,556,6/14/1994,0853 Schurz Parkway
+513,735,3/24/1995,56303 Swallow Plaza
+514,626,7/15/1984,320 Granby Park
+515,263,10/2/2000,8 American Ash Center
+516,73,6/28/1995,29502 Maryland Road
+517,391,4/22/1985,9 Cambridge Crossing
+518,697,10/25/1988,1 Eliot Parkway
+519,984,3/29/1987,640 Hauk Trail
+520,827,4/9/1992,96017 Lindbergh Park
+521,219,11/2/1997,27 Dahle Circle
+522,185,11/4/1985,2827 Bay Place
+523,837,5/24/1998,124 Messerschmidt Center
+524,965,2/21/2001,85235 Maywood Terrace
+525,437,10/13/1994,21 Hoffman Park
+526,147,3/1/2003,693 Hintze Drive
+527,930,5/23/1982,5561 Macpherson Circle
+528,57,6/28/1996,14 Arizona Junction
+529,957,1/20/2002,58 Swallow Alley
+530,255,3/17/1990,79261 Westport Place
+531,917,11/10/1999,130 Jenna Park
+532,316,7/1/1984,03077 Northport Court
+533,234,10/24/1982,69 Thierer Junction
+534,531,10/7/1998,13394 Carberry Trail
+535,609,9/11/2004,26 Lakeland Terrace
+536,406,12/3/1990,76680 Oak Trail
+537,787,1/10/2005,64923 Harbort Way
+538,792,2/26/1997,81685 Shopko Street
+539,775,11/16/2003,5 Northport Drive
+540,26,8/12/1995,917 Dunning Terrace
+541,647,3/18/1989,11 Oak Terrace
+542,424,11/9/1996,0476 Westerfield Court
+543,911,8/1/1998,222 Anniversary Junction
+544,883,5/23/1991,6551 Sherman Street
+545,881,2/17/1987,1489 Pierstorff Plaza
+546,20,1/10/1985,44402 Monica Lane
+547,375,2/3/1981,48 Susan Plaza
+548,131,6/22/1991,2457 Grim Alley
+549,432,9/1/1998,17177 Brentwood Road
+550,59,8/6/2005,62928 Porter Circle
+551,12,7/23/1997,866 Kim Drive
+552,227,12/31/1988,32 Linden Plaza
+553,714,7/11/2000,5056 Ridgeview Drive
+554,441,9/6/1981,23 Rigney Hill
+555,569,6/22/2002,317 Sundown Parkway
+556,386,3/4/1989,8 Del Mar Court
+557,634,10/20/1993,0 Harbort Place
+558,343,4/16/1991,43 Coleman Road
+559,897,11/24/1981,9990 Artisan Parkway
+560,517,8/6/2001,81437 Mosinee Avenue
+561,455,4/8/1986,3 Superior Plaza
+562,980,3/24/1984,146 Hallows Crossing
+563,210,6/30/1986,551 Dakota Park
+564,223,10/29/1986,43164 Spenser Circle
+565,854,3/24/1992,075 Ronald Regan Crossing
+566,932,11/5/1989,94390 Reindahl Terrace
+567,658,7/9/1994,3588 Morningstar Parkway
+568,187,7/16/2002,2 North Way
+569,113,3/1/1988,57277 Summerview Way
+570,618,4/23/1995,553 Darwin Terrace
+571,321,6/7/1998,810 Rusk Pass
+572,974,12/8/1993,91959 Marquette Plaza
+573,991,4/10/1988,844 Ridge Oak Pass
+574,17,4/22/1984,54403 Vermont Drive
+575,239,12/18/1987,2 Spenser Drive
+576,232,2/22/1982,1 Elka Trail
+577,511,12/9/1981,73375 Maywood Avenue
+578,344,4/25/1983,39389 Carey Hill
+579,850,3/31/1985,01 Westerfield Plaza
+580,858,10/13/1999,303 Sunfield Parkway
+581,729,1/16/1983,58 Fuller Avenue
+582,83,7/30/1999,8 Golf Court
+583,922,12/8/2000,471 Canary Plaza
+584,272,4/4/2005,6688 Fordem Center
+585,229,8/21/1992,3990 Heffernan Terrace
+586,904,7/13/1985,423 Kennedy Road
+587,75,5/7/2000,3989 Stang Place
+588,519,1/18/1992,39852 Upham Park
+589,661,10/11/1994,75934 Fair Oaks Lane
+590,686,9/19/1996,5 Mayer Point
+591,174,3/10/1989,30670 Pleasure Place
+592,705,5/14/1998,1 Crownhardt Court
+593,832,6/17/1991,0228 School Park
+594,720,11/12/1981,0 Hazelcrest Court
+595,116,10/5/1997,107 Waxwing Terrace
+596,463,10/26/2002,6212 Northport Avenue
+597,323,3/23/2000,802 Ronald Regan Street
+598,36,11/12/1984,2 Stone Corner Crossing
+599,468,4/20/2004,5513 Lunder Drive
+600,46,9/23/1988,3182 Emmet Lane
+601,667,12/23/2002,12 Spohn Lane
+602,330,12/27/1988,9818 Mcguire Circle
+603,217,8/3/1997,4 Farmco Road
+604,144,7/24/2001,275 Ohio Court
+605,334,8/22/1996,391 Del Sol Drive
+606,574,9/2/1995,2443 Melody Center
+607,828,8/20/1991,66708 Bayside Road
+608,798,5/23/1990,6 Longview Circle
+609,937,11/6/1980,6525 Loftsgordon Court
+610,813,7/22/1997,382 Talmadge Center
+611,738,4/4/1987,58 Browning Park
+612,630,12/3/1998,9 Goodland Trail
+613,956,7/24/2005,1646 Duke Terrace
+614,472,4/3/1997,26965 Prentice Place
+615,152,9/29/1987,211 Pierstorff Road
+616,861,6/16/1981,8 Meadow Valley Plaza
+617,501,10/9/2002,9 Donald Park
+618,734,2/20/1999,670 Clove Lane
+619,594,8/17/1990,1 Russell Lane
+620,596,2/15/1983,6 Weeping Birch Pass
+621,71,1/13/1994,615 Sherman Plaza
+622,510,8/16/1983,2991 Merry Drive
+623,284,12/25/1981,55 Hintze Crossing
+624,138,6/21/1992,46133 Acker Crossing
+625,356,9/27/1981,51 Goodland Circle
+626,169,4/11/1998,9 Alpine Parkway
+627,346,11/5/1992,88167 Arrowood Alley
+628,332,6/2/1993,5 Hauk Terrace
+629,110,9/29/1990,355 Dapin Lane
+630,372,1/4/2004,10 Steensland Junction
+631,625,7/1/1987,9 Ridge Oak Drive
+632,482,2/14/1997,29 Morning Road
+633,28,4/23/1990,641 3rd Way
+634,288,4/27/1993,4508 Sundown Point
+635,376,11/14/1990,65 Dexter Parkway
+636,784,5/10/2003,47727 Armistice Terrace
+637,357,8/14/2003,8 8th Terrace
+638,175,6/25/1985,6787 Manufacturers Point
+639,163,6/23/1993,2 Garrison Plaza
+640,86,1/4/1996,26 Forest Run Pass
+641,442,11/9/1981,19 School Hill
+642,804,12/19/2001,445 Russell Alley
+643,893,1/7/2002,48308 Pennsylvania Plaza
+644,135,2/1/1981,813 Emmet Pass
+645,361,3/17/1996,375 Mitchell Street
+646,811,1/8/1983,0 Golf Course Alley
+647,649,11/12/1996,046 Superior Parkway
+648,988,6/8/1996,08 Ronald Regan Avenue
+649,274,10/29/1989,59 Kinsman Point
+650,579,8/16/1996,72 Hoard Terrace
+651,831,11/14/1986,356 Mallard Pass
+652,306,7/26/1996,4 Dottie Alley
+653,866,2/3/1994,46631 Elmside Plaza
+654,662,10/28/1991,6 Hoard Avenue
+655,750,10/23/1986,6722 Armistice Parkway
+656,7,12/11/1992,9 Charing Cross Drive
+657,61,9/16/1982,0186 Graedel Trail
+658,688,7/1/1999,234 Sugar Place
+659,79,3/23/1984,86 Meadow Valley Lane
+660,676,6/20/1995,657 Brown Parkway
+661,529,3/14/1981,20490 Green Ridge Way
+662,771,10/3/1995,3 Continental Avenue
+663,833,1/31/1995,70 Hagan Center
+664,127,2/25/2004,5 Northridge Parkway
+665,848,10/15/1998,6971 Cardinal Junction
+666,756,7/9/1986,11 Springs Avenue
+667,161,9/14/1997,7 Lindbergh Alley
+668,942,9/1/1998,1619 Pearson Circle
+669,645,4/16/1998,19 Kennedy Alley
+670,392,3/31/1985,02 Village Green Hill
+671,765,1/25/1982,486 5th Lane
+672,836,6/19/1991,3840 Cody Hill
+673,479,4/10/2002,38789 Luster Trail
+674,782,1/2/1997,0 Florence Parkway
+675,18,2/14/1986,9 Spohn Drive
+676,678,9/7/2001,5177 Weeping Birch Trail
+677,408,12/22/1983,60 Forster Alley
+678,276,10/21/2000,872 Northview Plaza
+679,864,2/8/1991,5677 Sugar Parkway
+680,446,12/24/1985,490 Victoria Court
+681,107,8/27/1989,9 Judy Center
+682,503,6/29/1990,03560 Dryden Way
+683,162,1/19/2001,31760 Mitchell Center
+684,1,5/13/1996,2264 Spaight Plaza
+685,383,8/5/2004,1 Miller Avenue
+686,719,2/12/1995,06735 Stone Corner Road
+687,600,4/14/1995,7 Algoma Crossing
+688,241,7/18/2005,76 Graedel Point
+689,417,10/16/1987,3564 Grim Court
+690,311,10/15/1983,13190 Oriole Trail
+691,747,5/10/2002,8369 Dakota Junction
+692,692,5/7/2005,7778 Magdeline Plaza
+693,207,5/9/1986,50 Jackson Lane
+694,570,1/21/1990,886 Blue Bill Park Hill
+695,648,5/1/2005,7 Bowman Court
+696,538,8/9/1987,21 Northfield Avenue
+697,764,1/5/2003,933 Mccormick Way
+698,786,9/12/1996,1891 Nelson Road
+699,319,8/3/1996,5 Lerdahl Place
+700,916,9/20/1990,8 Valley Edge Center
+701,125,2/15/1991,557 Comanche Court
+702,92,7/24/1988,1 Gulseth Crossing
+703,291,5/24/2004,771 Melby Court
+704,14,8/18/2004,069 Reindahl Trail
+705,975,5/19/1992,820 Independence Pass
+706,795,2/2/1990,22 Alpine Place
+707,231,8/10/2000,226 Merry Crossing
+708,575,8/26/1984,87453 School Street
+709,646,1/30/1982,97658 Northridge Trail
+710,99,9/29/1988,6 Surrey Court
+711,293,9/12/1983,23821 Prairie Rose Park
+712,299,8/28/1997,5750 Northridge Circle
+713,430,7/2/1987,479 Brown Road
+714,717,8/13/1999,0 Continental Park
+715,137,12/24/1980,9034 Hoepker Center
+716,409,6/13/1987,6 Judy Park
+717,891,6/6/1994,3364 Nelson Crossing
+718,933,11/19/1986,32627 Killdeer Crossing
+719,416,7/20/1993,95 Mcbride Junction
+720,776,8/27/2002,94 American Ash Crossing
+721,280,7/10/1991,270 Green Point
+722,2,7/26/1992,61 Coolidge Pass
+723,740,10/4/1982,09806 Fair Oaks Circle
+724,6,1/30/1982,04 Caliangt Way
+725,281,12/6/2000,52196 Fallview Park
+726,948,1/17/1997,9 Buena Vista Road
+727,335,7/2/1991,640 Killdeer Pass
+728,95,11/2/1984,9 Westend Alley
+729,544,3/24/1987,0 1st Lane
+730,132,12/30/2000,822 Dorton Crossing
+731,928,2/18/1999,23 Lien Way
+732,393,2/26/1995,5689 Bunker Hill Place
+733,189,3/28/1987,55 Blackbird Park
+734,563,5/18/1987,59 Sachtjen Court
+735,604,11/3/1987,08944 Leroy Drive
+736,533,2/17/1990,83 Clemons Road
+737,721,3/4/1999,453 Brickson Park Point
+738,425,5/4/1991,6 Scoville Park
+739,558,1/24/1994,597 Granby Plaza
+740,121,8/16/2001,776 High Crossing Plaza
+741,434,10/10/2003,423 3rd Crossing
+742,320,7/26/1996,813 Esker Terrace
+743,889,12/6/2003,54796 Michigan Junction
+744,33,5/29/1989,828 Maple Park
+745,502,1/2/1982,21727 Grasskamp Crossing
+746,201,7/12/2004,708 Prentice Junction
+747,920,3/24/1996,46 Russell Pass
+748,842,2/29/1996,37 Norway Maple Crossing
+749,364,8/27/2003,4090 Schiller Road
+750,369,2/24/1987,449 Johnson Court
+751,237,4/18/1981,59 Fairfield Terrace
+752,513,4/7/1995,2805 Portage Plaza
+753,814,4/30/1986,41 Sunfield Place
+754,539,10/11/2002,131 Springview Point
+755,382,4/7/1989,5169 Buena Vista Road
+756,213,10/13/1994,3501 Bobwhite Terrace
+757,215,11/1/1998,688 Fremont Junction
+758,871,1/31/1989,7 Nova Circle
+759,914,11/22/2002,07641 Ryan Place
+760,122,6/4/1990,8142 Butternut Parkway
+761,585,1/12/1981,57 5th Plaza
+762,485,6/9/1994,2304 Melvin Circle
+763,906,11/21/1983,6 Nancy Parkway
+764,672,12/15/1986,455 Rockefeller Parkway
+765,654,9/19/1994,7 Westport Way
+766,949,11/9/2003,9 Rowland Terrace
+767,451,6/30/1985,94 Northwestern Crossing
+768,846,9/18/2001,970 Fallview Circle
+769,935,11/23/2003,3 Fairfield Center
+770,520,8/1/2004,1 John Wall Circle
+771,350,1/8/1999,8376 Crest Line Circle
+772,901,9/11/1987,9 Glendale Crossing
+773,277,5/31/2003,33 Clove Way
+774,902,5/20/1986,9549 Mariners Cove Avenue
+775,605,10/30/1990,808 Fieldstone Road
+776,69,2/13/1985,786 Packers Terrace
+777,783,9/7/1992,10973 Northwestern Lane
+778,370,6/20/1991,458 Lotheville Pass
+779,413,1/20/1996,9161 Longview Crossing
+780,80,10/26/1984,61358 Buena Vista Place
+781,817,10/19/2005,8 Sunbrook Circle
+782,220,7/6/1990,1 Roxbury Street
+783,32,9/30/1987,017 Namekagon Circle
+784,486,5/9/1988,11188 Dakota Pass
+785,104,6/17/1988,0163 Sachs Drive
+786,367,7/9/1997,2 Hauk Avenue
+787,744,7/8/1984,775 Harbort Lane
+788,542,10/15/1986,2 Pepper Wood Parkway
+789,218,7/20/1995,57 Killdeer Way
+790,465,3/13/1984,69372 Haas Avenue
+791,196,12/23/1993,14702 Summit Place
+792,412,3/8/1995,88005 Luster Parkway
+793,972,12/25/1997,7 North Parkway
+794,931,7/2/1981,947 Riverside Trail
+795,706,9/7/1983,6 Lunder Point
+796,30,9/13/1981,0016 Hoepker Lane
+797,936,6/5/1986,9 Sherman Street
+798,60,9/4/1992,803 Pierstorff Crossing
+799,151,1/9/1990,6 Starling Road
+800,821,8/25/1985,14 Truax Place
+801,292,7/5/1990,476 Bluejay Point
+802,23,1/28/1988,4523 Butternut Circle
+803,607,12/12/1997,692 Surrey Road
+804,950,11/4/2000,9 Caliangt Point
+805,389,6/28/1998,21806 Messerschmidt Place
+806,471,5/14/1994,0784 Dapin Drive
+807,919,12/10/2000,7 Green Center
+808,470,9/1/2003,20189 Continental Alley
+809,499,4/5/1984,033 Donald Drive
+810,345,4/22/1982,12405 Village Green Junction
+811,108,9/26/1983,8 Reinke Alley
+812,349,12/8/1983,398 Charing Cross Circle
+813,422,10/28/1983,4 Ramsey Point
+814,555,4/26/1986,22 Bashford Junction
+815,737,11/27/1987,4129 Magdeline Street
+816,362,4/12/1991,46099 Del Mar Avenue
+817,123,8/31/1995,3 Havey Crossing
+818,966,9/13/2000,0281 Fair Oaks Lane
+819,656,12/30/1983,13252 American Ash Point
+820,411,4/3/1997,52 Dayton Trail
+821,317,10/17/1999,490 Pine View Drive
+822,767,10/2/1986,677 Cardinal Place
+823,918,11/26/1989,56 Dovetail Road
+824,51,2/22/1992,68 Pierstorff Alley
+825,447,12/25/2002,74190 Hintze Center
+826,252,12/29/2001,7637 Ridge Oak Lane
+827,982,4/23/1983,5 Hovde Point
+828,366,4/23/1989,6 Redwing Court
+829,534,3/2/1994,4 Scoville Hill
+830,796,9/19/1987,9557 Coolidge Drive
+831,287,10/17/2004,17387 Clyde Gallagher Circle
+832,657,3/31/1997,2 Straubel Plaza
+833,145,7/24/1997,49005 Golf Course Center
+834,690,11/1/1991,4523 Charing Cross Court
+835,0,3/24/1995,98 Eastwood Junction
+836,294,8/23/1997,831 Fuller Crossing
+837,543,2/17/1998,7 Mayfield Circle
+838,679,11/4/2004,361 Mockingbird Street
+839,491,12/14/1995,935 Russell Circle
+840,449,8/26/1989,3332 Shelley Center
+841,54,12/3/2002,76 Nelson Parkway
+842,566,9/15/1985,3992 Norway Maple Plaza
+843,580,12/15/2003,77588 Anderson Avenue
+844,396,9/17/1988,7960 Golden Leaf Plaza
+845,507,9/10/1986,2184 Onsgard Alley
+846,546,10/23/1999,90 Corry Park
+847,199,5/30/1995,2749 Manitowish Crossing
+848,363,7/23/1981,16374 Atwood Road
+849,240,4/10/1994,7647 Carey Pass
+850,528,6/25/1986,8 Dixon Trail
+851,663,10/7/2004,405 Lake View Plaza
+852,205,1/4/2005,66734 Oak Valley Trail
+853,863,5/21/2001,6696 Judy Park
+854,216,6/29/2002,1 Artisan Hill
+855,100,7/12/1999,6484 Butterfield Road
+856,184,7/27/1994,04008 Packers Trail
+857,840,2/24/1989,55 Arapahoe Hill
+858,573,5/12/2005,083 Clyde Gallagher Crossing
+859,336,4/16/1988,0353 Maple Terrace
+860,53,5/11/1995,8 Norway Maple Park
+861,785,7/27/1991,718 Little Fleur Plaza
+862,725,2/21/1993,28436 Sundown Hill
+863,862,4/13/2000,06 Heffernan Parkway
+864,713,8/1/2000,615 East Terrace
+865,973,12/8/1997,7768 Del Mar Plaza
+866,875,1/3/1990,1170 West Drive
+867,554,12/21/1983,692 Esch Road
+868,27,4/13/1994,4 Iowa Crossing
+869,913,4/11/1997,346 Calypso Center
+870,800,3/18/2002,04 Almo Road
+871,183,7/8/1989,9 Reinke Road
+872,119,9/27/1985,76 Kennedy Avenue
+873,879,12/21/1993,45 Service Park
+874,149,12/4/1984,5413 Stoughton Parkway
+875,701,10/30/1994,5 Judy Court
+876,373,2/2/1986,89080 Mosinee Street
+877,587,1/27/1984,4 Pankratz Street
+878,478,2/27/1982,30541 Twin Pines Avenue
+879,40,5/27/1993,32 Golden Leaf Terrace
+880,882,5/18/1989,465 Erie Terrace
+881,801,11/25/1988,48 Shopko Alley
+882,899,3/6/1998,6716 Duke Court
+883,898,7/2/2002,31 Hoepker Drive
+884,172,5/15/1991,6 Leroy Court
+885,342,5/14/2003,51 Goodland Drive
+886,927,8/24/1987,9903 Doe Crossing Street
+887,567,2/10/1987,36 Mesta Trail
+888,969,9/9/1984,84350 Donald Place
+889,844,1/9/1981,97 Granby Place
+890,70,3/6/1989,9 Lakewood Junction
+891,271,11/28/1987,2 Eastwood Point
+892,962,5/2/1989,51 Commercial Court
+893,493,5/12/1995,14 Fremont Way
+894,819,10/8/1996,45391 Village Lane
+895,976,1/15/1984,010 Sunbrook Terrace
+896,235,7/12/1983,51456 Vidon Circle
+897,983,4/24/1991,46835 Fairfield Hill
+898,264,4/13/2003,31562 Anzinger Drive
+899,93,1/31/1991,12 Tomscot Place
+900,665,1/24/1987,81 Roth Point
+901,5,6/14/2005,74 Schurz Pass
+902,428,11/29/1984,2228 6th Avenue
+903,181,3/20/1982,5232 Lerdahl Crossing
+904,599,5/2/1988,5 Logan Hill
+905,986,7/2/2002,91 Sage Point
+906,243,9/5/2001,3225 Maple Street
+907,48,8/9/2002,363 Washington Hill
+908,810,12/26/1998,7 Harbort Hill
+909,228,10/24/1991,744 Leroy Center
+910,473,1/27/2004,70 Larry Way
+911,806,3/2/1988,1978 Karstens Center
+912,561,11/7/1988,81 Pearson Street
+913,10,12/15/1996,4 Golf Course Terrace
+914,584,12/9/2004,84267 Lakewood Court
+915,111,11/3/1989,24785 Oak Park
+916,722,7/17/2002,24 Duke Point
+917,141,12/24/1990,560 Grim Road
+918,923,9/23/2005,316 Vidon Road
+919,632,6/3/2002,5 Namekagon Place
+920,537,5/1/1987,97 Norway Maple Place
+921,621,3/27/1990,2617 Delladonna Center
+922,374,10/15/1986,5391 3rd Park
+923,773,3/22/1998,26 Russell Crossing
+924,822,10/3/1989,58156 Cody Pass
+925,82,7/2/2004,945 Warbler Place
+926,198,11/29/2000,8624 Debs Trail
+927,859,9/17/1987,0333 Warbler Road
+928,44,12/1/1994,299 Eggendart Crossing
+929,250,2/23/1982,09218 Anniversary Alley
+930,763,6/3/1988,59324 Pierstorff Point
+931,530,9/20/1989,04291 Kenwood Parkway
+932,211,3/8/1987,34 Logan Alley
+933,488,7/16/1985,5650 Mitchell Point
+934,96,7/4/1981,522 Sommers Place
+935,43,10/1/1982,7 Westerfield Terrace
+936,622,1/5/1989,469 Sunbrook Plaza
+937,379,7/7/1984,4752 Lakewood Gardens Avenue
+938,560,5/23/1994,94365 Dennis Trail
+939,779,12/13/1998,0863 Green Way
+940,870,6/9/1982,6 Artisan Court
+941,497,4/1/1987,26568 Center Place
+942,267,11/12/1985,020 Upham Hill
+943,674,9/19/1989,84 North Way
+944,9,12/14/1985,8553 Old Gate Alley
+945,660,9/29/1990,29423 Randy Place
+946,945,4/12/1988,245 Mockingbird Pass
+947,896,7/18/1986,427 Pond Point
+948,403,2/25/1992,2 Superior Drive
+949,938,4/26/2004,8 Crest Line Pass
+950,820,6/9/1992,97 Melvin Terrace
+951,139,8/23/2004,551 Prairieview Drive
+952,443,6/6/1994,916 Carpenter Place
+953,461,5/16/1981,504 Corry Trail
+954,353,11/17/1993,59906 Donald Circle
+955,651,1/1/1998,89471 Washington Place
+956,466,11/14/1987,3 Bonner Road
+957,401,5/6/1999,5015 Browning Street
+958,762,7/18/1985,79 Mallory Road
+959,943,5/16/1982,9 American Crossing
+960,524,3/8/1988,65736 Bellgrove Alley
+961,101,4/10/2004,6 Montana Hill
+962,279,6/1/1981,4399 Becker Point
+963,540,1/25/1985,420 Grasskamp Circle
+964,535,7/18/1991,9570 Iowa Hill
+965,222,5/26/1991,0 Shasta Lane
+966,589,4/15/1990,76 Graceland Place
+967,65,1/3/1998,28127 Golden Leaf Avenue
+968,378,7/7/1997,800 Mayfield Road
+969,860,10/23/1998,7834 Old Gate Point
+970,136,5/14/2005,6902 Corscot Avenue
+971,329,1/22/1995,75411 Florence Avenue
+972,552,9/3/1986,85523 Sunbrook Way
+973,591,4/6/1992,199 Dapin Lane
+974,337,10/13/1997,0894 Lakewood Gardens Plaza
+975,64,11/8/1996,5 High Crossing Alley
+976,496,4/4/2001,685 Express Hill
+977,887,2/26/1998,600 Cascade Road
+978,702,11/4/1986,256 Kipling Parkway
+979,421,10/11/2001,751 Farragut Place
+980,682,11/2/1997,7 Butterfield Trail
+981,68,7/14/1997,0 Warner Junction
+982,265,4/11/1992,457 Glacier Hill Road
+983,638,6/7/1992,4353 Debra Park
+984,583,3/7/1994,843 Erie Avenue
+985,462,6/19/1993,98 Sutteridge Court
+986,726,12/4/1981,0015 Moland Avenue
+987,826,3/14/1984,481 Merrick Avenue
+988,601,2/8/2003,900 Park Meadow Parkway
+989,610,12/27/1986,6485 Sutteridge Place
+990,1000,2/14/2004,7 Bashford Place
+991,924,8/15/1989,0714 Golf Alley
+992,769,4/5/1985,06 Pepper Wood Place
+993,781,6/3/1991,25 Moose Terrace
+994,581,4/1/1999,8748 Mendota Lane
+995,464,1/10/1989,66 Sunbrook Park
+996,492,4/9/1999,62 Sullivan Plaza
+997,576,1/8/2005,26912 Dorton Lane
+998,381,12/31/1995,910 Park Meadow Alley
+999,643,6/19/1984,92949 American Terrace
+1000,77,4/21/1983,2 Towne Way

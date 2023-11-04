@@ -35,6 +35,21 @@ public class Training implements IModel {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Training training = (Training) o;
+
+        return id == training.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
     public int getId() {
         return id;
     }
