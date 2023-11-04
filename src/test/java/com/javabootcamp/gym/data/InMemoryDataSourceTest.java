@@ -267,28 +267,6 @@ class InMemoryDataSourceTest {
         verify(loader).loadTrainings();
     }
 
-    void loadData_catchesException() {
-        // arrange
-        var loader = mock(InMemoryDataLoader.class);
-        when(loader.loadUsers()).thenReturn(new HashSet<>());
-        when(loader.loadTrainingTypes()).thenReturn(new HashSet<>());
-        when(loader.loadTrainees()).thenReturn(new HashSet<>());
-        when(loader.loadTrainers()).thenReturn(new HashSet<>());
-        when(loader.loadTrainings()).thenReturn(new HashSet<>());
-
-        var dataSource = new InMemoryDataSource(loader);
-
-        // act
-        dataSource.loadData();
-
-        // assert
-        verify(loader).loadUsers();
-        verify(loader).loadTrainingTypes();
-        verify(loader).loadTrainees();
-        verify(loader).loadTrainers();
-        verify(loader).loadTrainings();
-    }
-
     private static class ModelType1 implements IModel {
         private int id;
 
