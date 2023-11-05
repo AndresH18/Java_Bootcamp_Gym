@@ -20,6 +20,7 @@ class TraineeDaoTest {
     void create() {
         // arrange
         var date = LocalDate.now();
+
         Trainee expected = new Trainee(12, date, "Address");
 
         IDataSource dataSource = mock(IDataSource.class);
