@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Service
 public class TrainingService {
@@ -20,7 +20,7 @@ public class TrainingService {
     }
 
     @Nullable
-    public Training create(int traineeId, int trainerId, int trainingType, String name, int duration, @NotNull Date date) {
+    public Training create(int traineeId, int trainerId, int trainingType, String name, int duration, @NotNull LocalDate date) {
 
         if (trainerId <= 0 || traineeId <= 0 || trainingType <= 0 || duration <= 0 || !isValidDate(date))
             return null;
@@ -36,7 +36,7 @@ public class TrainingService {
      * @param date The date to compare
      * @return true if the date before the current date.
      */
-    private boolean isValidDate(Date date) {
-        return new Date().after(date);
+    private boolean isValidDate(LocalDate date) {
+        return LocalDate.now().isAfter(date);
     }
 }

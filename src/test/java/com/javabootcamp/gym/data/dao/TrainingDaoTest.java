@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -23,7 +23,7 @@ class TrainingDaoTest {
     @Test
     void create() {
         // arrange
-        var date = new Date();
+        var date = LocalDate.now();
         Training expected = new Training(1, 2, 3, "Weights", date, 10);
 
         IDataSource dataSource = mock(IDataSource.class);
@@ -49,7 +49,7 @@ class TrainingDaoTest {
     @Test
     void getById_returnsNotNull() {
         // arrange
-        Training t1 = new Training(1, 2, 3, "Weights", new Date(), 10);
+        Training t1 = new Training(1, 2, 3, "Weights", LocalDate.now(), 10);
 
         IDataSource dataSource = mock(IDataSource.class);
         when(dataSource.getById(1, Training.class))
@@ -84,7 +84,7 @@ class TrainingDaoTest {
     @Test
     void update_returnsTrue() {
         // arrange
-        Training t = new Training(1, 2, 3, "Weights", new Date(), 10);
+        Training t = new Training(1, 2, 3, "Weights", LocalDate.now(), 10);
 
         IDataSource dataSource = mock(IDataSource.class);
         when(dataSource.update(any(), eq(Training.class)))
@@ -102,7 +102,7 @@ class TrainingDaoTest {
     @Test
     void update_returnsFalse() {
         // arrange
-        Training t = new Training(1, 2, 3, "Weights", new Date(), 10);
+        Training t = new Training(1, 2, 3, "Weights", LocalDate.now(), 10);
 
         IDataSource dataSource = mock(IDataSource.class);
         when(dataSource.update(any(), eq(Training.class)))
@@ -119,7 +119,7 @@ class TrainingDaoTest {
 
     @Test
     void delete_returnsTrue() {
-        Training t = new Training(1, 2, 3, "Weights", new Date(), 10);
+        Training t = new Training(1, 2, 3, "Weights", LocalDate.now(), 10);
 
         IDataSource dataSource = mock(IDataSource.class);
         when(dataSource.delete(any(), eq(Training.class)))
@@ -136,7 +136,7 @@ class TrainingDaoTest {
 
     @Test
     void delete_returnsFalse() {
-        Training t = new Training(1, 2, 3, "Weights", new Date(), 10);
+        Training t = new Training(1, 2, 3, "Weights", LocalDate.now(), 10);
 
         IDataSource dataSource = mock(IDataSource.class);
         when(dataSource.delete(any(), eq(Training.class)))
@@ -172,7 +172,7 @@ class TrainingDaoTest {
         // arrange
         IDataSource dataSource = mock(IDataSource.class);
         when(dataSource.getById(anyInt(), eq(Training.class)))
-                .thenReturn(new Training(1, 2, 3, "Weights", new Date(), 10));
+                .thenReturn(new Training(1, 2, 3, "Weights", LocalDate.now(), 10));
 
         TrainingDao dao = new TrainingDao(dataSource);
 
@@ -198,7 +198,7 @@ class TrainingDaoSpringTest {
     @Test
     void create() {
         // arrange
-        var t = new Training(1, 2, 3, "Weights", new Date(), 10);
+        var t = new Training(1, 2, 3, "Weights", LocalDate.now(), 10);
 
         // act
         var r = dao.create(t);
@@ -210,7 +210,7 @@ class TrainingDaoSpringTest {
     @Test
     void getById() throws ParseException {
         // act
-        var formatter = new SimpleDateFormat("M/dd/yyy");
+        var formatter = DateTimeFormatter.ofPattern("M/dd/yyy");
         var t = dao.getById(1);
 
         // assert
@@ -220,7 +220,7 @@ class TrainingDaoSpringTest {
         assertEquals(760, t.getTrainerId());
         assertEquals(916, t.getTrainingTypeId());
         assertEquals("Cuscutaceae", t.getName());
-        assertEquals(formatter.parse("3/14/2023"), t.getDate());
+        assertEquals(LocalDate.parse("3/14/2023", formatter), t.getDate());
         assertEquals(5, t.getDuration());
     }
 }

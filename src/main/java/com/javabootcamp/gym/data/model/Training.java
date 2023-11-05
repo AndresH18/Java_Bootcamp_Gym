@@ -2,7 +2,7 @@ package com.javabootcamp.gym.data.model;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Training implements IModel {
     private int id;
@@ -12,10 +12,10 @@ public class Training implements IModel {
     @NotNull
     private String name;
     @NotNull
-    private Date date;
+    private LocalDate date;
     private int duration;
 
-    public Training(int id, int traineeId, int trainerId, int trainingTypeId, @NotNull String name, @NotNull Date date, int duration) {
+    public Training(int id, int traineeId, int trainerId, int trainingTypeId, @NotNull String name, @NotNull LocalDate date, int duration) {
         this.id = id;
         this.traineeId = traineeId;
         this.trainerId = trainerId;
@@ -25,7 +25,7 @@ public class Training implements IModel {
         this.duration = duration;
     }
 
-    public Training(int traineeId, int trainerId, int trainingTypeId, @NotNull String name, @NotNull Date date, int duration) {
+    public Training(int traineeId, int trainerId, int trainingTypeId, @NotNull String name, @NotNull LocalDate date, int duration) {
         this.traineeId = traineeId;
         this.trainerId = trainerId;
         this.trainingTypeId = trainingTypeId;
@@ -93,11 +93,11 @@ public class Training implements IModel {
     }
 
     @NotNull
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(@NotNull Date date) {
+    public void setDate(@NotNull LocalDate date) {
         this.date = date;
     }
 

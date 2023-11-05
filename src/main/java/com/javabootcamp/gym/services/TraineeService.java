@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
@@ -35,8 +35,8 @@ public class TraineeService {
      * @see User
      */
     @Nullable
-    public Trainee create(int userId, @NotNull Date dateOfBirth, @NotNull String address) {
-        if (isNotValidDate(dateOfBirth)) return null;
+    public Trainee create(int userId, @NotNull LocalDate dateOfBirth, @NotNull String address) {
+        if (!isValidDate(dateOfBirth)) return null;
 
         var trainee = new Trainee(userId, dateOfBirth, address);
 
@@ -55,8 +55,8 @@ public class TraineeService {
      * @see User
      */
     @Nullable
-    public Trainee create(@NotNull String firstName, @NotNull String lastName, @NotNull Date dateOfBirth, @NotNull String address) {
-        if (isNotValidDate(dateOfBirth)) return null;
+    public Trainee create(@NotNull String firstName, @NotNull String lastName, @NotNull LocalDate dateOfBirth, @NotNull String address) {
+        if (!isValidDate(dateOfBirth)) return null;
 
         var user = new User(firstName, lastName);
         var username = firstName.split(" ")[0].toLowerCase()
@@ -101,7 +101,7 @@ public class TraineeService {
      * @param date The date to compare
      * @return true if the date before the current date.
      */
-    private boolean isNotValidDate(Date date) {
-        return !new Date().after(date);
+    private boolean isValidDate(LocalDate date) {
+        return LocalDate.now().isAfter(date);
     }
 }

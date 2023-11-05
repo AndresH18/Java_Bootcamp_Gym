@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -19,7 +19,7 @@ class TraineeDaoTest {
     @Test
     void create() {
         // arrange
-        var date = new Date();
+        var date = LocalDate.now();
         Trainee expected = new Trainee(12, date, "Address");
 
         IDataSource dataSource = mock(IDataSource.class);
@@ -42,7 +42,7 @@ class TraineeDaoTest {
     @Test
     void getById_returnsNotNull() {
         // arrange
-        Trainee t1 = new Trainee(1, 2, new Date(), "Address");
+        Trainee t1 = new Trainee(1, 2, LocalDate.now(), "Address");
 
         IDataSource dataSource = mock(IDataSource.class);
         when(dataSource.getById(anyInt(), eq(Trainee.class)))
@@ -77,7 +77,7 @@ class TraineeDaoTest {
     @Test
     void update_returnsTrue() {
         // arrange
-        var date = new Date();
+        var date = LocalDate.now();
         Trainee t1 = new Trainee(12, date, "Address");
 
         IDataSource dataSource = mock(IDataSource.class);
@@ -96,7 +96,7 @@ class TraineeDaoTest {
     @Test
     void update_returnsFalse() {
         // arrange
-        var date = new Date();
+        var date = LocalDate.now();
         Trainee t1 = new Trainee(12, date, "Address");
 
         IDataSource dataSource = mock(IDataSource.class);
@@ -114,7 +114,7 @@ class TraineeDaoTest {
 
     @Test
     void delete_returnsTrue() {
-        Trainee t1 = new Trainee(12, new Date(), "Address");
+        Trainee t1 = new Trainee(12, LocalDate.now(), "Address");
 
         IDataSource dataSource = mock(IDataSource.class);
         when(dataSource.delete(any(), eq(Trainee.class)))
@@ -131,7 +131,7 @@ class TraineeDaoTest {
 
     @Test
     void delete_returnsFalse() {
-        Trainee t1 = new Trainee(12, new Date(), "Address");
+        Trainee t1 = new Trainee(12, LocalDate.now(), "Address");
 
         IDataSource dataSource = mock(IDataSource.class);
         when(dataSource.delete(any(), eq(Trainee.class)))
@@ -167,7 +167,7 @@ class TraineeDaoTest {
         // arrange
         IDataSource dataSource = mock(IDataSource.class);
         when(dataSource.getById(anyInt(), eq(Trainee.class)))
-                .thenReturn(new Trainee(1, 1, new Date(), "Address"));
+                .thenReturn(new Trainee(1, 1, LocalDate.now(), "Address"));
 
         TraineeDao dao = new TraineeDao(dataSource);
 
@@ -195,7 +195,7 @@ class TraineeDaoSpringTest {
     @Test
     void create() {
         // arrange
-        var t = new Trainee(1, new Date(), "Somewhere 123");
+        var t = new Trainee(1, LocalDate.now(), "Somewhere 123");
 
         // act
         var r = dao.create(t);

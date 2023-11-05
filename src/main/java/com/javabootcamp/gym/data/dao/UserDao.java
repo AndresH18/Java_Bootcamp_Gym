@@ -50,7 +50,7 @@ public class UserDao implements IDao<User> {
     }
 
     /**
-     * Updates an user on the data source
+     * Updates a user on the data source
      *
      * @param user The user to update
      * @return True if the update was successful, False otherwise.
@@ -61,7 +61,7 @@ public class UserDao implements IDao<User> {
     }
 
     /**
-     * Deletes an user from the data source.
+     * Deletes a user from the data source.
      *
      * @param user The user to delete
      * @return True if the user was deleted successful, false otherwise.
