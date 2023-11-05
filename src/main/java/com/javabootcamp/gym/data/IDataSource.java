@@ -2,6 +2,7 @@ package com.javabootcamp.gym.data;
 
 import com.javabootcamp.gym.data.model.IModel;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Predicate;
@@ -21,6 +22,7 @@ public interface IDataSource {
      * @param <T>    The type of the entity, which must implement the IModel interface.
      * @return The created entity.
      */
+    @NotNull
     <T extends IModel> T create(T entity, Class<T> type);
 
     /**
@@ -32,6 +34,7 @@ public interface IDataSource {
      * @return The retrieved entity, or null if not found.
      */
 
+    @Nullable
     <T extends IModel> T getById(int id, Class<T> type);
 
     /**

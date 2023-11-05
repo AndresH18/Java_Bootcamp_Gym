@@ -71,7 +71,6 @@ public class TrainerService {
     @Nullable
     public Trainer getById(int id) {
         return id > 0 ? trainerDao.getById(id) : null;
-
     }
 
     boolean update(@NotNull Trainer trainer) {

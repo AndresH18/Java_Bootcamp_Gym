@@ -30,6 +30,13 @@ public class TrainingService {
         return dao.create(training);
     }
 
+    @Nullable
+    public Training getById(int id) {
+        if (id <= 0) return null;
+
+        return dao.getById(id);
+    }
+
     /**
      * Checks if a date is greater than the current date.
      *
