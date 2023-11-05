@@ -5,17 +5,17 @@ public class Trainer implements IModel {
     private int userId;
 
     // Training type id
-    private int specialization;
+    private int specializationId;
 
-    public Trainer(int id, int userId, int specialization) {
+    public Trainer(int id, int userId, int specializationId) {
         this.id = id;
         this.userId = userId;
-        this.specialization = specialization;
+        this.specializationId = specializationId;
     }
 
-    public Trainer(int userId, int specialization) {
+    public Trainer(int userId, int specializationId) {
         this.userId = userId;
-        this.specialization = specialization;
+        this.specializationId = specializationId;
     }
 
     @Override
@@ -42,12 +42,12 @@ public class Trainer implements IModel {
         this.id = id;
     }
 
-    public int getSpecialization() {
-        return specialization;
+    public int getSpecializationId() {
+        return specializationId;
     }
 
-    public void setSpecialization(int specialization) {
-        this.specialization = specialization;
+    public void setSpecializationId(int specializationId) {
+        this.specializationId = specializationId;
     }
 
     public int getUserId() {

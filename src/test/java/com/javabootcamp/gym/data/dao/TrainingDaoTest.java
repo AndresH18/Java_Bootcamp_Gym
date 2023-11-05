@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -208,7 +207,7 @@ class TrainingDaoSpringTest {
     }
 
     @Test
-    void getById() throws ParseException {
+    void getById() {
         // act
         var formatter = DateTimeFormatter.ofPattern("M/dd/yyy");
         var t = dao.getById(1);

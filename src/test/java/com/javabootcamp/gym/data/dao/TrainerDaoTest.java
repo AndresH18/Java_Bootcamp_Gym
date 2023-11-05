@@ -33,7 +33,7 @@ class TrainerDaoTest {
         assertNotNull(r);
         assertEquals(1, r.getId());
         assertEquals(expected.getUserId(), r.getUserId());
-        assertEquals(expected.getSpecialization(), r.getSpecialization());
+        assertEquals(expected.getSpecializationId(), r.getSpecializationId());
     }
 
     @Test
@@ -206,6 +206,6 @@ class TrainerDaoSpringTest {
         assertNotNull(t);
         assertEquals(1, t.getId());
         assertEquals(809, t.getUserId());
-        assertEquals(846, t.getSpecialization());
+        assertEquals(846, t.getSpecializationId());
     }
 }
