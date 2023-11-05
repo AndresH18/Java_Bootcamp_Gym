@@ -33,21 +33,6 @@ public class Trainer implements IModel {
         return id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Trainer trainer = (Trainer) o;
-
-        return id == trainer.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return id;
-    }
-
     public int getId() {
         return id;
     }

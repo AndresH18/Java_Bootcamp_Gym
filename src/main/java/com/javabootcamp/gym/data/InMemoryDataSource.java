@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -100,7 +99,6 @@ public class InMemoryDataSource implements IDataSource {
         data.put(Trainer.class, loader.loadTrainers());
         data.put(Trainee.class, loader.loadTrainees());
         data.put(Training.class, loader.loadTrainings());
-
     }
 }
 
@@ -182,7 +180,6 @@ class InMemoryDataLoader {
     Set<Trainee> loadTrainees() {
         var trainees = new HashSet<Trainee>();
         var formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-
         var resource = resourceLoader.getResource(traineeResourceName);
         try (InputStream inputStream = resource.getInputStream();
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -197,7 +194,6 @@ class InMemoryDataLoader {
                 int id = Integer.parseInt(row[0]);
                 int userId = Integer.parseInt(row[1]);
                 LocalDate dateOfBirth = LocalDate.parse(row[2], formatter);
-
                 String address = row[3];
 
                 var trainee = new Trainee(id, userId, dateOfBirth, address);
@@ -241,7 +237,6 @@ class InMemoryDataLoader {
     Set<Training> loadTrainings() {
         var trainings = new HashSet<Training>();
         var formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-
         var resource = resourceLoader.getResource(trainingResourceName);
         try (InputStream inputStream = resource.getInputStream();
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -259,7 +254,6 @@ class InMemoryDataLoader {
                 int trainingTypeId = Integer.parseInt(row[3]);
                 String name = row[4];
                 LocalDate date = LocalDate.parse(row[5], formatter);
-
                 int duration = Integer.parseInt(row[6]);
 
                 var training = new Training(id, traineeId, trainerId, trainingTypeId, name, date, duration);
