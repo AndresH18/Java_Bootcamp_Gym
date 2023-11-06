@@ -6,6 +6,8 @@ import com.javabootcamp.gym.data.model.Trainee;
 import com.javabootcamp.gym.data.model.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +16,13 @@ import java.util.UUID;
 
 @Service
 public class TraineeService {
+    private final Logger logger = LoggerFactory.getLogger(TraineeService.class);
     private final TraineeDao traineeDao;
     private final UserDao userDao;
 
 
     @Autowired
-    public TraineeService(TraineeDao traineeDao, UserDao userDao) {
+    public TraineeService(@NotNull TraineeDao traineeDao, @NotNull UserDao userDao) {
         this.traineeDao = traineeDao;
         this.userDao = userDao;
     }
@@ -36,7 +39,17 @@ public class TraineeService {
      */
     @Nullable
     public Trainee create(int userId, @NotNull LocalDate dateOfBirth, @NotNull String address) {
-        if (!isValidDate(dateOfBirth)) return null;
+        logger.trace("create: userId={}, dateOfBirth={}, address='{}'", userId, dateOfBirth, address);
+        if (!isValidDate(dateOfBirth)) {
+            logger.info("Invalid date");
+            return null;
+        }
+        logger.info("Creating trainer");
+
+        if (!userDao.exists(userId)) {
+            logger.trace("create: user ({}) not found", userId);
+            return null;
+        }
 
         var trainee = new Trainee(userId, dateOfBirth, address);
 
@@ -56,39 +69,50 @@ public class TraineeService {
      */
     @Nullable
     public Trainee create(@NotNull String firstName, @NotNull String lastName, @NotNull LocalDate dateOfBirth, @NotNull String address) {
+        logger.trace("create: firstName='{}', lastName={}, dateOfBirth={}, address='{}'", firstName, lastName, dateOfBirth, address);
+
         if (!isValidDate(dateOfBirth)) return null;
 
         var user = new User(firstName, lastName);
-        var username = firstName.split(" ")[0].toLowerCase()
+        var username = firstName.split(" ")[0].toLowerCase() + "."
                 + lastName.split(" ")[0].toLowerCase();
+        logger.trace("create: username prefix '{}'", username);
 
         var count = userDao.count(u -> u.getUsername().matches(username + "\\d*"));
+        logger.trace("create: username count: {}", count);
 
         user.setUsername(username + count);
         user.setPassword(UUID.randomUUID().toString().replace("-", "").substring(0, 10));
+        logger.trace("create: username='{}', password='{}'", user.getUsername(), user.getPassword());
 
         user = userDao.create(user);
+        logger.info("create: created user");
 
         return traineeDao.create(new Trainee(user.getId(), dateOfBirth, address));
     }
 
     @Nullable
     public Trainee getById(int id) {
+        logger.trace("getById: id={}", id);
         if (id <= 0) return null;
+
+        logger.info("Retrieving Trainee");
 
         return traineeDao.getById(id);
     }
 
     public boolean update(@NotNull Trainee trainee) {
-        if (trainee.getId() <= 0) return false;
-
-        if (!traineeDao.exists(trainee.getId()))
+        logger.trace("update: updating user id={}", trainee.getId());
+        if (trainee.getId() <= 0) {
+            logger.trace("update: invalid id");
             return false;
+        }
 
         return traineeDao.update(trainee);
     }
 
     public boolean delete(int id) {
+        logger.trace("delete: id={}", id);
         var t = getById(id);
         if (t == null) return false;
 
