@@ -53,7 +53,6 @@ public class TrainingDao implements IDao<Training> {
      */
     @Override
     public boolean update(Training training) {
-//        throw new UnsupportedOperationException("This operation is not supported");
         return dataSource.update(training, Training.class);
     }
 
@@ -65,18 +64,6 @@ public class TrainingDao implements IDao<Training> {
      */
     @Override
     public boolean delete(Training training) {
-//        throw new UnsupportedOperationException("This operation is not supported");
         return dataSource.delete(training, Training.class);
-    }
-
-    /**
-     * Checks if the entity with the id exists in the datasource
-     *
-     * @param id The entity id
-     * @return True if the entity exists in the data source
-     */
-    @Override
-    public boolean exists(int id) {
-        return getById(id) != null;
     }
 }

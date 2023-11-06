@@ -1,32 +1,30 @@
 package com.javabootcamp.gym.data.dao;
 
 import com.javabootcamp.gym.data.IDataSource;
-import com.javabootcamp.gym.data.model.Trainee;
+import com.javabootcamp.gym.data.model.Trainer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-
-class TraineeDaoTest {
+class TrainerDaoTest {
 
     @Test
     void create() {
         // arrange
-        var date = LocalDate.now();
-        Trainee expected = new Trainee(12, date, "Address");
+        Trainer expected = new Trainer(12, 2);
 
         IDataSource dataSource = mock(IDataSource.class);
-        when(dataSource.create(any(), eq(Trainee.class)))
-                .thenReturn(new Trainee(1, 12, date, "Address"));
+        when(dataSource.create(any(), eq(Trainer.class)))
+                .thenReturn(new Trainer(1, 12, 2));
 
-        TraineeDao dao = new TraineeDao(dataSource);
+        TrainerDao dao = new TrainerDao(dataSource);
 
         // act
         var r = dao.create(expected);
@@ -35,20 +33,19 @@ class TraineeDaoTest {
         assertNotNull(r);
         assertEquals(1, r.getId());
         assertEquals(expected.getUserId(), r.getUserId());
-        assertEquals(expected.getDateOfBirth(), r.getDateOfBirth());
-        assertEquals(expected.getAddress(), r.getAddress());
+        assertEquals(expected.getSpecializationId(), r.getSpecializationId());
     }
 
     @Test
     void getById_returnsNotNull() {
         // arrange
-        Trainee t1 = new Trainee(1, 2, LocalDate.now(), "Address");
+        Trainer t1 = new Trainer(1, 2);
 
         IDataSource dataSource = mock(IDataSource.class);
-        when(dataSource.getById(anyInt(), eq(Trainee.class)))
+        when(dataSource.getById(1, Trainer.class))
                 .thenReturn(t1);
 
-        TraineeDao dao = new TraineeDao(dataSource);
+        TrainerDao dao = new TrainerDao(dataSource);
 
         // act
         var r = dao.getById(1);
@@ -62,10 +59,10 @@ class TraineeDaoTest {
     void getById_returnsNull() {
         // arrange
         IDataSource dataSource = mock(IDataSource.class);
-        when(dataSource.getById(anyInt(), eq(Trainee.class)))
+        when(dataSource.getById(anyInt(), eq(Trainer.class)))
                 .thenReturn(null);
 
-        TraineeDao dao = new TraineeDao(dataSource);
+        TrainerDao dao = new TrainerDao(dataSource);
 
         // act
         var r = dao.getById(2);
@@ -77,17 +74,16 @@ class TraineeDaoTest {
     @Test
     void update_returnsTrue() {
         // arrange
-        var date = LocalDate.now();
-        Trainee t1 = new Trainee(12, date, "Address");
+        Trainer t = new Trainer(1, 1, 2);
 
         IDataSource dataSource = mock(IDataSource.class);
-        when(dataSource.update(any(), eq(Trainee.class)))
+        when(dataSource.update(any(), eq(Trainer.class)))
                 .thenReturn(true);
 
-        TraineeDao dao = new TraineeDao(dataSource);
+        TrainerDao dao = new TrainerDao(dataSource);
 
         // act
-        var r = dao.update(t1);
+        var r = dao.update(t);
 
         // assert
         assertTrue(r);
@@ -96,17 +92,16 @@ class TraineeDaoTest {
     @Test
     void update_returnsFalse() {
         // arrange
-        var date = LocalDate.now();
-        Trainee t1 = new Trainee(12, date, "Address");
+        Trainer t = new Trainer(1, 1, 2);
 
         IDataSource dataSource = mock(IDataSource.class);
-        when(dataSource.update(any(), eq(Trainee.class)))
+        when(dataSource.update(any(), eq(Trainer.class)))
                 .thenReturn(false);
 
-        TraineeDao dao = new TraineeDao(dataSource);
+        TrainerDao dao = new TrainerDao(dataSource);
 
         // act
-        var r = dao.update(t1);
+        var r = dao.update(t);
 
         // assert
         assertFalse(r);
@@ -114,16 +109,16 @@ class TraineeDaoTest {
 
     @Test
     void delete_returnsTrue() {
-        Trainee t1 = new Trainee(12, LocalDate.now(), "Address");
+        Trainer t = new Trainer(1, 1, 1);
 
         IDataSource dataSource = mock(IDataSource.class);
-        when(dataSource.delete(any(), eq(Trainee.class)))
+        when(dataSource.delete(any(), eq(Trainer.class)))
                 .thenReturn(true);
 
-        TraineeDao dao = new TraineeDao(dataSource);
+        TrainerDao dao = new TrainerDao(dataSource);
 
         // act
-        var r = dao.delete(t1);
+        var r = dao.delete(t);
 
         // assert
         assertTrue(r);
@@ -131,16 +126,16 @@ class TraineeDaoTest {
 
     @Test
     void delete_returnsFalse() {
-        Trainee t1 = new Trainee(12, LocalDate.now(), "Address");
+        Trainer t = new Trainer(1, 1, 1);
 
         IDataSource dataSource = mock(IDataSource.class);
-        when(dataSource.delete(any(), eq(Trainee.class)))
+        when(dataSource.delete(any(), eq(Trainer.class)))
                 .thenReturn(false);
 
-        TraineeDao dao = new TraineeDao(dataSource);
+        TrainerDao dao = new TrainerDao(dataSource);
 
         // act
-        var r = dao.delete(t1);
+        var r = dao.delete(t);
 
         // assert
         assertFalse(r);
@@ -150,10 +145,10 @@ class TraineeDaoTest {
     void exists_returnFalse() {
         // arrange
         IDataSource dataSource = mock(IDataSource.class);
-        when(dataSource.getById(anyInt(), eq(Trainee.class)))
+        when(dataSource.getById(anyInt(), eq(Trainer.class)))
                 .thenReturn(null);
 
-        TraineeDao dao = new TraineeDao(dataSource);
+        TrainerDao dao = new TrainerDao(dataSource);
 
         // act
         var r = dao.exists(2);
@@ -166,42 +161,40 @@ class TraineeDaoTest {
     void exists_returnTrue() {
         // arrange
         IDataSource dataSource = mock(IDataSource.class);
-        when(dataSource.getById(anyInt(), eq(Trainee.class)))
-                .thenReturn(new Trainee(1, 1, LocalDate.now(), "Address"));
+        when(dataSource.getById(anyInt(), eq(Trainer.class)))
+                .thenReturn(new Trainer(1, 1, 1));
 
-        TraineeDao dao = new TraineeDao(dataSource);
+        TrainerDao dao = new TrainerDao(dataSource);
 
         // act
-        var r = dao.exists(2);
+        var r = dao.exists(1);
 
         // assert
         assertTrue(r);
     }
-
-
 }
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class TraineeDaoSpringTest {
+class TrainerDaoSpringTest {
 
-    private final TraineeDao dao;
+    private final TrainerDao dao;
 
     @Autowired
-    public TraineeDaoSpringTest(TraineeDao dao) {
+    public TrainerDaoSpringTest(TrainerDao dao) {
         this.dao = dao;
     }
 
     @Test
     void create() {
         // arrange
-        var t = new Trainee(1, LocalDate.now(), "Somewhere 123");
+        var t = new Trainer(1, 1);
 
         // act
         var r = dao.create(t);
 
         // assert
-        assertEquals(1001, r.getId());
+        assertEquals(970, r.getId());
     }
 
     @Test
@@ -212,6 +205,7 @@ class TraineeDaoSpringTest {
         // assert
         assertNotNull(t);
         assertEquals(1, t.getId());
-        assertEquals("17213 Dottie Terrace", t.getAddress());
+        assertEquals(809, t.getUserId());
+        assertEquals(846, t.getSpecializationId());
     }
 }

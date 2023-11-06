@@ -67,15 +67,4 @@ public class TraineeDao implements IDao<Trainee> {
     public boolean delete(Trainee trainee) {
         return dataSource.delete(trainee, Trainee.class);
     }
-
-    /**
-     * Checks if the entity with the id exists in the datasource
-     *
-     * @param id The entity id
-     * @return True if the entity exists in the data source
-     */
-    @Override
-    public boolean exists(int id) {
-        return getById(id) != null;
-    }
 }

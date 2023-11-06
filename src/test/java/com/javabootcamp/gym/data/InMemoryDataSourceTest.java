@@ -1,16 +1,20 @@
 package com.javabootcamp.gym.data;
 
 import com.javabootcamp.gym.data.model.IModel;
+import com.javabootcamp.gym.data.model.TrainingType;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 
 class InMemoryDataSourceTest {
-
 
     @Test
     void create_canAdd_True() {
@@ -187,133 +191,204 @@ class InMemoryDataSourceTest {
         // assert
         assertTrue(b);
     }
-}
 
-class ModelType1 implements IModel {
-    private int id;
+    @Test
+    void search_returnsNotNull() {
+        // arrange
+        Map<Class<? extends IModel>, Set<?>> map = new HashMap<>();
+        map.put(TrainingType.class, new HashSet<>());
 
-    ModelType1(int id) {
-        this.id = id;
+        var dataSource = new InMemoryDataSource(map);
+
+        // act
+        var stream = dataSource.search(p -> true, TrainingType.class);
+
+        // assert
+        assertNotNull(stream);
     }
 
-    public ModelType1() {
+    @Test
+    void search_countReturns() {
+        // arrange
+        Set<TrainingType> set = new HashSet<>();
+        set.add(new TrainingType(1, "Weights"));
+        set.add(new TrainingType(2, "Running"));
+        set.add(new TrainingType(3, "Athleticism"));
+        set.add(new TrainingType(4, "Climbing"));
+
+        Map<Class<? extends IModel>, Set<?>> map = new HashMap<>();
+        map.put(TrainingType.class, set);
+
+        var dataSource = new InMemoryDataSource(map);
+
+        // act - if word starts with W or C
+        var stream = dataSource.search(p -> p.getName().matches("\\b[WC]\\w+"), TrainingType.class);
+
+        // assert
+        assertNotNull(stream);
+        var resultSet = stream.collect(Collectors.toSet());
+        assertEquals(2, resultSet.size());
     }
 
-    @Override
-    public int getId() {
-        return id;
+    @Test
+    void constructor_loader() {
+        // arrange
+        var loader = mock(InMemoryDataLoader.class);
+
+        // act
+        var dataSource = new InMemoryDataSource(loader);
+
+        // assert
+        assertNotNull(dataSource);
+
+
     }
 
-    @Override
-    public void setId(int id) {
-        this.id = id;
+    @Test
+    void loadData() {
+        // arrange
+        var loader = mock(InMemoryDataLoader.class);
+        when(loader.loadUsers()).thenReturn(new HashSet<>());
+        when(loader.loadTrainingTypes()).thenReturn(new HashSet<>());
+        when(loader.loadTrainees()).thenReturn(new HashSet<>());
+        when(loader.loadTrainers()).thenReturn(new HashSet<>());
+        when(loader.loadTrainings()).thenReturn(new HashSet<>());
+
+        var dataSource = new InMemoryDataSource(loader);
+
+        // act
+        dataSource.loadData();
+
+        // assert
+        verify(loader).loadUsers();
+        verify(loader).loadTrainingTypes();
+        verify(loader).loadTrainees();
+        verify(loader).loadTrainers();
+        verify(loader).loadTrainings();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    private static class ModelType1 implements IModel {
+        private int id;
 
-        ModelType1 model = (ModelType1) o;
+        ModelType1(int id) {
+            this.id = id;
+        }
 
-        return id == model.id;
+        public ModelType1() {
+        }
+
+        @Override
+        public int getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ModelType1 model = (ModelType1) o;
+
+            return id == model.id;
+        }
+
+        @Override
+        public int hashCode() {
+            return id;
+        }
+
+        @Override
+        public String toString() {
+            return "ModelType1[" +
+                    "id=" + id + ']';
+        }
+
     }
 
-    @Override
-    public int hashCode() {
-        return id;
+    private static class ModelType2 implements IModel {
+        private int id;
+
+        public ModelType2() {
+        }
+
+        @Override
+        public int getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ModelType2 model = (ModelType2) o;
+
+            return id == model.id;
+        }
+
+        @Override
+        public int hashCode() {
+            return id;
+        }
+
+        @Override
+        public String toString() {
+            return "ModelType2[" +
+                    "id=" + id + ']';
+        }
+
     }
 
-    @Override
-    public String toString() {
-        return "ModelType1[" +
-                "id=" + id + ']';
-    }
+    private static class ModelType3 implements IModel {
+        private final String name;
+        private int id;
 
-}
+        ModelType3(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
 
-class ModelType2 implements IModel {
-    private int id;
+        public ModelType3(String name) {
+            this.name = name;
+        }
 
-    ModelType2(int id) {
-        this.id = id;
-    }
+        @Override
+        public int getId() {
+            return id;
+        }
 
-    public ModelType2() {
-    }
+        @Override
+        public void setId(int id) {
+            this.id = id;
+        }
 
-    @Override
-    public int getId() {
-        return id;
-    }
+        public String getName() {
+            return name;
+        }
 
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+            ModelType3 that = (ModelType3) o;
 
-        ModelType2 model = (ModelType2) o;
+            return id == that.id;
+        }
 
-        return id == model.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        return "ModelType2[" +
-                "id=" + id + ']';
-    }
-
-}
-
-class ModelType3 implements IModel {
-    private final String name;
-    private int id;
-
-    ModelType3(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public ModelType3(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ModelType3 that = (ModelType3) o;
-
-        return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return id;
+        @Override
+        public int hashCode() {
+            return id;
+        }
     }
 }

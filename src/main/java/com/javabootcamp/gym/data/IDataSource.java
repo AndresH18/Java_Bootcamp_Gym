@@ -2,6 +2,7 @@ package com.javabootcamp.gym.data;
 
 import com.javabootcamp.gym.data.model.IModel;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Predicate;
@@ -21,7 +22,7 @@ public interface IDataSource {
      * @param <T>    The type of the entity, which must implement the IModel interface.
      * @return The created entity.
      */
-    <T extends IModel> T create(T entity, Class<T> type);
+    @NotNull <T extends IModel> T create(@NotNull T entity, @NotNull Class<T> type);
 
     /**
      * Retrieves an entity of the specified type by its unique identifier.
@@ -32,7 +33,7 @@ public interface IDataSource {
      * @return The retrieved entity, or null if not found.
      */
 
-    <T extends IModel> T getById(int id, Class<T> type);
+    @Nullable <T extends IModel> T getById(int id, @NotNull Class<T> type);
 
     /**
      * Updates an existing entity of the specified type.
@@ -42,7 +43,7 @@ public interface IDataSource {
      * @param <T>    The type of the entity, which must implement the IModel interface.
      * @return True if the update was successful, false otherwise.
      */
-    <T extends IModel> boolean update(T entity, Class<T> type);
+    <T extends IModel> boolean update(@NotNull T entity, @NotNull Class<T> type);
 
     /**
      * Deletes an existing entity of the specified type.
@@ -52,7 +53,7 @@ public interface IDataSource {
      * @param <T>    The type of the entity, which must implement the IModel interface.
      * @return True if the deletion was successful, false otherwise.
      */
-    <T extends IModel> boolean delete(T entity, Class<T> type);
+    <T extends IModel> boolean delete(@NotNull T entity, @NotNull Class<T> type);
 
     @NotNull
     default <T extends IModel> Stream<T> search(Predicate<T> searchPredicate, Class<T> type) {
