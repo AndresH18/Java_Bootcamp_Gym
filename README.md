@@ -2,7 +2,9 @@
 
 Spring based module, which handles gyn CRM system
 
-## Task
+## Tasks
+
+### Spring Core
 
 1. Create DB schema according to the structure.
 
@@ -64,7 +66,7 @@ Spring based module, which handles gyn CRM system
     - [TrainingService.java](src/main/java/com/javabootcamp/gym/services/TrainingService.java)
         - Should support possibility to create/select Training profile
 
-### Notes
+#### Notes
 
 1. Configure spring application context based on the Spring annotation or on Java based approach.
 2. Implement DAO objects for each of the domain model
