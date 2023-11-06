@@ -6,55 +6,52 @@ Spring based module, which handles gyn CRM system
 
 1. Create DB schema according to the structure.
 
-```mermaid
-erDiagram
-    User ||--o| Trainee: ""
-    User ||--o| Trainer: ""
-    Trainee ||--o{ Training: ""
-    Trainer ||--o{ Training: ""
-    TT ||--o{ Trainer: ""
-    TT ||--o{ Training: ""
-
-    User {
-        int id PK
-        String firstName
-        String lastName
-        String username
-        String password
-        boolean isActive
-    }
-
-    Trainee {
-        int id PK
-        int userId FK
-        Date dateOfBirth "optional"
-        String address "optional"
-    }
-
-    Trainer {
-        int id PK
-        int userId FK
-        int specialization FK "Training type foreign key"
-    }
-
-    Training {
-        int id PK
-        int traineeId FK
-        int trainerId FK
-        int typeId FK "Training type foreign key"
-        String name
-        Date trainingDate
-        int trainingDuration
-    }
-
-    TT["Training Type"] {
-        int id PK
-        String name
-    }
-
-
-
-```
+    ```mermaid
+    erDiagram
+        User ||--o| Trainee: ""
+        User ||--o| Trainer: ""
+        Trainee ||--o{ Training: ""
+        Trainer ||--o{ Training: ""
+        TT ||--o{ Trainer: ""
+        TT ||--o{ Training: ""
+    
+        User {
+            int id PK
+            String firstName
+            String lastName
+            String username
+            String password
+            boolean isActive
+        }
+    
+        Trainee {
+            int id PK
+            int userId FK
+            Date dateOfBirth "optional"
+            String address "optional"
+        }
+    
+        Trainer {
+            int id PK
+            int userId FK
+            int specialization FK "Training type foreign key"
+        }
+    
+        Training {
+            int id PK
+            int traineeId FK
+            int trainerId FK
+            int typeId FK "Training type foreign key"
+            String name
+            Date trainingDate
+            int trainingDuration
+        }
+    
+        TT["Training Type"] {
+            int id PK
+            String name
+        }
+    ```
 
 2. Implement three service
    classes:
