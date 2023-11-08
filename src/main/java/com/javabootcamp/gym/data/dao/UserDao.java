@@ -14,7 +14,7 @@ import java.util.function.Predicate;
  * It allows you to perform CRUD (Create, Retrieve, Update, Delete) operations on User objects
  * in the data source.
  *
- * @see com.javabootcamp.gym.data.dao.IDao
+ * @see IDao
  * @see User
  */
 @Repository

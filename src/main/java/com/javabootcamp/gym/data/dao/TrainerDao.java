@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * It allows you to perform CRUD (Create, Retrieve, Update, Delete) operations on Trainer objects
  * in the data source.
  *
- * @see com.javabootcamp.gym.data.dao.IDao
+ * @see IDao
  */
 @Repository
 public class TrainerDao implements IDao<Trainer> {
