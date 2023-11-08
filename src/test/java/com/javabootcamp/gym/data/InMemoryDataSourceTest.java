@@ -210,11 +210,11 @@ class InMemoryDataSourceTest {
     @Test
     void search_countReturns() {
         // arrange
-        Set<TrainingType> set = new HashSet<>();
-        set.add(new TrainingType(1, "Weights"));
-        set.add(new TrainingType(2, "Running"));
-        set.add(new TrainingType(3, "Athleticism"));
-        set.add(new TrainingType(4, "Climbing"));
+        Set<InMemoryDataSource.Entity<TrainingType>> set = new HashSet<>();
+        set.add(new InMemoryDataSource.Entity<>(new TrainingType(1, "Weights")));
+        set.add(new InMemoryDataSource.Entity<>(new TrainingType(2, "Running")));
+        set.add(new InMemoryDataSource.Entity<>(new TrainingType(3, "Athleticism")));
+        set.add(new InMemoryDataSource.Entity<>(new TrainingType(4, "Climbing")));
 
         Map<Class<? extends IModel>, Set<?>> map = new HashMap<>();
         map.put(TrainingType.class, set);
