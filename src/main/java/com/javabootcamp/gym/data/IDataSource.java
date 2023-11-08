@@ -12,7 +12,6 @@ import java.util.stream.Stream;
  * The IDataSource interface provides methods for creating, retrieving, updating, and deleting
  * entities of a specific type.
  */
-@Component
 public interface IDataSource {
     /**
      * Creates a new entity of the specified type.
