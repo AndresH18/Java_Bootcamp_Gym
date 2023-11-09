@@ -1,27 +1,51 @@
 package com.javabootcamp.gym.data.model;
 
+import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.util.Set;
 
+@Entity
+@Table(name = "Trainees")
 public class Trainee implements IModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int userId;
+
     @NotNull
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+
+    @NotNull
     private String address;
 
-    public Trainee(int id, int userId, @NotNull LocalDate dateOfBirth, String address) {
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "trainee_id")
+    private Set<Training> trainings;
+
+    @Transient
+    @Deprecated
+    private int userId;
+
+    public Trainee(int id, int userId, @NotNull LocalDate dateOfBirth, @NotNull String address) {
         this.id = id;
         this.userId = userId;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
     }
 
-    public Trainee(int userId, @NotNull LocalDate dateOfBirth, String address) {
+    public Trainee(int userId, @NotNull LocalDate dateOfBirth, @NotNull String address) {
         this.userId = userId;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
+    }
+
+    public Trainee() {
     }
 
     @Override
@@ -31,12 +55,19 @@ public class Trainee implements IModel {
 
         Trainee trainee = (Trainee) o;
 
-        return id == trainee.id;
+        if (id != trainee.id) return false;
+        if (userId != trainee.userId) return false;
+        if (!dateOfBirth.equals(trainee.dateOfBirth)) return false;
+        return address.equals(trainee.address);
     }
 
     @Override
     public int hashCode() {
-        return id;
+        int result = id;
+        result = 31 * result + userId;
+        result = 31 * result + dateOfBirth.hashCode();
+        result = 31 * result + address.hashCode();
+        return result;
     }
 
     public int getId() {
@@ -48,10 +79,6 @@ public class Trainee implements IModel {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
 
     public @NotNull LocalDate getDateOfBirth() {
         return dateOfBirth;
@@ -61,16 +88,30 @@ public class Trainee implements IModel {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getAddress() {
+    public @NotNull String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(@NotNull String address) {
         this.address = address;
     }
 
-    public Trainee setUserId(int userId) {
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Deprecated
+    public void setUserId(int userId) {
         this.userId = userId;
-        return this;
+    }
+
+    @Deprecated
+    public int getUserId() {
+        return userId;
     }
 }
