@@ -1,8 +1,8 @@
 package com.javabootcamp.gym.data.dao;
 
-import com.javabootcamp.gym.data.model.IModel;
 import org.junit.jupiter.api.Test;
 
+import static com.javabootcamp.gym.data.IDataSource.MemoryModels.IModel;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;

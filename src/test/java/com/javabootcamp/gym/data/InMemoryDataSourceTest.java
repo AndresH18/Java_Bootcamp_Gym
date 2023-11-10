@@ -1,7 +1,7 @@
 package com.javabootcamp.gym.data;
 
-import com.javabootcamp.gym.data.model.IModel;
-import com.javabootcamp.gym.data.model.TrainingType;
+import static com.javabootcamp.gym.data.IDataSource.MemoryModels.*;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

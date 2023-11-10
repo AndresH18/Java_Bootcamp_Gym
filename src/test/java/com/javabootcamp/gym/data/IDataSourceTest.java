@@ -1,6 +1,6 @@
 package com.javabootcamp.gym.data;
 
-import com.javabootcamp.gym.data.model.IModel;
+import com.javabootcamp.gym.data.IDataSource.MemoryModels.IModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.Stream;

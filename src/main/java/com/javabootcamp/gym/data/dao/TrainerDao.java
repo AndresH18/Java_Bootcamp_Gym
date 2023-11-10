@@ -1,11 +1,12 @@
 package com.javabootcamp.gym.data.dao;
 
 import com.javabootcamp.gym.data.IDataSource;
-import com.javabootcamp.gym.data.model.Trainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import static com.javabootcamp.gym.data.IDataSource.MemoryModels.Trainer;
 
 /**
  * The TrainerDao class provides data access operations for Trainer entities.
