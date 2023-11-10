@@ -1,9 +1,10 @@
 package com.javabootcamp.gym.services;
 
-import com.javabootcamp.gym.data.dao.TraineeDao;
-import com.javabootcamp.gym.data.dao.UserDao;
 import com.javabootcamp.gym.data.model.Trainee;
 import com.javabootcamp.gym.data.model.User;
+import com.javabootcamp.gym.data.repository.TraineeRepository;
+import com.javabootcamp.gym.data.repository.UserRepository;
+import com.javabootcamp.gym.services.helper.UserHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -12,19 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Service
 public class TraineeService {
     private final Logger logger = LoggerFactory.getLogger(TraineeService.class);
-    private final TraineeDao traineeDao;
-    private final UserDao userDao;
-
+    private final TraineeRepository traineeRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public TraineeService(@NotNull TraineeDao traineeDao, @NotNull UserDao userDao) {
-        this.traineeDao = traineeDao;
-        this.userDao = userDao;
+    public TraineeService(@NotNull TraineeRepository traineeRepository, @NotNull UserRepository userRepository) {
+        this.traineeRepository = traineeRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -40,20 +39,22 @@ public class TraineeService {
     @Nullable
     public Trainee create(int userId, @NotNull LocalDate dateOfBirth, @NotNull String address) {
         logger.trace("create: userId={}, dateOfBirth={}, address='{}'", userId, dateOfBirth, address);
-        if (!isValidDate(dateOfBirth)) {
+        if (isInvalidDate(dateOfBirth)) {
             logger.info("Invalid date");
+            return null;
+        }
+
+        var user = userRepository.findById(userId);
+
+        if (user.isEmpty()) {
+            logger.trace("create: user ({}) not found", userId);
             return null;
         }
         logger.info("Creating trainer");
 
-        if (!userDao.exists(userId)) {
-            logger.trace("create: user ({}) not found", userId);
-            return null;
-        }
+        var trainee = new Trainee(dateOfBirth, address, user.get());
 
-        var trainee = new Trainee(userId, dateOfBirth, address);
-
-        return traineeDao.create(trainee);
+        return traineeRepository.save(trainee);
     }
 
     /**
@@ -71,24 +72,22 @@ public class TraineeService {
     public Trainee create(@NotNull String firstName, @NotNull String lastName, @NotNull LocalDate dateOfBirth, @NotNull String address) {
         logger.trace("create: firstName='{}', lastName={}, dateOfBirth={}, address='{}'", firstName, lastName, dateOfBirth, address);
 
-        if (!isValidDate(dateOfBirth)) return null;
+        if (isInvalidDate(dateOfBirth)) return null;
 
-        var user = new User(firstName, lastName);
-        var username = firstName.split(" ")[0].toLowerCase() + "."
-                + lastName.split(" ")[0].toLowerCase();
+        var username = UserHelper.createUsernamePrefix(firstName, lastName);
         logger.trace("create: username prefix '{}'", username);
 
-        var count = userDao.count(u -> u.getUsername().matches(username + "\\d*"));
+        var count = userRepository.countUserByUsernameStartingWith(username);
         logger.trace("create: username count: {}", count);
 
-        user.setUsername(username + count);
-        user.setPassword(UUID.randomUUID().toString().replace("-", "").substring(0, 10));
+        var user = UserHelper.createUser(firstName, lastName, username, count);
+
         logger.trace("create: username='{}', password='{}'", user.getUsername(), user.getPassword());
 
-        user = userDao.create(user);
+        user = userRepository.save(user);
         logger.info("create: created user");
 
-        return traineeDao.create(new Trainee(user.getId(), dateOfBirth, address));
+        return traineeRepository.save(new Trainee(user.getId(), dateOfBirth, address));
     }
 
     @Nullable
@@ -98,7 +97,8 @@ public class TraineeService {
 
         logger.info("Retrieving Trainee");
 
-        return traineeDao.getById(id);
+        var user = traineeRepository.findById(id);
+        return user.orElse(null);
     }
 
     public boolean update(@NotNull Trainee trainee) {
@@ -108,24 +108,42 @@ public class TraineeService {
             return false;
         }
 
-        return traineeDao.update(trainee);
+        var optional = traineeRepository.findById(trainee.getId());
+        if (optional.isEmpty())
+            return false;
+
+        trainee = optional.get().copyFrom(trainee);
+        trainee = traineeRepository.save(trainee);
+
+        return true;
     }
 
     public boolean delete(int id) {
         logger.trace("delete: id={}", id);
-        var t = getById(id);
-        if (t == null) return false;
+        if (id <= 0)
+            return false;
 
-        return traineeDao.delete(t);
+//        var optional = traineeRepository.findById(id);
+//        if (optional.isEmpty())
+//            return false;
+//
+//        traineeRepository.delete(optional.get());
+
+        traineeRepository.deleteById(id);
+        return true;
     }
 
     /**
-     * Checks if a date is greater than the current date.
+     * Checks if a date is valid.
      *
      * @param date The date to compare
-     * @return true if the date before the current date.
+     * @return true if the date is valid.
      */
-    private boolean isValidDate(LocalDate date) {
+    private static boolean isValidDate(LocalDate date) {
         return LocalDate.now().isAfter(date);
+    }
+
+    private static boolean isInvalidDate(LocalDate date) {
+        return !isValidDate(date);
     }
 }

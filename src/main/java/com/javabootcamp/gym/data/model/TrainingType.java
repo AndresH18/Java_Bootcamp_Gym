@@ -33,22 +33,7 @@ public class TrainingType implements IModel {
     public TrainingType() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TrainingType that = (TrainingType) o;
-
-        return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + name.hashCode();
-        return result;
-    }
+    // TODO: equals(), hashcode()
 
     @Override
     public int getId() {

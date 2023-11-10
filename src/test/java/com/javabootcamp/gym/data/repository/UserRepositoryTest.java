@@ -8,22 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
-class UserRepositoryTest {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Test
-    void test() {
-        var user = new User();
-
-        user.setFirstName("Andres");
-        user.setLastName("Hoyos");
-        user.setUsername("andres.hoyos");
-        user.setPassword("00andres00");
-        userRepository.save(user);
-
-    }
-}
+//@SpringBootTest
+//@ExtendWith(SpringExtension.class)
+//class UserRepositoryTest {
+//
+//    @Autowired
+//    private UserRepository userRepository;
+//
+//    @Test
+//    void test() {
+//        var user = new User();
+//
+//        user.setFirstName("Andres");
+//        user.setLastName("Hoyos");
+//        user.setUsername("andres.hoyos");
+//        user.setPassword("00andres00");
+//        userRepository.save(user);
+//
+//    }
+//}

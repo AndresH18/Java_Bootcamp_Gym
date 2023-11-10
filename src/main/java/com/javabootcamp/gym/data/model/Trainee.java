@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Trainees")
-public class Trainee implements IModel {
+public class Trainee implements IModel, ICopy<Trainee> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,50 +25,34 @@ public class Trainee implements IModel {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "trainee_id")
+    @OneToMany(mappedBy = "trainee")
     private Set<Training> trainings;
-
-    @Transient
-    @Deprecated
-    private int userId;
-
-    public Trainee(int id, int userId, @NotNull LocalDate dateOfBirth, @NotNull String address) {
-        this.id = id;
-        this.userId = userId;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-    }
-
-    public Trainee(int userId, @NotNull LocalDate dateOfBirth, @NotNull String address) {
-        this.userId = userId;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-    }
 
     public Trainee() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Trainee(int id, @NotNull LocalDate dateOfBirth, @NotNull String address) {
+        this.id = id;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+    }
 
-        Trainee trainee = (Trainee) o;
-
-        if (id != trainee.id) return false;
-        if (userId != trainee.userId) return false;
-        if (!dateOfBirth.equals(trainee.dateOfBirth)) return false;
-        return address.equals(trainee.address);
+    public Trainee(@NotNull LocalDate dateOfBirth, @NotNull String address, User user) {
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.user = user;
     }
 
     @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + userId;
-        result = 31 * result + dateOfBirth.hashCode();
-        result = 31 * result + address.hashCode();
-        return result;
+    public Trainee copyFrom(Trainee trainee) {
+        this.address = trainee.address;
+        this.dateOfBirth = trainee.dateOfBirth;
+        // other properties?
+
+        return this;
     }
+
+    // TODO: equals(), hashcode()
 
     public int getId() {
         return id;
@@ -78,7 +62,6 @@ public class Trainee implements IModel {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public @NotNull LocalDate getDateOfBirth() {
         return dateOfBirth;
@@ -96,22 +79,11 @@ public class Trainee implements IModel {
         this.address = address;
     }
 
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @Deprecated
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    @Deprecated
-    public int getUserId() {
-        return userId;
     }
 }

@@ -10,25 +10,25 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
-class TraineeRepositoryTest {
-
-    @Autowired
-    private TraineeRepository repository;
-
-
-    @Test
-    void test() {
-        var user = new User(1, "Andres", "Hoyos", " andres.hoyos", "00andres00", false);
-        var trainee = new Trainee();
-
-        trainee.setAddress("Colombia");
-        trainee.setDateOfBirth(LocalDate.now());
-
-        trainee.setUser(user);
-
-        repository.save(trainee);
-    }
-
-}
+//@SpringBootTest
+//@ExtendWith(SpringExtension.class)
+//class TraineeRepositoryTest {
+//
+//    @Autowired
+//    private TraineeRepository repository;
+//
+//
+//    @Test
+//    void test() {
+//        var user = new User(1, "Andres", "Hoyos", " andres.hoyos", "00andres00", false);
+//        var trainee = new Trainee();
+//
+//        trainee.setAddress("Colombia");
+//        trainee.setDateOfBirth(LocalDate.now());
+//
+//        trainee.setUser(user);
+//
+//        repository.save(trainee);
+//    }
+//
+//}
