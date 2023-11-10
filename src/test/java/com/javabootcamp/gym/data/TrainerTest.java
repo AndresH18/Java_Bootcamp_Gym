@@ -1,9 +1,10 @@
-package com.javabootcamp.gym.data.model;
+package com.javabootcamp.gym.data;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static com.javabootcamp.gym.data.IDataSource.MemoryModels.*;
 
 class TrainerTest {
     @Test

@@ -1,7 +1,6 @@
 package com.javabootcamp.gym.data.dao;
 
 import com.javabootcamp.gym.data.IDataSource;
-import com.javabootcamp.gym.data.model.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.function.Predicate;
 
+import static com.javabootcamp.gym.data.IDataSource.MemoryModels.User;
+
 /**
  * The UserDao class provides data access operations for User entities.
  * It allows you to perform CRUD (Create, Retrieve, Update, Delete) operations on User objects
  * in the data source.
  *
- * @see com.javabootcamp.gym.data.dao.IDao
+ * @see IDao
  * @see User
  */
 @Repository

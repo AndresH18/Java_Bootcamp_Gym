@@ -1,6 +1,6 @@
 package com.javabootcamp.gym.data.dao;
 
-import com.javabootcamp.gym.data.model.IModel;
+import com.javabootcamp.gym.data.IDataSource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Repository;
@@ -14,7 +14,7 @@ import java.util.function.Predicate;
  * @param <T> The type of entity this DAO is responsible for.
  */
 @Repository
-public interface IDao<T extends IModel> {
+public interface IDao<T extends IDataSource.MemoryModels.IModel> {
     /**
      * Creates a new entity in the data source.
      *

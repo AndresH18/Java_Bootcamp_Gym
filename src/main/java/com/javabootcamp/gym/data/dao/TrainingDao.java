@@ -1,18 +1,19 @@
 package com.javabootcamp.gym.data.dao;
 
 import com.javabootcamp.gym.data.IDataSource;
-import com.javabootcamp.gym.data.model.Training;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import static com.javabootcamp.gym.data.IDataSource.MemoryModels.Training;
 
 /**
  * The TrainingDao class provides data access operations for Training entities.
  * It allows you to perform CRUD (Create, Retrieve, Update, Delete) operations on Training objects
  * in the data source.
  *
- * @see com.javabootcamp.gym.data.dao.IDao
+ * @see IDao
  */
 @Repository
 public class TrainingDao implements IDao<Training> {

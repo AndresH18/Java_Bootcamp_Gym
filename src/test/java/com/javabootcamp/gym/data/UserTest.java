@@ -1,9 +1,10 @@
-package com.javabootcamp.gym.data.model;
+package com.javabootcamp.gym.data;
 
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import static com.javabootcamp.gym.data.IDataSource.MemoryModels.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
@@ -67,7 +68,6 @@ class UserTest {
         assertNotEquals("andres.hoyos", user.getUsername());
         assertNotEquals("some_password", user.getPassword());
         assertNotEquals(true, user.isActive());
-
 
 
         assertEquals(2, user.getId());
