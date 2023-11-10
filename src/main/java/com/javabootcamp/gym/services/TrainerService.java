@@ -1,9 +1,12 @@
 package com.javabootcamp.gym.services;
 
-import com.javabootcamp.gym.data.dao.TrainerDao;
-import com.javabootcamp.gym.data.dao.UserDao;
 import com.javabootcamp.gym.data.model.Trainer;
 import com.javabootcamp.gym.data.model.User;
+import com.javabootcamp.gym.data.repository.TrainerRepository;
+import com.javabootcamp.gym.data.repository.TrainingTypeRepository;
+import com.javabootcamp.gym.data.repository.UserRepository;
+import com.javabootcamp.gym.services.helper.ServiceHelper;
+import com.javabootcamp.gym.services.helper.UserHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -11,18 +14,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 public class TrainerService {
     private final Logger logger = LoggerFactory.getLogger(TrainerService.class);
-    private final TrainerDao trainerDao;
-    private final UserDao userDao;
+    private final TrainerRepository trainerRepository;
+    private final UserRepository userRepository;
+    private final TrainingTypeRepository trainingTypeRepository;
 
     @Autowired
-    public TrainerService(@NotNull TrainerDao trainerDao, @NotNull UserDao userDao) {
-        this.trainerDao = trainerDao;
-        this.userDao = userDao;
+    public TrainerService(@NotNull TrainerRepository trainerRepository, @NotNull UserRepository userRepository, TrainingTypeRepository trainingTypeRepository) {
+        this.trainerRepository = trainerRepository;
+        this.userRepository = userRepository;
+        this.trainingTypeRepository = trainingTypeRepository;
     }
 
     /**
@@ -42,15 +45,23 @@ public class TrainerService {
             return null;
         }
 
-        if (!userDao.exists(userId)) {
+        var user = userRepository.findById(userId);
+
+        if (user.isEmpty()) {
             logger.trace("create: user ({}) not found", userId);
             return null;
         }
 
+        var trainingType = trainingTypeRepository.findById(specializationId);
+        if (trainingType.isEmpty()) {
+            logger.trace("create: training type ({}) not found", specializationId);
+            return null;
+        }
         logger.info("Creating trainer");
-        var trainer = new Trainer(userId, specializationId);
 
-        return trainerDao.create(trainer);
+        var trainer = new Trainer(trainingType.get(), user.get());
+
+        return trainerRepository.save(trainer);
     }
 
     /**
@@ -67,41 +78,27 @@ public class TrainerService {
     @Nullable
     public Trainer create(@NotNull String firstName, @NotNull String lastName, int specializationId) {
         logger.trace("create: firstName='{}', lastName='{}', specializationId={}", firstName, lastName, specializationId);
-        var user = new User(firstName, lastName);
-        var username = firstName.split(" ")[0].toLowerCase() + "."
-                + lastName.split(" ")[0].toLowerCase();
-        logger.trace("create: username prefix '{}'", username);
 
-        var count = userDao.count(u -> u.getUsername().matches(username + "\\d*"));
-        logger.trace("create: username count: {}", count);
+        if (specializationId <= 0)
+            return null;
 
-        user.setUsername(username + count);
-        user.setPassword(UUID.randomUUID().toString().replace("-", "").substring(0, 10));
+        var specialization = trainingTypeRepository.findById(specializationId);
+        if (specialization.isEmpty())
+            return null;
 
-        logger.trace("create: username='{}', password='{}'", user.getUsername(), user.getPassword());
+        var user = UserHelper.createUser(firstName, lastName, userRepository, logger);
 
-        user = userDao.create(user);
-        logger.info("create: created user");
-
-        return trainerDao.create(new Trainer(user.getId(), specializationId));
+        return trainerRepository.save(new Trainer(specialization.get(), user));
     }
 
     @Nullable
     public Trainer getById(int id) {
         logger.trace("getById: id={}", id);
-        if (id <= 0) return null;
 
-        logger.info("Retrieving training");
-
-        return trainerDao.getById(id);
+        return ServiceHelper.findById(id, trainerRepository);
     }
 
     boolean update(@NotNull Trainer trainer) {
-        logger.trace("update: updating user id={}", trainer.getId());
-        if (trainer.getId() <= 0) {
-            logger.trace("update: invalid id");
-            return false;
-        }
-        return trainerDao.update(trainer);
+        return ServiceHelper.update(trainer, trainerRepository);
     }
 }

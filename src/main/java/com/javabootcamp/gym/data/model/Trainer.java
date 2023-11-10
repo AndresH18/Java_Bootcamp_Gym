@@ -1,38 +1,50 @@
 package com.javabootcamp.gym.data.model;
 
-public class Trainer implements IModel {
+import jakarta.persistence.*;
+
+import java.util.Set;
+
+@Entity
+@Table(name = "Trainers")
+public class Trainer implements IModel, ICopy<Trainer> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int userId;
 
-    // Training type id
-    private int specializationId;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Trainer(int id, int userId, int specializationId) {
+    @ManyToOne
+    @JoinColumn(name = "specialization_id")
+    private TrainingType specialization;
+
+    @OneToMany(mappedBy = "trainer")
+    private Set<Training> trainings;
+
+    public Trainer(int id, TrainingType specialization, User user) {
+        this(specialization, user);
         this.id = id;
-        this.userId = userId;
-        this.specializationId = specializationId;
     }
 
-    public Trainer(int userId, int specializationId) {
-        this.userId = userId;
-        this.specializationId = specializationId;
+    public Trainer(TrainingType specialization, User user) {
+        this.user = user;
+        this.specialization = specialization;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Trainer trainer = (Trainer) o;
-
-        return id == trainer.id;
+    public Trainer() {
     }
 
     @Override
-    public int hashCode() {
-        return id;
+    public Trainer copyFrom(Trainer trainer) {
+        this.specialization = trainer.specialization;
+        // copy other fields here
+        return this;
     }
 
+    // TODO: equals(), hashcode()
+
+    @Override
     public int getId() {
         return id;
     }
@@ -42,20 +54,19 @@ public class Trainer implements IModel {
         this.id = id;
     }
 
-    public int getSpecializationId() {
-        return specializationId;
+    public User getUser() {
+        return user;
     }
 
-    public void setSpecializationId(int specializationId) {
-        this.specializationId = specializationId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getUserId() {
-        return userId;
+    public TrainingType getSpecialization() {
+        return specialization;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setSpecialization(TrainingType specialization) {
+        this.specialization = specialization;
     }
-
 }

@@ -1,43 +1,58 @@
 package com.javabootcamp.gym.data.model;
 
+import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.util.Set;
 
-public class Trainee implements IModel {
+@Entity
+@Table(name = "Trainees")
+public class Trainee implements IModel, ICopy<Trainee> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int userId;
+
     @NotNull
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+
+    @NotNull
     private String address;
 
-    public Trainee(int id, int userId, @NotNull LocalDate dateOfBirth, String address) {
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "trainee")
+    private Set<Training> trainings;
+
+    public Trainee() {
+    }
+
+    public Trainee(int id, @NotNull LocalDate dateOfBirth, @NotNull String address) {
         this.id = id;
-        this.userId = userId;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
     }
 
-    public Trainee(int userId, @NotNull LocalDate dateOfBirth, String address) {
-        this.userId = userId;
+    public Trainee(@NotNull LocalDate dateOfBirth, @NotNull String address, User user) {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
+        this.user = user;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Trainee copyFrom(Trainee trainee) {
+        this.address = trainee.address;
+        this.dateOfBirth = trainee.dateOfBirth;
+        // copy other fields here
 
-        Trainee trainee = (Trainee) o;
-
-        return id == trainee.id;
+        return this;
     }
 
-    @Override
-    public int hashCode() {
-        return id;
-    }
+    // TODO: equals(), hashcode()
 
     public int getId() {
         return id;
@@ -48,11 +63,6 @@ public class Trainee implements IModel {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-
     public @NotNull LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
@@ -61,16 +71,19 @@ public class Trainee implements IModel {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getAddress() {
+    public @NotNull String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(@NotNull String address) {
         this.address = address;
     }
 
-    public Trainee setUserId(int userId) {
-        this.userId = userId;
-        return this;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

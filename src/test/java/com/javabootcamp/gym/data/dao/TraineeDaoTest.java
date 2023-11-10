@@ -1,7 +1,6 @@
 package com.javabootcamp.gym.data.dao;
 
 import com.javabootcamp.gym.data.IDataSource;
-import com.javabootcamp.gym.data.model.Trainee;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 
+import static com.javabootcamp.gym.data.IDataSource.MemoryModels.Trainee;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

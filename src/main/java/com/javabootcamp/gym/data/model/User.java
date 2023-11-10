@@ -1,18 +1,33 @@
 package com.javabootcamp.gym.data.model;
 
+import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
+@Entity
+@Table(name = "Users")
 public class User implements IModel {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @NotNull
+    @Column(name = "first_name")
     private String firstName;
     @NotNull
+    @Column(name = "last_name")
     private String lastName;
     @NotNull
     private String username = "";
     @NotNull
     private String password = "";
+    @Column(name = "is_active")
     private boolean isActive;
+
+    @OneToOne(mappedBy = "user"/*, cascade = CascadeType.REMOVE*/)
+    private Trainee trainee;
+
+    @OneToOne(mappedBy = "user"/*, cascade = CascadeType.REMOVE*/)
+    private Trainer trainer;
 
     public User(int id, @NotNull String firstName, @NotNull String lastName, @NotNull String username, @NotNull String password, boolean isActive) {
         this.id = id;
@@ -28,20 +43,16 @@ public class User implements IModel {
         this.lastName = lastName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        return id == user.id;
+    public User(@NotNull String firstName, @NotNull String lastName, @NotNull String username, @NotNull String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
     }
 
-    @Override
-    public int hashCode() {
-        return id;
+    public User() {
     }
+    // TODO: equals(), hashcode()
 
     public int getId() {
         return id;
@@ -90,5 +101,14 @@ public class User implements IModel {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public Trainee getTrainee() {
+        return trainee;
+    }
+
+    public User setTrainee(Trainee trainee) {
+        this.trainee = trainee;
+        return this;
     }
 }

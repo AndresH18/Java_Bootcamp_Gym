@@ -1,87 +1,45 @@
 package com.javabootcamp.gym.data.model;
 
+import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "Trainings")
 public class Training implements IModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int traineeId;
-    private int trainerId;
-    private int trainingTypeId;
+    private int duration;
     @NotNull
     private String name;
     @NotNull
     private LocalDate date;
-    private int duration;
 
-    public Training(int id, int traineeId, int trainerId, int trainingTypeId, @NotNull String name, @NotNull LocalDate date, int duration) {
-        this.id = id;
-        this.traineeId = traineeId;
-        this.trainerId = trainerId;
-        this.trainingTypeId = trainingTypeId;
+    @ManyToOne
+    @JoinColumn(name = "training_type_id")
+    private TrainingType trainingType;
+    @ManyToOne
+    @JoinColumn(name = "trainee_id")
+    private Trainee trainee;
+    @ManyToOne
+    @JoinColumn(name = "trainer_id")
+    private Trainer trainer;
+
+    public Training(Trainer trainer, Trainee trainee, TrainingType trainingType, @NotNull String name, int duration, @NotNull LocalDate date) {
+        this.duration = duration;
         this.name = name;
         this.date = date;
-        this.duration = duration;
+        this.trainingType = trainingType;
+        this.trainee = trainee;
+        this.trainer = trainer;
     }
 
-    public Training(int traineeId, int trainerId, int trainingTypeId, @NotNull String name, @NotNull LocalDate date, int duration) {
-        this.traineeId = traineeId;
-        this.trainerId = trainerId;
-        this.trainingTypeId = trainingTypeId;
-        this.name = name;
-        this.date = date;
-        this.duration = duration;
+    public Training() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Training training = (Training) o;
-
-        return id == training.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return id;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getTraineeId() {
-        return traineeId;
-    }
-
-    public void setTraineeId(int traineeId) {
-        this.traineeId = traineeId;
-    }
-
-    public int getTrainerId() {
-        return trainerId;
-    }
-
-    public void setTrainerId(int trainerId) {
-        this.trainerId = trainerId;
-    }
-
-    public int getTrainingTypeId() {
-        return trainingTypeId;
-    }
-
-    public void setTrainingTypeId(int trainingTypeId) {
-        this.trainingTypeId = trainingTypeId;
-    }
+    // TODO: equals(), hashcode()
 
     @NotNull
     public String getName() {
@@ -107,5 +65,15 @@ public class Training implements IModel {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 }
