@@ -12,8 +12,8 @@ Spring based module, which handles gyn CRM system
         User ||--o| Trainer: ""
         Trainee ||--o{ Training: ""
         Trainer ||--o{ Training: ""
-        TT ||--o{ Trainer: ""
-        TT ||--o{ Training: ""
+        "Training Type" ||--o{ Trainer: ""
+        "Training Type" ||--o{ Training: ""
     
         User {
             int id PK
@@ -47,7 +47,7 @@ Spring based module, which handles gyn CRM system
             int trainingDuration
         }
     
-        TT["Training Type"] {
+        "Training Type" {
             int id PK
             String name
         }
