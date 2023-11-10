@@ -27,6 +27,14 @@ public class Training implements IModel {
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
 
+    public Training(Trainer trainer, Trainee trainee, TrainingType trainingType, @NotNull String name, int duration, @NotNull LocalDate date) {
+        this.duration = duration;
+        this.name = name;
+        this.date = date;
+        this.trainingType = trainingType;
+        this.trainee = trainee;
+        this.trainer = trainer;
+    }
 
     public Training() {
     }

@@ -47,7 +47,7 @@ public class Trainee implements IModel, ICopy<Trainee> {
     public Trainee copyFrom(Trainee trainee) {
         this.address = trainee.address;
         this.dateOfBirth = trainee.dateOfBirth;
-        // other properties?
+        // copy other fields here
 
         return this;
     }

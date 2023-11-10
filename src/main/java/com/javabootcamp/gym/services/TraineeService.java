@@ -4,6 +4,7 @@ import com.javabootcamp.gym.data.model.Trainee;
 import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.TraineeRepository;
 import com.javabootcamp.gym.data.repository.UserRepository;
+import com.javabootcamp.gym.services.helper.ServiceHelper;
 import com.javabootcamp.gym.services.helper.UserHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -39,7 +40,7 @@ public class TraineeService {
     @Nullable
     public Trainee create(int userId, @NotNull LocalDate dateOfBirth, @NotNull String address) {
         logger.trace("create: userId={}, dateOfBirth={}, address='{}'", userId, dateOfBirth, address);
-        if (isInvalidDate(dateOfBirth)) {
+        if (!ServiceHelper.isValidDate(dateOfBirth)) {
             logger.info("Invalid date");
             return null;
         }
@@ -72,20 +73,9 @@ public class TraineeService {
     public Trainee create(@NotNull String firstName, @NotNull String lastName, @NotNull LocalDate dateOfBirth, @NotNull String address) {
         logger.trace("create: firstName='{}', lastName={}, dateOfBirth={}, address='{}'", firstName, lastName, dateOfBirth, address);
 
-        if (isInvalidDate(dateOfBirth)) return null;
+        if (!ServiceHelper.isValidDate(dateOfBirth)) return null;
 
-        var username = UserHelper.createUsernamePrefix(firstName, lastName);
-        logger.trace("create: username prefix '{}'", username);
-
-        var count = userRepository.countUserByUsernameStartingWith(username);
-        logger.trace("create: username count: {}", count);
-
-        var user = UserHelper.createUser(firstName, lastName, username, count);
-
-        logger.trace("create: username='{}', password='{}'", user.getUsername(), user.getPassword());
-
-        user = userRepository.save(user);
-        logger.info("create: created user");
+        var user = UserHelper.createUser(firstName, lastName, userRepository, logger);
 
         return traineeRepository.save(new Trainee(user.getId(), dateOfBirth, address));
     }
@@ -93,29 +83,12 @@ public class TraineeService {
     @Nullable
     public Trainee getById(int id) {
         logger.trace("getById: id={}", id);
-        if (id <= 0) return null;
 
-        logger.info("Retrieving Trainee");
-
-        var user = traineeRepository.findById(id);
-        return user.orElse(null);
+        return ServiceHelper.findById(id, traineeRepository);
     }
 
     public boolean update(@NotNull Trainee trainee) {
-        logger.trace("update: updating user id={}", trainee.getId());
-        if (trainee.getId() <= 0) {
-            logger.trace("update: invalid id");
-            return false;
-        }
-
-        var optional = traineeRepository.findById(trainee.getId());
-        if (optional.isEmpty())
-            return false;
-
-        trainee = optional.get().copyFrom(trainee);
-        trainee = traineeRepository.save(trainee);
-
-        return true;
+        return ServiceHelper.update(trainee, traineeRepository);
     }
 
     public boolean delete(int id) {
@@ -123,27 +96,9 @@ public class TraineeService {
         if (id <= 0)
             return false;
 
-//        var optional = traineeRepository.findById(id);
-//        if (optional.isEmpty())
-//            return false;
-//
-//        traineeRepository.delete(optional.get());
-
         traineeRepository.deleteById(id);
         return true;
     }
 
-    /**
-     * Checks if a date is valid.
-     *
-     * @param date The date to compare
-     * @return true if the date is valid.
-     */
-    private static boolean isValidDate(LocalDate date) {
-        return LocalDate.now().isAfter(date);
-    }
 
-    private static boolean isInvalidDate(LocalDate date) {
-        return !isValidDate(date);
-    }
 }

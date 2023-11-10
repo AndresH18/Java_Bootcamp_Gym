@@ -2,12 +2,11 @@ package com.javabootcamp.gym.data.model;
 
 import jakarta.persistence.*;
 
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "Trainers")
-public class Trainer implements IModel {
+public class Trainer implements IModel, ICopy<Trainer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -34,6 +33,13 @@ public class Trainer implements IModel {
     }
 
     public Trainer() {
+    }
+
+    @Override
+    public Trainer copyFrom(Trainer trainer) {
+        this.specialization = trainer.specialization;
+        // copy other fields here
+        return this;
     }
 
     // TODO: equals(), hashcode()
