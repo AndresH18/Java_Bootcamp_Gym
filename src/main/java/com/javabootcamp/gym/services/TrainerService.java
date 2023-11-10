@@ -4,9 +4,8 @@ import com.javabootcamp.gym.data.model.Trainer;
 import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.TrainerRepository;
 import com.javabootcamp.gym.data.repository.TrainingTypeRepository;
-import com.javabootcamp.gym.data.repository.UserRepository;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
-import com.javabootcamp.gym.services.helper.UserHelper;
+import com.javabootcamp.gym.services.user.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -18,13 +17,13 @@ import org.springframework.stereotype.Service;
 public class TrainerService {
     private final Logger logger = LoggerFactory.getLogger(TrainerService.class);
     private final TrainerRepository trainerRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final TrainingTypeRepository trainingTypeRepository;
 
     @Autowired
-    public TrainerService(@NotNull TrainerRepository trainerRepository, @NotNull UserRepository userRepository, TrainingTypeRepository trainingTypeRepository) {
+    public TrainerService(@NotNull TrainerRepository trainerRepository, @NotNull UserService userService, TrainingTypeRepository trainingTypeRepository) {
         this.trainerRepository = trainerRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.trainingTypeRepository = trainingTypeRepository;
     }
 
@@ -45,9 +44,9 @@ public class TrainerService {
             return null;
         }
 
-        var user = userRepository.findById(userId);
+        var user = userService.get(userId);
 
-        if (user.isEmpty()) {
+        if (user == null) {
             logger.trace("create: user ({}) not found", userId);
             return null;
         }
@@ -59,7 +58,7 @@ public class TrainerService {
         }
         logger.info("Creating trainer");
 
-        var trainer = new Trainer(trainingType.get(), user.get());
+        var trainer = new Trainer(trainingType.get(), user);
 
         return trainerRepository.save(trainer);
     }
@@ -86,7 +85,7 @@ public class TrainerService {
         if (specialization.isEmpty())
             return null;
 
-        var user = UserHelper.createUser(firstName, lastName, userRepository, logger);
+        var user = userService.createUser(firstName, lastName);
 
         return trainerRepository.save(new Trainer(specialization.get(), user));
     }

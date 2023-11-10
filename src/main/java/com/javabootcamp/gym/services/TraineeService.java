@@ -3,9 +3,8 @@ package com.javabootcamp.gym.services;
 import com.javabootcamp.gym.data.model.Trainee;
 import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.TraineeRepository;
-import com.javabootcamp.gym.data.repository.UserRepository;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
-import com.javabootcamp.gym.services.helper.UserHelper;
+import com.javabootcamp.gym.services.user.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -19,12 +18,12 @@ import java.time.LocalDate;
 public class TraineeService {
     private final Logger logger = LoggerFactory.getLogger(TraineeService.class);
     private final TraineeRepository traineeRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public TraineeService(@NotNull TraineeRepository traineeRepository, @NotNull UserRepository userRepository) {
+    public TraineeService(@NotNull TraineeRepository traineeRepository, @NotNull UserService userService) {
         this.traineeRepository = traineeRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     /**
@@ -45,15 +44,15 @@ public class TraineeService {
             return null;
         }
 
-        var user = userRepository.findById(userId);
+        var user = userService.get(userId);
 
-        if (user.isEmpty()) {
+        if (user == null) {
             logger.trace("create: user ({}) not found", userId);
             return null;
         }
         logger.info("Creating trainer");
 
-        var trainee = new Trainee(dateOfBirth, address, user.get());
+        var trainee = new Trainee(dateOfBirth, address, user);
 
         return traineeRepository.save(trainee);
     }
@@ -75,9 +74,9 @@ public class TraineeService {
 
         if (!ServiceHelper.isValidDate(dateOfBirth)) return null;
 
-        var user = UserHelper.createUser(firstName, lastName, userRepository, logger);
+        var user = userService.createUser(firstName, lastName);
 
-        return traineeRepository.save(new Trainee(user.getId(), dateOfBirth, address));
+        return traineeRepository.save(new Trainee(dateOfBirth, address, user));
     }
 
     @Nullable
