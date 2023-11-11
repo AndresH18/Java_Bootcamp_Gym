@@ -1,13 +1,18 @@
 package com.javabootcamp.gym.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
+
 @Entity
-@Table(name = "Trainees")
+@Table(name = "Trainees", schema = "dbo")
 public class Trainee implements IModel, ICopy<Trainee> {
 
     @Id
@@ -21,12 +26,21 @@ public class Trainee implements IModel, ICopy<Trainee> {
     @NotNull
     private String address;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @JsonManagedReference
     private User user;
 
-    @OneToMany(mappedBy = "trainee")
+    @OneToMany(mappedBy = "trainee", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private Set<Training> trainings;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "TrainerTrainee",
+            joinColumns = @JoinColumn(name = "trainee_id"),
+            inverseJoinColumns = @JoinColumn(name = "trainer_id"))
+    @JsonIgnoreProperties("trainees")
+    private List<Trainer> trainers;
 
     public Trainee() {
     }
@@ -85,5 +99,21 @@ public class Trainee implements IModel, ICopy<Trainee> {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Training> getTrainings() {
+        return trainings;
+    }
+
+    public void setTrainings(Set<Training> trainings) {
+        this.trainings = trainings;
+    }
+
+    public List<Trainer> getTrainers() {
+        return trainers;
+    }
+
+    public void setTrainers(List<Trainer> trainers) {
+        this.trainers = trainers;
     }
 }

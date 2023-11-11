@@ -1,5 +1,6 @@
 package com.javabootcamp.gym.services;
 
+import com.javabootcamp.gym.data.dto.TrainingDto;
 import com.javabootcamp.gym.data.model.Training;
 import com.javabootcamp.gym.data.repository.TraineeRepository;
 import com.javabootcamp.gym.data.repository.TrainerRepository;
@@ -49,6 +50,28 @@ public class TrainingService {
         var training = new Training(trainer, trainee, trainingType, name, duration, date);
 
         return trainingRepository.save(training);
+    }
+
+    @Nullable
+    public Training create(@NotNull TrainingDto dto) {
+        try {
+            var trainee = traineeRepository.findFirstByUserUsername(dto.traineeUsername());
+            var trainer = trainerRepository.findFirstByUserUsername(dto.trainerUsername());
+//            var trainingType = trainingTypeRepository.findFirstByNameIgnoreCase(dto.trainingTypeName());
+
+            if (trainee.isEmpty() || trainer.isEmpty())
+                return null;
+
+            var training = new Training(trainer.get(), trainee.get(), trainer.get().getSpecialization(), dto.trainingName(), dto.duration(), dto.date());
+
+            training = trainingRepository.save(training);
+
+            return training;
+        } catch (Exception e) {
+            logger.error("Error creating training", e);
+            return null;
+        }
+
     }
 
     @Nullable

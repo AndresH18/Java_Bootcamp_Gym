@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService implements IAuthentication, IUserCreator {
     private final UserRepository repository;
@@ -47,7 +49,11 @@ public class UserService implements IAuthentication, IUserCreator {
         }
     }
 
-    boolean changePassword(@NotNull String username, @NotNull String oldPassword, @NotNull String newPassword) {
+    public Optional<User> get(@NotNull String username) {
+        return repository.findByUsernameIgnoreCase(username);
+    }
+
+    public boolean changePassword(@NotNull String username, @NotNull String oldPassword, @NotNull String newPassword) {
         try {
             var o = repository.findByUsernameAndPassword(username, oldPassword);
             if (o.isEmpty())
@@ -70,7 +76,21 @@ public class UserService implements IAuthentication, IUserCreator {
      * Changes the {@link User#isActive} state
      */
     @SuppressWarnings("JavadocReference")
-    boolean setIsActive(int userId, boolean isActive) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+    public Optional<Boolean> setIsActive(@NotNull String username, boolean isActive) {
+        try {
+            var o = repository.findByUsernameIgnoreCase(username);
+            if (o.isEmpty())
+                return Optional.empty();
+
+            var user = o.get();
+            user.setActive(isActive);
+            repository.save(user);
+
+            return Optional.of(true);
+
+        } catch (Exception e) {
+            logger.error("Error setting user active state", e);
+            return Optional.of(false);
+        }
     }
 }
