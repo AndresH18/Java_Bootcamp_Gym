@@ -3,6 +3,7 @@ package com.javabootcamp.gym.services;
 import com.javabootcamp.gym.data.model.Trainee;
 import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.TraineeRepository;
+import com.javabootcamp.gym.data.viewmodels.TraineeRegistrationViewModel;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
 import com.javabootcamp.gym.services.user.UserService;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
 @Service
-public class TraineeService {
+public final class TraineeService {
     private final Logger logger = LoggerFactory.getLogger(TraineeService.class);
     private final TraineeRepository traineeRepository;
     private final UserService userService;
@@ -77,6 +78,11 @@ public class TraineeService {
         var user = userService.createUser(firstName, lastName);
 
         return traineeRepository.save(new Trainee(dateOfBirth, address, user));
+    }
+
+    @Nullable
+    public Trainee create(TraineeRegistrationViewModel vm) {
+        return create(vm.getFirstName(), vm.getLastName(), vm.getDateOfBirth(), vm.getAddress());
     }
 
     @Nullable

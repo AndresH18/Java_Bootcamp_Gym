@@ -63,6 +63,22 @@ public class TrainerService {
         return trainerRepository.save(trainer);
     }
 
+    @Nullable
+    public Trainer create(@NotNull String firstName, @NotNull String lastName, String specializationName) {
+        logger.trace("create: firstName='{}', lastName='{}', specializationName={}", firstName, lastName, specializationName);
+
+        if (specializationName == null)
+            return null;
+
+        var specialization = trainingTypeRepository.findFirstByNameIgnoreCase(specializationName);
+        if (specialization.isEmpty())
+            return null;
+
+        var user = userService.createUser(firstName, lastName);
+
+        return trainerRepository.save(new Trainer(specialization.get(), user));
+    }
+
     /**
      * Create a new User and a Trainer with the User id
      *
