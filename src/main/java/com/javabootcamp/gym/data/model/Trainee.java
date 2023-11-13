@@ -1,13 +1,17 @@
 package com.javabootcamp.gym.data.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+
 @Entity
-@Table(name = "Trainees")
+@Table(name = "Trainees", schema = "dbo")
 public class Trainee implements IModel, ICopy<Trainee> {
 
     @Id
@@ -21,12 +25,19 @@ public class Trainee implements IModel, ICopy<Trainee> {
     @NotNull
     private String address;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @JsonManagedReference
     private User user;
 
-    @OneToMany(mappedBy = "trainee")
-    private Set<Training> trainings;
+//    @OneToMany(mappedBy = "trainee")
+//    private Set<Training> trainings;
+
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name = "TrainerTrainee",
+//            joinColumns = @JoinColumn(name = "trainee_id"),
+//            inverseJoinColumns = @JoinColumn(name = "trainer_id"))
+//    private Set<Trainer> trainers;
 
     public Trainee() {
     }
@@ -86,4 +97,20 @@ public class Trainee implements IModel, ICopy<Trainee> {
     public void setUser(User user) {
         this.user = user;
     }
+
+//    public Set<Training> getTrainings() {
+//        return trainings;
+//    }
+//
+//    public void setTrainings(Set<Training> trainings) {
+//        this.trainings = trainings;
+//    }
+//
+//    public Set<Trainer> getTrainers() {
+//        return trainers;
+//    }
+//
+//    public void setTrainers(Set<Trainer> trainers) {
+//        this.trainers = trainers;
+//    }
 }

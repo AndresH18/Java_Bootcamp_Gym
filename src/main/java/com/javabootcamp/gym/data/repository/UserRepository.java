@@ -20,4 +20,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     boolean existsUserByUsernameAndPassword(@NotNull String username, @NotNull String password);
 
     Optional<User> findByUsernameAndPassword(@NotNull String username, @NotNull String password);
+
+    Optional<User> findByUsernameIgnoreCase(@NotNull String username);
 }

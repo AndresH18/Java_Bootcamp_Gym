@@ -3,10 +3,11 @@ package com.javabootcamp.gym.data.model;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "TrainingTypes")
+@Table(name = "TrainingTypes", schema = "dbo")
 public class TrainingType implements IModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +19,8 @@ public class TrainingType implements IModel {
     @OneToMany(mappedBy = "specialization")
     private Set<Trainer> trainers;
 
-    @OneToMany(mappedBy = "trainingType")
-    private Set<Training> trainings;
+//    @OneToMany(mappedBy = "trainingType")
+//    private Set<Training> trainings;
 
     public TrainingType(int id, @NotNull String name) {
         this.id = id;
@@ -33,7 +34,6 @@ public class TrainingType implements IModel {
     public TrainingType() {
     }
 
-    // TODO: equals(), hashcode()
 
     @Override
     public int getId() {
@@ -52,4 +52,20 @@ public class TrainingType implements IModel {
     public void setName(@NotNull String name) {
         this.name = name;
     }
+
+    public Set<Trainer> getTrainers() {
+        return trainers;
+    }
+
+    public void setTrainers(Set<Trainer> trainers) {
+        this.trainers = trainers;
+    }
+
+//    public Set<Training> getTrainings() {
+//        return trainings;
+//    }
+//
+//    public void setTrainings(Set<Training> trainings) {
+//        this.trainings = trainings;
+//    }
 }

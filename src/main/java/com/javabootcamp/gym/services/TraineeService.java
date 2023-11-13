@@ -6,6 +6,7 @@ import com.javabootcamp.gym.data.repository.TraineeRepository;
 import com.javabootcamp.gym.data.viewmodels.TraineeRegistrationViewModel;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
 import com.javabootcamp.gym.services.user.UserService;
+import jakarta.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -16,7 +17,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
 @Service
-public final class TraineeService {
+@Transactional
+public class TraineeService {
     private final Logger logger = LoggerFactory.getLogger(TraineeService.class);
     private final TraineeRepository traineeRepository;
     private final UserService userService;
@@ -90,6 +92,20 @@ public final class TraineeService {
         logger.trace("getById: id={}", id);
 
         return ServiceHelper.findById(id, traineeRepository);
+    }
+
+
+    @Nullable
+    public Trainee getByUsername(@NotNull String username) {
+        logger.trace("getByUsername: username={}", username);
+        var user = userService.get(username);
+//        if (user.isEmpty())
+//            return null;
+//
+//        var trainee = user.get().getTrainee();
+//
+//        return trainee;
+        return user.map(User::getTrainee).orElse(null);
     }
 
     public boolean update(@NotNull Trainee trainee) {

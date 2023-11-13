@@ -2,7 +2,8 @@ package com.javabootcamp.gym.services.helper;
 
 import com.javabootcamp.gym.data.model.ICopy;
 import com.javabootcamp.gym.data.model.IModel;
-import jakarta.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
@@ -34,13 +35,14 @@ public class ServiceHelper {
         return t.orElse(null);
     }
 
-    public static boolean areAnyNull(Object...objects) {
+    public static boolean areAnyNull(Object... objects) {
         for (Object object : objects) {
             if (object == null)
                 return true;
         }
         return false;
     }
+
     /**
      * Checks if a date is valid.
      *

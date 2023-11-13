@@ -1,10 +1,11 @@
 package com.javabootcamp.gym.data.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "Users", schema = "dbo")
 public class User implements IModel {
 
     @Id
@@ -24,6 +25,7 @@ public class User implements IModel {
     private boolean isActive;
 
     @OneToOne(mappedBy = "user"/*, cascade = CascadeType.REMOVE*/)
+    @JsonBackReference
     private Trainee trainee;
 
     @OneToOne(mappedBy = "user"/*, cascade = CascadeType.REMOVE*/)

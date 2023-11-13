@@ -4,6 +4,7 @@ import com.javabootcamp.gym.data.model.Trainer;
 import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.TrainerRepository;
 import com.javabootcamp.gym.data.repository.TrainingTypeRepository;
+import com.javabootcamp.gym.data.viewmodels.TrainerRegistrationViewModel;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
 import com.javabootcamp.gym.services.user.UserService;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TrainerService {
+public final class TrainerService {
     private final Logger logger = LoggerFactory.getLogger(TrainerService.class);
     private final TrainerRepository trainerRepository;
     private final UserService userService;
@@ -77,6 +78,16 @@ public class TrainerService {
         var user = userService.createUser(firstName, lastName);
 
         return trainerRepository.save(new Trainer(specialization.get(), user));
+    }
+
+    @Nullable
+    public Trainer create(@NotNull TrainerRegistrationViewModel vm) {
+        if (vm.getSpecialization() != null && !vm.getSpecialization().isBlank()) {
+            return create(vm.getFirstName(), vm.getLastName(), vm.getSpecialization());
+        } else {
+            return create(vm.getFirstName(), vm.getLastName(), vm.getSpecializationId());
+        }
+
     }
 
     /**

@@ -1,33 +1,38 @@
 package com.javabootcamp.gym.controller;
 
 import com.javabootcamp.gym.data.model.Trainer;
-import com.javabootcamp.gym.data.viewmodels.AbstractBaseController;
+import com.javabootcamp.gym.data.viewmodels.BaseController;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
+import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
 import com.javabootcamp.gym.data.viewmodels.TrainerRegistrationViewModel;
+import com.javabootcamp.gym.services.TrainerService;
+import com.javabootcamp.gym.services.user.UserService;
 import jakarta.validation.Valid;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/trainer")
-public class TrainerController extends AbstractBaseController implements IRegistrationController<TrainerRegistrationViewModel> {
+public class TrainerController extends BaseController implements IRegistrationController<TrainerRegistrationViewModel> {
 
-    // TODO: inject from constructor
-    private final TrainerService trainerService = new TrainerService();
+    private final TrainerService trainerService;
+
+    public TrainerController(UserService userService, TrainerService trainerService) {
+        super(userService);
+        this.trainerService = trainerService;
+    }
 
     @Override
     @PostMapping
     @SuppressWarnings("DuplicatedCode")
-    public ResponseEntity<?> register(@Valid @RequestBody TrainerRegistrationViewModel trainerRegistrationViewModel, BindingResult binding) {
+    public ResponseEntity<?> register(@Valid @RequestBody TrainerRegistrationViewModel trainerRegistrationViewModel, @NotNull BindingResult binding) {
         var response = new HashMap<String, Object>();
         if (binding.hasErrors()) {
             var errors = handleValidationErrors(binding);
@@ -44,10 +49,26 @@ public class TrainerController extends AbstractBaseController implements IRegist
 
         return ResponseEntity.ok(new LoginViewModel(user.getUsername(), user.getPassword()));
     }
-}
 
-class TrainerService {
-    Trainer create(TrainerRegistrationViewModel vm) {
-        return null;
+    @GetMapping("login")
+    public HttpStatus login(@Valid @RequestBody LoginViewModel loginViewModel, @NotNull BindingResult binding) {
+        if (binding.hasErrors())
+            return UNAUTHORIZED;
+
+        return super.login(loginViewModel);
+    }
+
+    @PutMapping("change-password")
+    public HttpStatus changePassword(@Valid @RequestBody PasswordChangeViewModel viewModel, @NotNull BindingResult binding) {
+        if (binding.hasErrors())
+            return BAD_REQUEST;
+
+        return super.changePassword(viewModel);
     }
 }
+//
+//class TrainerService {
+//    Trainer create(TrainerRegistrationViewModel vm) {
+//        return null;
+//    }
+//}
