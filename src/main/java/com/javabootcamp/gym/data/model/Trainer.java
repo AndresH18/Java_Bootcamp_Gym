@@ -1,7 +1,11 @@
 package com.javabootcamp.gym.data.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,13 +21,15 @@ public class Trainer implements IModel, ICopy<Trainer> {
 
     @ManyToOne
     @JoinColumn(name = "specialization_id")
+    @JsonManagedReference
     private TrainingType specialization;
 
 //    @OneToMany(mappedBy = "trainer")
 //    private Set<Training> trainings;
 
-//    @ManyToMany(mappedBy = "trainers")
-//    private Set<Trainee> trainees;
+    @ManyToMany(mappedBy = "trainers")
+    @JsonIgnoreProperties("trainers")
+    private List<Trainee> trainees;
 
     public Trainer(int id, TrainingType specialization, User user) {
         this(specialization, user);
@@ -81,11 +87,11 @@ public class Trainer implements IModel, ICopy<Trainer> {
 //        this.trainings = trainings;
 //    }
 
-//    public Set<Trainee> getTrainees() {
-//        return trainees;
-//    }
-//
-//    public void setTrainees(Set<Trainee> trainees) {
-//        this.trainees = trainees;
-//    }
+    public List<Trainee> getTrainees() {
+        return trainees;
+    }
+
+    public void setTrainees(List<Trainee> trainees) {
+        this.trainees = trainees;
+    }
 }

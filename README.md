@@ -60,11 +60,11 @@ erDiagram
     - _Trainees_ and _Trainers_
 
 2. **Actions**
-   - _What actions does the participants take?_(could do a process diagram)
+    - _What actions does the participants take?_(could do a process diagram)
 3. **Item Resources**
-   - What are the items actions. (Lists, data,.....)
+    - What are the items actions. (Lists, data,.....)
 4. **Http Verbs**
-   - Convert Item Resources actions into HTTP verbs. _(ej. List Items -> GET Items)_
+    - Convert Item Resources actions into HTTP verbs. _(ej. List Items -> GET Items)_
 
 ## Logging
 
@@ -113,3 +113,193 @@ erDiagram
       TRACE and DEBUG).
     - Rarely used in practice, as it can lead to excessive log output.
 
+## Json
+
+When serializing objects into Jsons, we could come across some situations were we have circular dependencies. For
+example, a _Trainer_ has a list of _Trainees_, and a _Trainee_ has a list of _Trainers_. If we were to try to convert
+this into json we would stay in a loop. To solve this, there are some _annotations_ we can use from
+the `com.fasterxml.jackson.annotation` package:
+
+- `JsonManagedReference` & `JsonBackReference`: These annotations allow us to specify which property is a 'parent'_(
+  managed)_ and which is a 'child'_(back)_. The managed property is converted normally, while the back property is
+  handled specially (most of the time, it is ignored). For example:
+
+  ```java 
+  import java.util.List;
+  
+  class User {
+    String name;
+    
+    List<Phone> phones;
+  }
+  
+  class Phone {
+      String model;
+      
+      User user;
+  }
+  ```
+  In this case, we would be stuck in an infinite loop while serializing a `User`.
+  ```json
+  {
+    "name": "the user name",
+    "phones": [
+      {
+        "model": "first phone model",
+        "user": {
+          "name": "the user name",
+          "phones": [
+            {
+              "model": "first phone model",
+              "user": {
+                "name": "the user name",
+                "phones": [
+                  {
+                    "model": "first phone model",
+                    "user": {
+                      "name": "the user name",
+                      "phones": [
+                        {
+                          "model": "first phone model",
+                          "user": {
+                            "name": "the user name",
+                            "phones": [
+                              {
+                                "model": "first phone model",
+                                "user": {
+                                  "name": "the user name",
+                                  "phones": [
+                                    {
+                                      "model": "first phone model",
+                                      "user": "....................."
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+  ```
+  Instead, we can do this:
+  ```java
+  import java.util.List;
+  
+  class User {
+    String name;
+    @JsonManagedReference
+    List<Phone> phones;
+  }
+  
+  class Phone {
+      String model;
+      @JsonBackReference
+      User user;
+  }
+  ```
+  In this case, when we convert a User into json, it will convert the User, with its phones, but will not convert the
+  phones' user
+  ```json
+  {
+    "name": "the user name",
+    "phones": [
+      {
+        "model": "first phone model"
+      }
+    ]
+  }
+  ```
+  This is very useful in one-to-may and many-to-one or one-to-one relationships
+- `JsonIgnoreProperties`: This is used when we don't want to serialize a specific property, which isn't necessarily on
+  our main object. It is mostly used in many-to-manu relationships, where we want to get an entity A with all related
+  entities B, or an entity B with all its related entities A. For example: A student is in many courses, and a course
+  has many students.
+
+  ```java
+  class Student {
+      String name;
+  
+      List<Course> courses;
+  }
+  
+  class Course {
+      int courseId;
+  
+      List<Student> students;
+  }
+  ```
+
+  If we try to serialize this like before, we will be stuck in an infinite loop. We could use
+  the `JsonManagedReference`/`JsonBackReference` but what if we want to get a course with all its students or a student
+  with all its courses. For this we can do:
+
+  ```java
+  class Student {
+      String name;
+      @JsonIgnoreProperies("students")
+      List<Course> courses;
+  }
+  
+  class Course {
+      int courseId;
+      @JsonIgnoreProperties("courses")
+      List<Student> students;
+  }
+  ```
+  If we want to get a student, then we will not convert `Course::students` into json. If we want to get a course, then
+  we will not convert `Student::courses` into json.
+  ```json
+  {
+    "name": "student name",
+    "courses": [
+      {
+        "courseId": 1
+      },
+      {
+        "courseId": 2
+      },
+      {
+        "courseId": 3
+      }
+    ]
+  }
+  ```
+  ```json
+  {
+    "courseId": 1,
+    "students": [
+      {
+        "name": "student 1"
+      },
+      {
+        "name": "student 3"
+      },
+      {
+        "name": "student 2"
+      }
+    ]
+  }
+  ```
+- `JsonIgnore`: allows us to mark a property so that it is ignored when converting to json. For example, we don't want
+  to show a user's password, so we annotate this field so that it is ignored
+```java
+class User {
+  String name;
+  String password;
+}
+```
+```json
+{
+  "name": "user's name"
+}
+```

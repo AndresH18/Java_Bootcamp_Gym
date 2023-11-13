@@ -1,10 +1,13 @@
 package com.javabootcamp.gym.data.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -33,11 +36,12 @@ public class Trainee implements IModel, ICopy<Trainee> {
 //    @OneToMany(mappedBy = "trainee")
 //    private Set<Training> trainings;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "TrainerTrainee",
-//            joinColumns = @JoinColumn(name = "trainee_id"),
-//            inverseJoinColumns = @JoinColumn(name = "trainer_id"))
-//    private Set<Trainer> trainers;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "TrainerTrainee",
+            joinColumns = @JoinColumn(name = "trainee_id"),
+            inverseJoinColumns = @JoinColumn(name = "trainer_id"))
+    @JsonIgnoreProperties("trainees")
+    private List<Trainer> trainers;
 
     public Trainee() {
     }
@@ -105,12 +109,11 @@ public class Trainee implements IModel, ICopy<Trainee> {
 //    public void setTrainings(Set<Training> trainings) {
 //        this.trainings = trainings;
 //    }
-//
-//    public Set<Trainer> getTrainers() {
-//        return trainers;
-//    }
-//
-//    public void setTrainers(Set<Trainer> trainers) {
-//        this.trainers = trainers;
-//    }
+    public List<Trainer> getTrainers() {
+        return trainers;
+    }
+
+    public void setTrainers(List<Trainer> trainers) {
+        this.trainers = trainers;
+    }
 }

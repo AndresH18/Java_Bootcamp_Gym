@@ -1,8 +1,11 @@
 package com.javabootcamp.gym.data.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,7 +20,8 @@ public class TrainingType implements IModel {
     private String name;
 
     @OneToMany(mappedBy = "specialization")
-    private Set<Trainer> trainers;
+    @JsonBackReference
+    private List<Trainer> trainers;
 
 //    @OneToMany(mappedBy = "trainingType")
 //    private Set<Training> trainings;
@@ -53,11 +57,11 @@ public class TrainingType implements IModel {
         this.name = name;
     }
 
-    public Set<Trainer> getTrainers() {
+    public List<Trainer> getTrainers() {
         return trainers;
     }
 
-    public void setTrainers(Set<Trainer> trainers) {
+    public void setTrainers(List<Trainer> trainers) {
         this.trainers = trainers;
     }
 

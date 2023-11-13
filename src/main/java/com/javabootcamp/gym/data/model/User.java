@@ -1,6 +1,7 @@
 package com.javabootcamp.gym.data.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,10 +19,13 @@ public class User implements IModel {
     @Column(name = "last_name")
     private String lastName;
     @NotNull
+    @JsonIgnore
     private String username = "";
     @NotNull
+    @JsonIgnore
     private String password = "";
     @Column(name = "is_active")
+    @JsonIgnore
     private boolean isActive;
 
     @OneToOne(mappedBy = "user"/*, cascade = CascadeType.REMOVE*/)
@@ -29,6 +33,7 @@ public class User implements IModel {
     private Trainee trainee;
 
     @OneToOne(mappedBy = "user"/*, cascade = CascadeType.REMOVE*/)
+    @JsonBackReference
     private Trainer trainer;
 
     public User(int id, @NotNull String firstName, @NotNull String lastName, @NotNull String username, @NotNull String password, boolean isActive) {
