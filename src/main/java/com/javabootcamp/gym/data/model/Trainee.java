@@ -1,6 +1,5 @@
 package com.javabootcamp.gym.data.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -9,8 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
 @Entity
@@ -33,7 +30,7 @@ public class Trainee implements IModel, ICopy<Trainee> {
     @JsonManagedReference
     private User user;
 
-    @OneToMany(mappedBy = "trainee")
+    @OneToMany(mappedBy = "trainee", cascade = CascadeType.REMOVE)
     private Set<Training> trainings;
 
     @ManyToMany(fetch = FetchType.EAGER)

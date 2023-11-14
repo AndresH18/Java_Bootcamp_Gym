@@ -10,7 +10,7 @@ import java.time.LocalDate;
  * @param periodFrom
  * @param periodTo
  * @param name
- * @param trainingName
+ * @param trainingTypeName
  */
 public record TrainingFilterDto(
         @DateTimeFormat(pattern = "yyyy-M-d")
@@ -22,6 +22,6 @@ public record TrainingFilterDto(
         LocalDate periodTo,
 
         String name,
-        String trainingName
+        String trainingTypeName
 ) {
 }

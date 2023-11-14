@@ -40,8 +40,5 @@ public class TrainingController extends BaseController {
             return ResponseEntity.internalServerError().build();
 
         return ResponseEntity.ok().build();
-
     }
-
-
 }

@@ -75,17 +75,8 @@ public class TrainerController extends BaseController implements IRegistrationCo
     }
 
     @PutMapping("{username}")
-    public ResponseEntity<?> updateTrainee(@Valid @RequestBody UpdateTrainerDto dto, BindingResult binding) {
-        if (binding.hasErrors()) {
-            var errors = handleValidationErrors(binding);
-            return ResponseEntity.badRequest().body(errors);
-        }
-
-        var b = trainerService.update(dto);
-        if (!b)
-            return ResponseEntity.internalServerError().build();
-
-        return getProfile(dto.username());
+    public ResponseEntity<?> updateTrainee(@PathVariable String username, @Valid @RequestBody UpdateTrainerDto dto, BindingResult binding) {
+        return super.update(username, dto, binding, trainerService, this);
     }
 
     @GetMapping("{username}/trainings")

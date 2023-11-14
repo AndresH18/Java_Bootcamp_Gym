@@ -89,17 +89,8 @@ public class TraineeController extends BaseController implements IRegistrationCo
     }
 
     @PutMapping("{username}")
-    public ResponseEntity<?> updateTrainee(@Valid @RequestBody UpdateTraineeDto dto, BindingResult binding) {
-        if (binding.hasErrors()) {
-            var errors = handleValidationErrors(binding);
-            return ResponseEntity.badRequest().body(errors);
-        }
-
-        var b = traineeService.update(dto);
-        if (!b)
-            return ResponseEntity.internalServerError().build();
-
-        return getProfile(dto.username());
+    public ResponseEntity<?> updateTrainee(@PathVariable String username, @Valid @RequestBody UpdateTraineeDto dto, BindingResult binding) {
+        return super.update(username, dto, binding, traineeService, this);
     }
 
     @GetMapping("login")
@@ -113,7 +104,7 @@ public class TraineeController extends BaseController implements IRegistrationCo
     @PutMapping("change-password")
     public HttpStatus changePassword(@Valid @RequestBody PasswordChangeViewModel viewModel, @NotNull BindingResult binding) {
         if (binding.hasErrors())
-            return BAD_REQUEST;
+            return UNAUTHORIZED;
 
         return super.changePassword(viewModel);
     }

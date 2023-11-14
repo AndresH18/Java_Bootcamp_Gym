@@ -1,8 +1,11 @@
 package com.javabootcamp.gym.controller;
 
 import com.javabootcamp.gym.controller.IUpdateController;
+import com.javabootcamp.gym.data.dto.IUsernameDto;
+import com.javabootcamp.gym.data.model.Trainer;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
 import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
+import com.javabootcamp.gym.services.IUpdateService;
 import com.javabootcamp.gym.services.user.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -58,5 +61,22 @@ public abstract class BaseController {
         }
 
         return errors;
+    }
+
+    protected <T, R> ResponseEntity<?> update(String username,
+                                              T dto,
+                                              BindingResult binding,
+                                              IUpdateService<T> updateService,
+                                              IGetProfileController<R> profileController) {
+        if (binding.hasErrors()) {
+            var errors = handleValidationErrors(binding);
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        var b = updateService.update(username, dto);
+        if (!b)
+            return ResponseEntity.internalServerError().build();
+
+        return profileController.getProfile(username);
     }
 }

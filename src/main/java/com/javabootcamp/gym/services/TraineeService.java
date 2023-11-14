@@ -2,12 +2,14 @@ package com.javabootcamp.gym.services;
 
 import com.javabootcamp.gym.data.dto.TraineeTrainingDto;
 import com.javabootcamp.gym.data.dto.TrainingFilterDto;
+import com.javabootcamp.gym.data.dto.UpdateTraineeDto;
 import com.javabootcamp.gym.data.model.Trainee;
 import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.TraineeRepository;
 import com.javabootcamp.gym.data.repository.TrainingRepository;
 import com.javabootcamp.gym.data.viewmodels.TraineeRegistrationViewModel;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
+import com.javabootcamp.gym.services.helper.UpdateServiceHelper;
 import com.javabootcamp.gym.services.user.UserService;
 import jakarta.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +25,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class TraineeService {
+public class TraineeService implements IUpdateService<UpdateTraineeDto> {
     private final Logger logger = LoggerFactory.getLogger(TraineeService.class);
     private final TraineeRepository traineeRepository;
     private final TrainingRepository trainingRepository;
@@ -119,7 +121,7 @@ public class TraineeService {
     @NotNull
     public Optional<List<TraineeTrainingDto>> getTrainings(@NotNull String username, @NotNull TrainingFilterDto dto) {
         try {
-            var r = trainingRepository.getTraineeTrainings(username, dto.periodFrom(), dto.periodTo(), dto.trainingName(), dto.name());
+            var r = trainingRepository.getTraineeTrainings(username, dto.periodFrom(), dto.periodTo(), dto.trainingTypeName(), dto.name());
 
             var l = r.stream()
                     .map(t -> new TraineeTrainingDto(
@@ -138,6 +140,43 @@ public class TraineeService {
 
     public boolean update(@NotNull Trainee trainee) {
         return ServiceHelper.update(trainee, traineeRepository);
+    }
+
+    public boolean update(@NotNull String username, @NotNull UpdateTraineeDto dto) {
+        try {
+
+
+//            var t = traineeRepository.findFirstByUserUsername(dto.username());
+//            if (t.isEmpty())
+//                return false;
+//
+//            var trainee = t.get();
+//            trainee.getUser().setFirstName(dto.firstName());
+//            trainee.getUser().setLastName(dto.lastName());
+//            trainee.getUser().setActive(dto.isActive());
+
+            var trainee =
+                    ServiceHelper.apply(username,
+                            traineeRepository::findFirstByUserUsername,
+                            UpdateServiceHelper.updateUser(dto.firstName(), dto.lastName(), dto.isActive()),
+                            Trainee::getUser);
+
+            if (trainee == null)
+                return false;
+
+            if (dto.dateOfBirth() != null)
+                trainee.setDateOfBirth(dto.dateOfBirth());
+
+            if (dto.address() != null)
+                trainee.setAddress(dto.address());
+
+            traineeRepository.save(trainee);
+
+            return true;
+        } catch (Exception e) {
+            logger.error("Error updating trainee", e);
+            return false;
+        }
     }
 
     public boolean delete(int id) {

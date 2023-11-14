@@ -1,5 +1,6 @@
 package com.javabootcamp.gym.data.viewmodels;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,6 +10,7 @@ public class TraineeRegistrationViewModel extends RegistrationViewModel {
 
     @DateTimeFormat(pattern = "yyyy-M-d")
     @Past(message = "Date must be in the past")
+    @NotNull
     private LocalDate dateOfBirth;
 
     private String address;

@@ -2,13 +2,16 @@ package com.javabootcamp.gym.services;
 
 import com.javabootcamp.gym.data.dto.TrainerTrainingDto;
 import com.javabootcamp.gym.data.dto.TrainingFilterDto;
+import com.javabootcamp.gym.data.dto.UpdateTrainerDto;
 import com.javabootcamp.gym.data.model.Trainer;
+import com.javabootcamp.gym.data.model.TrainingType;
 import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.TrainerRepository;
 import com.javabootcamp.gym.data.repository.TrainingRepository;
 import com.javabootcamp.gym.data.repository.TrainingTypeRepository;
 import com.javabootcamp.gym.data.viewmodels.TrainerRegistrationViewModel;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
+import com.javabootcamp.gym.services.helper.UpdateServiceHelper;
 import com.javabootcamp.gym.services.user.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public final class TrainerService {
+public final class TrainerService implements IUpdateService<UpdateTrainerDto> {
     private final Logger logger = LoggerFactory.getLogger(TrainerService.class);
     private final TrainerRepository trainerRepository;
     private final UserService userService;
@@ -144,7 +147,7 @@ public final class TrainerService {
     @NotNull
     public Optional<List<TrainerTrainingDto>> getTrainings(@NotNull String username, @NotNull TrainingFilterDto dto) {
         try {
-            var r = trainingRepository.getTrainerTrainings(username, dto.periodFrom(), dto.periodTo(), dto.trainingName(), dto.name());
+            var r = trainingRepository.getTrainerTrainings(username, dto.periodFrom(), dto.periodTo(), dto.trainingTypeName(), dto.name());
 
             var l = r.stream()
                     .map(t -> new TrainerTrainingDto(
@@ -159,6 +162,49 @@ public final class TrainerService {
             logger.error("Error getting trainer trainings", e);
             return Optional.empty();
         }
+    }
+
+    public boolean update(@NotNull String username, @NotNull UpdateTrainerDto dto) {
+        try {
+
+//            var t = trainerRepository.findFirstByUserUsername(dto.username());
+//            if (t.isEmpty())
+//                return false;
+//
+//            var trainer = t.get();
+//            trainer.getUser().setFirstName(dto.firstName());
+//            trainer.getUser().setLastName(dto.lastName());
+//            trainer.getUser().setActive(dto.isActive());
+
+            var trainer = ServiceHelper.apply(username,
+                    trainerRepository::findFirstByUserUsername,
+                    UpdateServiceHelper.updateUser(dto.firstName(), dto.lastName(), dto.isActive()),
+                    Trainer::getUser);
+
+            if (trainer == null)
+                return false;
+
+            Optional<TrainingType> trainingType = Optional.empty();
+            if (dto.specialization() != null || dto.specializationId() > 0) {
+                if (dto.specialization() != null) {
+                    trainingType = trainingTypeRepository.findFirstByNameIgnoreCase(dto.specialization());
+                } else {
+                    trainingType = trainingTypeRepository.findById(dto.specializationId());
+                }
+            }
+//        if (trainingType.isPresent())
+//            trainer.setSpecialization(trainingType.get());
+            trainingType.ifPresent(trainer::setSpecialization);
+
+            trainerRepository.save(trainer);
+
+            return true;
+        } catch (Exception e) {
+            logger.error("Error updating trainer", e);
+            return false;
+        }
+
+
     }
 
     boolean update(@NotNull Trainer trainer) {

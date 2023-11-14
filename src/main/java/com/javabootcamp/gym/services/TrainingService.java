@@ -58,7 +58,7 @@ public class TrainingService {
         try {
             var trainee = traineeRepository.findFirstByUserUsername(dto.traineeUsername());
             var trainer = trainerRepository.findFirstByUserUsername(dto.trainerUsername());
-//            var trainingType = trainingTypeRepository.findFirstByNameIgnoreCase(dto.trainingName());
+//            var trainingType = trainingTypeRepository.findFirstByNameIgnoreCase(dto.trainingTypeName());
 
             if (trainee.isEmpty() || trainer.isEmpty())
                 return null;
