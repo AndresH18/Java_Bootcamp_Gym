@@ -1,5 +1,6 @@
 package com.javabootcamp.gym.controller;
 
+import com.javabootcamp.gym.data.dto.TraineeTrainingDto;
 import com.javabootcamp.gym.data.dto.TrainingFilterDto;
 import com.javabootcamp.gym.data.model.Trainee;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
@@ -15,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.HttpStatus.*;
@@ -69,13 +71,15 @@ public class TraineeController extends BaseController implements IRegistrationCo
     }
 
     @GetMapping("{username}/trainers")
-    public void getTrainers(@PathVariable String username, @Valid @ModelAttribute TrainingFilterDto filterDto, BindingResult binding) {
+    public ResponseEntity<List<TraineeTrainingDto>> getTrainers(@PathVariable String username, @Valid @ModelAttribute TrainingFilterDto filterDto, BindingResult binding) {
         if (binding.hasErrors() || username == null) {
             // BAD_REQUEST
-            return;
+            return ResponseEntity.badRequest().build();
         }
-        traineeService.getTrainings(username, filterDto);
+        var o = traineeService.getTrainings(username, filterDto);
 
+
+        return ResponseEntity.of(o);
     }
 
     @PatchMapping("{username}/status")

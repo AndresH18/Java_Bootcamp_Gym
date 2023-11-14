@@ -1,5 +1,6 @@
 package com.javabootcamp.gym.services;
 
+import com.javabootcamp.gym.data.dto.TraineeTrainingDto;
 import com.javabootcamp.gym.data.dto.TrainingFilterDto;
 import com.javabootcamp.gym.data.model.Trainee;
 import com.javabootcamp.gym.data.model.User;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -114,9 +117,23 @@ public class TraineeService {
     }
 
 
-    public void getTrainings(@NotNull String username, @NotNull TrainingFilterDto dto) {
-        var r = trainingRepository.getTraineeTrainings(username, dto.periodFrom(), dto.periodTo(), dto.trainingName(), dto.name());
-        r.size();
+    public Optional<List<TraineeTrainingDto>> getTrainings(@NotNull String username, @NotNull TrainingFilterDto dto) {
+        try {
+            var r = trainingRepository.getTraineeTrainings(username, dto.periodFrom(), dto.periodTo(), dto.trainingName(), dto.name());
+
+            var l = r.stream()
+                    .map(t -> new TraineeTrainingDto(
+                            t.getName(),
+                            t.getDate(),
+                            t.getTrainingType().getName(),
+                            t.getDuration(),
+                            t.getTrainer().getUser().getUsername()));
+
+            return Optional.of(l.toList());
+        } catch (Exception e) {
+            logger.error("Error getting trainee trainings", e);
+            return Optional.empty();
+        }
     }
 
     public boolean update(@NotNull Trainee trainee) {
