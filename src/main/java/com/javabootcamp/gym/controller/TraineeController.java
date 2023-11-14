@@ -70,14 +70,13 @@ public class TraineeController extends BaseController implements IRegistrationCo
         return new ResponseEntity<>(trainee, OK);
     }
 
-    @GetMapping("{username}/trainers")
+    @GetMapping("{username}/trainings")
     public ResponseEntity<List<TraineeTrainingDto>> getTrainers(@PathVariable String username, @Valid @ModelAttribute TrainingFilterDto filterDto, BindingResult binding) {
         if (binding.hasErrors() || username == null) {
             // BAD_REQUEST
             return ResponseEntity.badRequest().build();
         }
         var o = traineeService.getTrainings(username, filterDto);
-
 
         return ResponseEntity.of(o);
     }
@@ -104,12 +103,3 @@ public class TraineeController extends BaseController implements IRegistrationCo
         return super.changePassword(viewModel);
     }
 }
-
-//class TraineeService {
-//    public Trainee create(TraineeRegistrationViewModel vm) {
-//
-//        var t = new Trainee(1, vm.getDateOfBirth(), vm.getAddress());
-//        t.setUser(new User(1, vm.getFirstName(), vm.getLastName(), vm.getFirstName() + "." + vm.getLastName(), "1234567890", true));
-//        return t;
-//    }
-//}

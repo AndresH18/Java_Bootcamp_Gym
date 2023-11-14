@@ -11,14 +11,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TrainingRepository extends JpaRepository<Training, Integer> {
-//    List<Training> getTrainingsByDateBetweenAndTraineeUserUsername(@Nullable LocalDate date, @Nullable LocalDate date2, @Nullable String trainee_user_username);
-
-    List<Training> getTrainingsByDateBetweenAndTrainerUserUsername(@Nullable LocalDate date, @Nullable LocalDate date2, @Nullable String trainer_user_username);
-
-    List<Training> getTrainingsByTraineeUserUsernameAndDateBetweenAndTrainerUserUsername(@NotNull String trainee_user_username,
-                                                                                         @Nullable LocalDate date,
-                                                                                         @Nullable LocalDate date2,
-                                                                                         @Nullable String trainer_user_username);
 
     @Query("""
             select t from Training t
@@ -36,4 +28,21 @@ public interface TrainingRepository extends JpaRepository<Training, Integer> {
                                        @Nullable LocalDate dateTo,
                                        @Nullable String trainingTypeName,
                                        @Nullable String trainerUsername);
+
+    @Query("""
+            select t from Training t
+                join t.trainee tr
+                join t.trainer trn
+                join t.trainingType tt
+            where trn.user.username = :username
+                and (:dateFrom is null or t.date >= :dateFrom)
+                and (:dateTo is null or t.date <= :dateTo)
+                and (:traineeUsername is null or trn.user.username = :traineeUsername)
+                and (:trainingTypeName is null or tt.name = :trainingTypeName)
+            """)
+    List<Training> getTrainerTrainings(@NotNull @Param("username") String username,
+                                       @Nullable LocalDate dateFrom,
+                                       @Nullable LocalDate dateTo,
+                                       @Nullable String trainingTypeName,
+                                       @Nullable String traineeUsername);
 }

@@ -1,8 +1,11 @@
 package com.javabootcamp.gym.services;
 
+import com.javabootcamp.gym.data.dto.TrainerTrainingDto;
+import com.javabootcamp.gym.data.dto.TrainingFilterDto;
 import com.javabootcamp.gym.data.model.Trainer;
 import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.TrainerRepository;
+import com.javabootcamp.gym.data.repository.TrainingRepository;
 import com.javabootcamp.gym.data.repository.TrainingTypeRepository;
 import com.javabootcamp.gym.data.viewmodels.TrainerRegistrationViewModel;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
@@ -14,18 +17,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public final class TrainerService {
     private final Logger logger = LoggerFactory.getLogger(TrainerService.class);
     private final TrainerRepository trainerRepository;
     private final UserService userService;
     private final TrainingTypeRepository trainingTypeRepository;
+    private final TrainingRepository trainingRepository;
 
     @Autowired
-    public TrainerService(@NotNull TrainerRepository trainerRepository, @NotNull UserService userService, TrainingTypeRepository trainingTypeRepository) {
+    public TrainerService(@NotNull TrainerRepository trainerRepository, @NotNull UserService userService, TrainingTypeRepository trainingTypeRepository, TrainingRepository trainingRepository) {
         this.trainerRepository = trainerRepository;
         this.userService = userService;
         this.trainingTypeRepository = trainingTypeRepository;
+        this.trainingRepository = trainingRepository;
     }
 
     /**
@@ -131,6 +139,26 @@ public final class TrainerService {
         var user = userService.get(username);
 
         return user.map(User::getTrainer).orElse(null);
+    }
+
+    @NotNull
+    public Optional<List<TrainerTrainingDto>> getTrainings(@NotNull String username, @NotNull TrainingFilterDto dto) {
+        try {
+            var r = trainingRepository.getTrainerTrainings(username, dto.periodFrom(), dto.periodTo(), dto.trainingName(), dto.name());
+
+            var l = r.stream()
+                    .map(t -> new TrainerTrainingDto(
+                            t.getName(),
+                            t.getDate(),
+                            t.getTrainingType().getName(),
+                            t.getDuration(),
+                            t.getTrainee().getUser().getUsername()));
+
+            return Optional.of(l.toList());
+        } catch (Exception e) {
+            logger.error("Error getting trainer trainings", e);
+            return Optional.empty();
+        }
     }
 
     boolean update(@NotNull Trainer trainer) {

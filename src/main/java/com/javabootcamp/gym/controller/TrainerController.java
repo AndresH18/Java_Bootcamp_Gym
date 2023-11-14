@@ -1,5 +1,7 @@
 package com.javabootcamp.gym.controller;
 
+import com.javabootcamp.gym.data.dto.TrainerTrainingDto;
+import com.javabootcamp.gym.data.dto.TrainingFilterDto;
 import com.javabootcamp.gym.data.model.Trainer;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
 import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
@@ -14,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -69,6 +72,17 @@ public class TrainerController extends BaseController implements IRegistrationCo
         return super.setIsActiveStatus(username, isActive);
     }
 
+    @GetMapping("{username}/trainings")
+    public ResponseEntity<List<TrainerTrainingDto>> getTrainers(@PathVariable String username, @Valid @ModelAttribute TrainingFilterDto filterDto, BindingResult binding) {
+        if (binding.hasErrors() || username == null) {
+            // BAD_REQUEST
+            return ResponseEntity.badRequest().build();
+        }
+        var o = trainerService.getTrainings(username, filterDto);
+
+        return ResponseEntity.of(o);
+    }
+
     @GetMapping("login")
     public HttpStatus login(@Valid @RequestBody LoginViewModel loginViewModel, @NotNull BindingResult binding) {
         if (binding.hasErrors())
@@ -85,9 +99,3 @@ public class TrainerController extends BaseController implements IRegistrationCo
         return super.changePassword(viewModel);
     }
 }
-//
-//class TrainerService {
-//    Trainer create(TrainerRegistrationViewModel vm) {
-//        return null;
-//    }
-//}

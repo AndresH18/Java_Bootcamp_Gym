@@ -116,7 +116,7 @@ public class TraineeService {
         return user.map(User::getTrainee).orElse(null);
     }
 
-
+    @NotNull
     public Optional<List<TraineeTrainingDto>> getTrainings(@NotNull String username, @NotNull TrainingFilterDto dto) {
         try {
             var r = trainingRepository.getTraineeTrainings(username, dto.periodFrom(), dto.periodTo(), dto.trainingName(), dto.name());
