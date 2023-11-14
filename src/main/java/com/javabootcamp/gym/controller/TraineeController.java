@@ -1,8 +1,7 @@
 package com.javabootcamp.gym.controller;
 
+import com.javabootcamp.gym.data.dto.TrainingFilterDto;
 import com.javabootcamp.gym.data.model.Trainee;
-import com.javabootcamp.gym.data.model.User;
-import com.javabootcamp.gym.data.viewmodels.BaseController;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
 import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
 import com.javabootcamp.gym.data.viewmodels.TraineeRegistrationViewModel;
@@ -23,7 +22,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/trainee")
-public class TraineeController extends BaseController implements IRegistrationController<TraineeRegistrationViewModel> {
+public class TraineeController extends BaseController implements IRegistrationController<TraineeRegistrationViewModel>, IGetProfileController<Trainee>, IUpdateController {
 
     private final TraineeService traineeService;
 
@@ -55,7 +54,8 @@ public class TraineeController extends BaseController implements IRegistrationCo
     }
 
     @GetMapping("{username}")
-    public ResponseEntity<?> getTrainee(@PathVariable String username) {
+    @Override
+    public ResponseEntity<Trainee> getProfile(@PathVariable String username) {
         if (username == null)
             return ResponseEntity.badRequest().build();
 
@@ -65,7 +65,23 @@ public class TraineeController extends BaseController implements IRegistrationCo
             return new ResponseEntity<>(NOT_FOUND);
 
 
-        return new ResponseEntity<Trainee>(trainee, OK);
+        return new ResponseEntity<>(trainee, OK);
+    }
+
+    @GetMapping("{username}/trainers")
+    public void getTrainers(@PathVariable String username, @Valid @ModelAttribute TrainingFilterDto filterDto, BindingResult binding) {
+        if (binding.hasErrors() || username == null) {
+            // BAD_REQUEST
+            return;
+        }
+        traineeService.getTrainings(username, filterDto);
+
+    }
+
+    @PatchMapping("{username}/status")
+    @Override
+    public HttpStatus setIsActiveStatus(@NotNull @PathVariable String username, @RequestParam(name = "isActive", defaultValue = "false") boolean isActive) {
+        return super.setIsActiveStatus(username, isActive);
     }
 
     @GetMapping("login")

@@ -1,8 +1,10 @@
 package com.javabootcamp.gym.services;
 
+import com.javabootcamp.gym.data.dto.TrainingFilterDto;
 import com.javabootcamp.gym.data.model.Trainee;
 import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.TraineeRepository;
+import com.javabootcamp.gym.data.repository.TrainingRepository;
 import com.javabootcamp.gym.data.viewmodels.TraineeRegistrationViewModel;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
 import com.javabootcamp.gym.services.user.UserService;
@@ -21,11 +23,14 @@ import java.time.LocalDate;
 public class TraineeService {
     private final Logger logger = LoggerFactory.getLogger(TraineeService.class);
     private final TraineeRepository traineeRepository;
+    private final TrainingRepository trainingRepository;
     private final UserService userService;
 
+
     @Autowired
-    public TraineeService(@NotNull TraineeRepository traineeRepository, @NotNull UserService userService) {
+    public TraineeService(@NotNull TraineeRepository traineeRepository, TrainingRepository trainingRepository, @NotNull UserService userService) {
         this.traineeRepository = traineeRepository;
+        this.trainingRepository = trainingRepository;
         this.userService = userService;
     }
 
@@ -106,6 +111,12 @@ public class TraineeService {
 //
 //        return trainee;
         return user.map(User::getTrainee).orElse(null);
+    }
+
+
+    public void getTrainings(@NotNull String username, @NotNull TrainingFilterDto dto) {
+        var r = trainingRepository.getTraineeTrainings(username, dto.periodFrom(), dto.periodTo(), dto.trainingName(), dto.name());
+        r.size();
     }
 
     public boolean update(@NotNull Trainee trainee) {

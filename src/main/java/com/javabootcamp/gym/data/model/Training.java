@@ -11,23 +11,25 @@ public class Training implements IModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "training_duration")
     private int duration;
     @NotNull
+    @Column(name = "training_name")
     private String name;
     @NotNull
+    @Column(name = "training_date")
     private LocalDate date;
 
-    //    @ManyToOne
-//    @JoinColumn(name = "training_type_id")
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "training_type_id")
     private TrainingType trainingType;
-    //    @ManyToOne
-//    @JoinColumn(name = "trainee_id")
-    @Transient
+
+    @ManyToOne
+    @JoinColumn(name = "trainee_id")
     private Trainee trainee;
-    //    @ManyToOne
-//    @JoinColumn(name = "trainer_id")
-    @Transient
+
+    @ManyToOne
+    @JoinColumn(name = "trainer_id")
     private Trainer trainer;
 
     public Training(Trainer trainer, Trainee trainee, TrainingType trainingType, @NotNull String name, int duration, @NotNull LocalDate date) {
@@ -78,5 +80,29 @@ public class Training implements IModel {
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    public TrainingType getTrainingType() {
+        return trainingType;
+    }
+
+    public void setTrainingType(TrainingType trainingType) {
+        this.trainingType = trainingType;
+    }
+
+    public Trainee getTrainee() {
+        return trainee;
+    }
+
+    public void setTrainee(Trainee trainee) {
+        this.trainee = trainee;
+    }
+
+    public Trainer getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(Trainer trainer) {
+        this.trainer = trainer;
     }
 }

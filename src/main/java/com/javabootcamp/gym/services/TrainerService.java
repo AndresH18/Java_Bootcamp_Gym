@@ -124,6 +124,15 @@ public final class TrainerService {
         return ServiceHelper.findById(id, trainerRepository);
     }
 
+    @Nullable
+    public Trainer getByUsername(@NotNull String username) {
+        logger.trace("getByUsername: username={}", username);
+
+        var user = userService.get(username);
+
+        return user.map(User::getTrainer).orElse(null);
+    }
+
     boolean update(@NotNull Trainer trainer) {
         return ServiceHelper.update(trainer, trainerRepository);
     }

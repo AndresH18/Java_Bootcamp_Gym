@@ -23,8 +23,9 @@ public class TrainingType implements IModel {
     @JsonBackReference
     private List<Trainer> trainers;
 
-//    @OneToMany(mappedBy = "trainingType")
-//    private Set<Training> trainings;
+    @OneToMany(mappedBy = "trainingType")
+    @JsonIgnore
+    private Set<Training> trainings;
 
     public TrainingType(int id, @NotNull String name) {
         this.id = id;
@@ -65,11 +66,11 @@ public class TrainingType implements IModel {
         this.trainers = trainers;
     }
 
-//    public Set<Training> getTrainings() {
-//        return trainings;
-//    }
-//
-//    public void setTrainings(Set<Training> trainings) {
-//        this.trainings = trainings;
-//    }
+    public Set<Training> getTrainings() {
+        return trainings;
+    }
+
+    public void setTrainings(Set<Training> trainings) {
+        this.trainings = trainings;
+    }
 }

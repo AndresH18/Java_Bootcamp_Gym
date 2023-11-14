@@ -1,5 +1,8 @@
-package com.javabootcamp.gym.data.viewmodels;
+package com.javabootcamp.gym.controller;
 
+import com.javabootcamp.gym.controller.IUpdateController;
+import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
+import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
 import com.javabootcamp.gym.services.user.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -33,6 +36,17 @@ public abstract class BaseController {
         return result
                 ? HttpStatus.OK
                 : HttpStatus.BAD_REQUEST;
+    }
+
+    protected HttpStatus setIsActiveStatus(@NotNull String username, boolean isActive) {
+        var r = userService.setIsActive(username, isActive);
+//        if (r.isEmpty())
+//            return HttpStatus.NOT_FOUND;
+//
+//        return r.get() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR;
+
+        return r.map(aBoolean -> aBoolean ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR).orElse(HttpStatus.NOT_FOUND);
+
     }
 
     protected Map<String, String> handleValidationErrors(@NotNull BindingResult bindingResult) {

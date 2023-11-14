@@ -1,7 +1,6 @@
 package com.javabootcamp.gym.controller;
 
 import com.javabootcamp.gym.data.model.Trainer;
-import com.javabootcamp.gym.data.viewmodels.BaseController;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
 import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
 import com.javabootcamp.gym.data.viewmodels.TrainerRegistrationViewModel;
@@ -20,7 +19,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/trainer")
-public class TrainerController extends BaseController implements IRegistrationController<TrainerRegistrationViewModel> {
+public class TrainerController extends BaseController implements IRegistrationController<TrainerRegistrationViewModel>, IGetProfileController<Trainer> {
 
     private final TrainerService trainerService;
 
@@ -48,6 +47,26 @@ public class TrainerController extends BaseController implements IRegistrationCo
         var user = trainer.getUser();
 
         return ResponseEntity.ok(new LoginViewModel(user.getUsername(), user.getPassword()));
+    }
+
+    @Override
+    @GetMapping("{username}")
+    public ResponseEntity<Trainer> getProfile(@PathVariable String username) {
+        if (username == null)
+            return ResponseEntity.badRequest().build();
+
+        var trainer = trainerService.getByUsername(username);
+
+        if (trainer == null)
+            return new ResponseEntity<>(NOT_FOUND);
+
+        return ResponseEntity.ok(trainer);
+    }
+
+    @PatchMapping("{username}/status")
+    @Override
+    public HttpStatus setIsActiveStatus(@NotNull @PathVariable String username, @RequestParam(name = "isActive", defaultValue = "false") boolean isActive) {
+        return super.setIsActiveStatus(username, isActive);
     }
 
     @GetMapping("login")

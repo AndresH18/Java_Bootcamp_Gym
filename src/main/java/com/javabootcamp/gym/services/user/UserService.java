@@ -76,7 +76,21 @@ public class UserService implements IAuthentication, IUserCreator {
      * Changes the {@link User#isActive} state
      */
     @SuppressWarnings("JavadocReference")
-    boolean setIsActive(int userId, boolean isActive) {
-        throw new UnsupportedOperationException("This method is not implemented yet");
+    public Optional<Boolean> setIsActive(@NotNull String username, boolean isActive) {
+        try {
+            var o = repository.findByUsernameIgnoreCase(username);
+            if (o.isEmpty())
+                return Optional.empty();
+
+            var user = o.get();
+            user.setActive(isActive);
+            repository.save(user);
+
+            return Optional.of(true);
+
+        } catch (Exception e) {
+            logger.error("Error setting user active state", e);
+            return Optional.of(false);
+        }
     }
 }

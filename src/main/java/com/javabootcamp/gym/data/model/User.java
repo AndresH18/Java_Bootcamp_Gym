@@ -19,7 +19,6 @@ public class User implements IModel {
     @Column(name = "last_name")
     private String lastName;
     @NotNull
-    @JsonIgnore
     private String username = "";
     @NotNull
     @JsonIgnore
@@ -117,5 +116,13 @@ public class User implements IModel {
     public User setTrainee(Trainee trainee) {
         this.trainee = trainee;
         return this;
+    }
+
+    public Trainer getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(Trainer trainer) {
+        this.trainer = trainer;
     }
 }

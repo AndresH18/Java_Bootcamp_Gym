@@ -24,8 +24,8 @@ public class Trainer implements IModel, ICopy<Trainer> {
     @JsonManagedReference
     private TrainingType specialization;
 
-//    @OneToMany(mappedBy = "trainer")
-//    private Set<Training> trainings;
+    @OneToMany(mappedBy = "trainer")
+    private Set<Training> trainings;
 
     @ManyToMany(mappedBy = "trainers")
     @JsonIgnoreProperties("trainers")
@@ -79,13 +79,13 @@ public class Trainer implements IModel, ICopy<Trainer> {
         this.specialization = specialization;
     }
 
-//    public Set<Training> getTrainings() {
-//        return trainings;
-//    }
-//
-//    public void setTrainings(Set<Training> trainings) {
-//        this.trainings = trainings;
-//    }
+    public Set<Training> getTrainings() {
+        return trainings;
+    }
+
+    public void setTrainings(Set<Training> trainings) {
+        this.trainings = trainings;
+    }
 
     public List<Trainee> getTrainees() {
         return trainees;

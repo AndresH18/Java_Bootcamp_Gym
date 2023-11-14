@@ -33,8 +33,8 @@ public class Trainee implements IModel, ICopy<Trainee> {
     @JsonManagedReference
     private User user;
 
-//    @OneToMany(mappedBy = "trainee")
-//    private Set<Training> trainings;
+    @OneToMany(mappedBy = "trainee")
+    private Set<Training> trainings;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "TrainerTrainee",
@@ -102,13 +102,14 @@ public class Trainee implements IModel, ICopy<Trainee> {
         this.user = user;
     }
 
-//    public Set<Training> getTrainings() {
-//        return trainings;
-//    }
-//
-//    public void setTrainings(Set<Training> trainings) {
-//        this.trainings = trainings;
-//    }
+    public Set<Training> getTrainings() {
+        return trainings;
+    }
+
+    public void setTrainings(Set<Training> trainings) {
+        this.trainings = trainings;
+    }
+
     public List<Trainer> getTrainers() {
         return trainers;
     }
