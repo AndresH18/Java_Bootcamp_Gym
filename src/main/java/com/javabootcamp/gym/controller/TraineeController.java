@@ -2,6 +2,7 @@ package com.javabootcamp.gym.controller;
 
 import com.javabootcamp.gym.data.dto.TraineeTrainingDto;
 import com.javabootcamp.gym.data.dto.TrainingFilterDto;
+import com.javabootcamp.gym.data.dto.UpdateTraineeDto;
 import com.javabootcamp.gym.data.model.Trainee;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
 import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
@@ -85,6 +86,20 @@ public class TraineeController extends BaseController implements IRegistrationCo
     @Override
     public HttpStatus setIsActiveStatus(@NotNull @PathVariable String username, @RequestParam(name = "isActive", defaultValue = "false") boolean isActive) {
         return super.setIsActiveStatus(username, isActive);
+    }
+
+    @PutMapping("{username}")
+    public ResponseEntity<?> updateTrainee(@Valid @RequestBody UpdateTraineeDto dto, BindingResult binding) {
+        if (binding.hasErrors()) {
+            var errors = handleValidationErrors(binding);
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        var b = traineeService.update(dto);
+        if (!b)
+            return ResponseEntity.internalServerError().build();
+
+        return getProfile(dto.username());
     }
 
     @GetMapping("login")
