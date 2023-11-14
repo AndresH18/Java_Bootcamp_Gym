@@ -1,5 +1,6 @@
 package com.javabootcamp.gym.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -31,6 +32,7 @@ public class Trainee implements IModel, ICopy<Trainee> {
     private User user;
 
     @OneToMany(mappedBy = "trainee", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private Set<Training> trainings;
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -39,16 +39,16 @@ public class TrainingTypeService {
 
     @NotNull
     public Optional<List<TrainingType>> getAll(int page, int size) {
-        if (size <= 0)
-            size = 10;
-
-        if (page < 0)
-            page = 0;
-        else
-            page -= 1;
-
-        Pageable pageable = PageRequest.of(page, size);
         try {
+            if (size <= 0)
+                size = 10;
+
+            if (page < 0)
+                page = 0;
+            else
+                page -= 1;
+
+            Pageable pageable = PageRequest.of(page, size);
             var p = repository.findAll(pageable);
 
             var list = p.get().toList();

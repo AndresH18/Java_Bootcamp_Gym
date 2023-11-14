@@ -1,8 +1,6 @@
 package com.javabootcamp.gym.controller;
 
-import com.javabootcamp.gym.data.dto.TraineeTrainingDto;
-import com.javabootcamp.gym.data.dto.TrainingFilterDto;
-import com.javabootcamp.gym.data.dto.UpdateTraineeDto;
+import com.javabootcamp.gym.data.dto.*;
 import com.javabootcamp.gym.data.model.Trainee;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
 import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
@@ -24,8 +22,8 @@ import static org.springframework.http.HttpStatus.*;
 
 
 @RestController
-@RequestMapping("/trainee")
-public class TraineeController extends BaseController implements IRegistrationController<TraineeRegistrationViewModel>, IGetProfileController<Trainee>, IUpdateController {
+@RequestMapping("/trainees")
+public class TraineeController extends BaseController implements IRegistrationController<TraineeRegistrationViewModel>, IGetProfileController<TraineeProfileDto>, IUpdateController {
 
     private final TraineeService traineeService;
 
@@ -35,7 +33,6 @@ public class TraineeController extends BaseController implements IRegistrationCo
     }
 
     @PostMapping
-    @SuppressWarnings("DuplicatedCode")
     public ResponseEntity<?> register(@Valid @RequestBody TraineeRegistrationViewModel viewModel, @NotNull BindingResult binding) {
 
         var response = new HashMap<String, Object>();
@@ -43,22 +40,23 @@ public class TraineeController extends BaseController implements IRegistrationCo
         if (binding.hasErrors()) {
             var errors = handleValidationErrors(binding);
             response.put("errors", errors);
-            return new ResponseEntity<Map<String, Object>>(response, BAD_REQUEST);
+            return ResponseEntity.badRequest().body(response);
+//                    new ResponseEntity<Map<String, Object>>(response, BAD_REQUEST);
         }
 
         var trainee = traineeService.create(viewModel);
 
         if (trainee == null || trainee.getUser() == null) {
-            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
+            return ResponseEntity.internalServerError().build();
         }
         var user = trainee.getUser();
 
-        return ResponseEntity.ok(new LoginViewModel(user.getUsername(), user.getPassword()));
+        return ResponseEntity.ok(new LoginDto(user.getUsername(), user.getPassword()));
     }
 
     @GetMapping("{username}")
     @Override
-    public ResponseEntity<Trainee> getProfile(@PathVariable String username) {
+    public ResponseEntity<TraineeProfileDto> getProfile(@PathVariable String username) {
         if (username == null)
             return ResponseEntity.badRequest().build();
 
@@ -67,8 +65,9 @@ public class TraineeController extends BaseController implements IRegistrationCo
         if (trainee == null)
             return new ResponseEntity<>(NOT_FOUND);
 
+        var dto = TraineeProfileDto.convert(trainee);
 
-        return new ResponseEntity<>(trainee, OK);
+        return new ResponseEntity<>(dto, OK);
     }
 
     @GetMapping("{username}/trainings")

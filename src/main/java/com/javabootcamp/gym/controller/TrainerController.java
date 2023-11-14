@@ -1,9 +1,6 @@
 package com.javabootcamp.gym.controller;
 
-import com.javabootcamp.gym.data.dto.TrainerTrainingDto;
-import com.javabootcamp.gym.data.dto.TrainingFilterDto;
-import com.javabootcamp.gym.data.dto.UpdateTraineeDto;
-import com.javabootcamp.gym.data.dto.UpdateTrainerDto;
+import com.javabootcamp.gym.data.dto.*;
 import com.javabootcamp.gym.data.model.Trainer;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
 import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
@@ -23,8 +20,8 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@RequestMapping("/trainer")
-public class TrainerController extends BaseController implements IRegistrationController<TrainerRegistrationViewModel>, IGetProfileController<Trainer> {
+@RequestMapping("/trainers")
+public class TrainerController extends BaseController implements IRegistrationController<TrainerRegistrationViewModel>, IGetProfileController<TrainerProfileDto> {
 
     private final TrainerService trainerService;
 
@@ -56,7 +53,7 @@ public class TrainerController extends BaseController implements IRegistrationCo
 
     @Override
     @GetMapping("{username}")
-    public ResponseEntity<Trainer> getProfile(@PathVariable String username) {
+    public ResponseEntity<TrainerProfileDto> getProfile(@PathVariable String username) {
         if (username == null)
             return ResponseEntity.badRequest().build();
 
@@ -65,7 +62,9 @@ public class TrainerController extends BaseController implements IRegistrationCo
         if (trainer == null)
             return new ResponseEntity<>(NOT_FOUND);
 
-        return ResponseEntity.ok(trainer);
+        var dto = TrainerProfileDto.convert(trainer);
+
+        return ResponseEntity.ok(dto);
     }
 
     @PatchMapping("{username}/status")
