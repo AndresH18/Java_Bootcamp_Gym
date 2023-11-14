@@ -94,4 +94,5 @@ public class Trainer implements IModel, ICopy<Trainer> {
     public void setTrainees(List<Trainee> trainees) {
         this.trainees = trainees;
     }
+
 }
