@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/training-type")
+@RequestMapping("/training-types")
 public class TrainingTypeController {
     private final TrainingTypeService service;
 
@@ -23,7 +23,7 @@ public class TrainingTypeController {
 
     @GetMapping
     public ResponseEntity<List<TrainingTypeDto>> getTrainingTypes(@RequestParam(name = "page", defaultValue = "1") int page,
-                                                                  @RequestParam(name = "page-size", defaultValue = "10") int size) {
+                                                                  @RequestParam(name = "size", defaultValue = "10") int size) {
 
         var o = service.getAll(page, size);
 

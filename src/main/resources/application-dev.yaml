@@ -1,0 +1,35 @@
+# logging
+logging:
+  level:
+    root: debug
+
+# database configuration
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+# health checks - actuator
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    loggers:
+      enabled: true
+    prometheus:
+      enabled: true
+    info:
+      enabled: true
+  endpoints:
+    jmx:
+      exposure:
+        include: "health"
+    web:
+      exposure:
+        include: "health,loggers,info,prometheus"
+

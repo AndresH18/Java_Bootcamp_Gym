@@ -1,8 +1,6 @@
 package com.javabootcamp.gym.controller;
 
 import com.javabootcamp.gym.data.dto.*;
-import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
-import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
 import com.javabootcamp.gym.data.viewmodels.TraineeRegistrationViewModel;
 import com.javabootcamp.gym.services.TraineeService;
 import com.javabootcamp.gym.services.user.UserService;
@@ -20,7 +18,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/trainees")
-public class TraineeController extends BaseController implements IRegistrationController<TraineeRegistrationViewModel>, IGetProfileController<TraineeProfileDto>, IUpdateController {
+public class TraineeController extends BaseController implements IRegistrationController<TraineeRegistrationViewModel>, IGetProfileController<TraineeProfileDto> {
 
     private final TraineeService traineeService;
 
@@ -54,13 +52,11 @@ public class TraineeController extends BaseController implements IRegistrationCo
     @GetMapping("{username}")
     @Override
     public ResponseEntity<TraineeProfileDto> getProfile(@PathVariable String username) {
-        if (username == null)
-            return ResponseEntity.badRequest().build();
+        if (username == null) return ResponseEntity.badRequest().build();
 
         var trainee = traineeService.getByUsername(username);
 
-        if (trainee == null)
-            return new ResponseEntity<>(NOT_FOUND);
+        if (trainee == null) return new ResponseEntity<>(NOT_FOUND);
 
         var dto = TraineeProfileDto.convert(trainee);
 
@@ -78,30 +74,26 @@ public class TraineeController extends BaseController implements IRegistrationCo
         return ResponseEntity.of(o);
     }
 
-    @PatchMapping("{username}/status")
-    @Override
-    public ResponseEntity<?> setIsActiveStatus(@NotNull @PathVariable String username, @RequestParam(name = "active", defaultValue = "false") boolean isActive) {
-        return super.setIsActiveStatus(username, isActive);
-    }
-
     @PutMapping("{username}")
     public ResponseEntity<?> updateTrainee(@PathVariable String username, @Valid @RequestBody UpdateTraineeDto dto, BindingResult binding) {
         return super.update(username, dto, binding, traineeService, this);
     }
 
-    @GetMapping("login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginViewModel loginViewModel, @NotNull BindingResult binding) {
-        if (binding.hasErrors())
-            return new ResponseEntity<>(UNAUTHORIZED);
+    @DeleteMapping("{username}")
+    public ResponseEntity<?> delete(@PathVariable String username) {
+        if (username == null) return ResponseEntity.badRequest().build();
 
-        return super.login(loginViewModel);
+        var r = traineeService.delete(username);
+        if (r.isEmpty()) return ResponseEntity.notFound().build();
+
+        var code = r.get() ? OK : INTERNAL_SERVER_ERROR;
+
+        return new ResponseEntity<>(code);
     }
 
-    @PutMapping("change-password")
-    public ResponseEntity<?> changePassword(@Valid @RequestBody PasswordChangeViewModel viewModel, @NotNull BindingResult binding) {
-        if (binding.hasErrors())
-            return new ResponseEntity<>(UNAUTHORIZED);
-
-        return super.changePassword(viewModel);
+    @PutMapping("{username}/trainers")
+    public void updateTrainers(@PathVariable String username, @RequestBody List<String> trainers) {
+        // TODO: set trainee (username) trainers (list of usernames)
+        //  For the trainee, use the list of usernames that belong to trainers and set the trainee' trainers
     }
 }

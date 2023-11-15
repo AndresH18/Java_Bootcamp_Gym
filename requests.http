@@ -1,0 +1,122 @@
+### get trainee
+GET http://localhost:8080/trainees/mauricio.markson
+
+<> f-6.txt
+
+### get trainee trainings
+GET http://localhost:8080/trainees/mauricio.markson/trainings
+
+<> 2023-11-14T181900.200.json
+<> 2023-11-14T175821.200.json
+
+### filter trainee trainings
+GET http://localhost:8080/trainees/mauricio.markson/trainings?periodFrom=2018-01-01&periodTo=2020-02-02
+
+<> 2023-11-14T181932.200.json
+<> 2023-11-14T181923.200.json
+<> 2023-11-14T181916.200.json
+
+### trainee login 200
+GET http://localhost:8080/trainees/login
+Content-Type: application/json
+
+{
+  "username": "mauricio.markson",
+  "password": "dd2m33w214"
+}
+
+### trainee login 401 - bad password
+GET http://localhost:8080/trainees/login
+Content-Type: application/json
+
+{
+  "username": "mauricio.markson",
+  "password": "111"
+}
+
+### set trainee status
+PATCH http://localhost:8080/trainees/mauricio.markson/status?active=true
+
+### change password
+
+PUT http://localhost:8080/trainees/change-password
+Content-Type: application/json
+
+{
+  "username": "osgood.yakebovitch",
+  "oldPassword": "HelloWorld",
+  "newPassword": "HolaMundos"
+}
+
+<> 2023-11-14T191100.200.json
+
+### get trainer
+GET http://localhost:8080/trainers/aile.peetermann
+
+<> f-13.txt
+
+
+### get trainer trainings
+GET http://localhost:8080/trainers/aile.peetermann/trainings
+
+<> 2023-11-14T183608.200.json
+
+### filter trainer trainings
+GET http://localhost:8080/trainers/aile.peetermann/trainings?periodFrom=2012-01-01&periodTo=2020-02-02
+
+<> 2023-11-14T183653.200.json
+<> 2023-11-14T183615.200.json
+
+
+### trainer login 200
+GET http://localhost:8080/trainers/login
+Content-Type: application/json
+
+{
+  "username": "aile.peetermann",
+  "password": "dm2uhxd4nf"
+}
+
+### trainer login 401
+GET http://localhost:8080/trainers/login
+Content-Type: application/json
+
+{
+  "username": "aile.peetermann",
+  "password": "111"
+}
+
+### get training types
+GET http://localhost:8080/training-types
+
+<> 2023-11-14T192609.200.json
+
+### get training types - size 5
+GET http://localhost:8080/training-types?size=5
+
+<> 2023-11-14T192654.200.json
+
+### get training types - page 2
+GET http://localhost:8080/training-types?page=2
+
+<> 2023-11-14T192746.200.json
+
+### get training types - page 2 size 5
+GET http://localhost:8080/training-types?size=5&page=2
+
+<> 2023-11-14T192831.200.json
+
+
+# Actuators
+### Health
+GET http://localhost:8080/actuator/health
+
+### DB Health
+GET http://localhost:8080/actuator/db-health
+
+### Loggers
+GET http://localhost:8080/actuator/loggers
+
+### Info
+GET http://localhost:8080/actuator/prometheus
+

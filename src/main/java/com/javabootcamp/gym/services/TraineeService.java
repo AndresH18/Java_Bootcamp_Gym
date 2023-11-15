@@ -179,6 +179,23 @@ public class TraineeService implements IUpdateService<UpdateTraineeDto> {
         }
     }
 
+    @NotNull
+    public Optional<Boolean> delete(@NotNull String username) {
+        try {
+            var t = traineeRepository.findFirstByUserUsername(username);
+
+            if (t.isEmpty())
+                return Optional.empty();
+
+            traineeRepository.delete(t.get());
+            return Optional.of(true);
+        } catch (
+                Exception e) {
+            logger.error("Error deleting trainee", e);
+            return Optional.of(false);
+        }
+    }
+
     public boolean delete(int id) {
         logger.trace("delete: id={}", id);
         if (id <= 0)
