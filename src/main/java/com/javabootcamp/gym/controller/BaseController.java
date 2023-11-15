@@ -1,8 +1,5 @@
 package com.javabootcamp.gym.controller;
 
-import com.javabootcamp.gym.controller.IUpdateController;
-import com.javabootcamp.gym.data.dto.IUsernameDto;
-import com.javabootcamp.gym.data.model.Trainer;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
 import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
 import com.javabootcamp.gym.services.IUpdateService;
@@ -12,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.HashMap;
 import java.util.Map;

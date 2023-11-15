@@ -1,14 +1,11 @@
 package com.javabootcamp.gym.services.helper;
 
-import com.javabootcamp.gym.data.model.IModel;
 import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.UserRepository;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class UpdateServiceHelper {
     private UpdateServiceHelper() {

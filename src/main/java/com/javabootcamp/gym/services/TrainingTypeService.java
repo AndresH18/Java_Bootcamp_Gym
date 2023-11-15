@@ -2,7 +2,6 @@ package com.javabootcamp.gym.services;
 
 import com.javabootcamp.gym.data.model.TrainingType;
 import com.javabootcamp.gym.data.repository.TrainingTypeRepository;
-import com.javabootcamp.gym.services.user.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

@@ -1,7 +1,9 @@
 package com.javabootcamp.gym.controller;
 
-import com.javabootcamp.gym.data.dto.*;
-import com.javabootcamp.gym.data.model.Trainer;
+import com.javabootcamp.gym.data.dto.TrainerProfileDto;
+import com.javabootcamp.gym.data.dto.TrainerTrainingDto;
+import com.javabootcamp.gym.data.dto.TrainingFilterDto;
+import com.javabootcamp.gym.data.dto.UpdateTrainerDto;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
 import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
 import com.javabootcamp.gym.data.viewmodels.TrainerRegistrationViewModel;
@@ -9,7 +11,6 @@ import com.javabootcamp.gym.services.TrainerService;
 import com.javabootcamp.gym.services.user.UserService;
 import jakarta.validation.Valid;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;

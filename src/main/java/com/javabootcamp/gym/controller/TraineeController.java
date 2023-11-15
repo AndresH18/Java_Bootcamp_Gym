@@ -1,7 +1,6 @@
 package com.javabootcamp.gym.controller;
 
 import com.javabootcamp.gym.data.dto.*;
-import com.javabootcamp.gym.data.model.Trainee;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
 import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
 import com.javabootcamp.gym.data.viewmodels.TraineeRegistrationViewModel;
@@ -9,14 +8,12 @@ import com.javabootcamp.gym.services.TraineeService;
 import com.javabootcamp.gym.services.user.UserService;
 import jakarta.validation.Valid;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.http.HttpStatus.*;
 

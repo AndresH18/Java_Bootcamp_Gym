@@ -1,9 +1,8 @@
 package com.javabootcamp.gym.data.dto;
 
-import jakarta.validation.constraints.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public record UpdateTrainerDto(
 //        @NotBlank
