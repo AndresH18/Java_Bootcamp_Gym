@@ -1,7 +1,8 @@
 package com.javabootcamp.gym.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 public interface IUpdateController {
-    HttpStatus setIsActiveStatus(String username, boolean isActive);
+    ResponseEntity<?> setIsActiveStatus(String username, boolean isActive);
 }

@@ -69,7 +69,7 @@ public class TrainerController extends BaseController implements IRegistrationCo
 
     @PatchMapping("{username}/status")
     @Override
-    public HttpStatus setIsActiveStatus(@NotNull @PathVariable String username, @RequestParam(name = "isActive", defaultValue = "false") boolean isActive) {
+    public ResponseEntity<?> setIsActiveStatus(@NotNull @PathVariable String username, @RequestParam(name = "isActive", defaultValue = "false") boolean isActive) {
         return super.setIsActiveStatus(username, isActive);
     }
 
@@ -90,17 +90,17 @@ public class TrainerController extends BaseController implements IRegistrationCo
     }
 
     @GetMapping("login")
-    public HttpStatus login(@Valid @RequestBody LoginViewModel loginViewModel, @NotNull BindingResult binding) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginViewModel loginViewModel, @NotNull BindingResult binding) {
         if (binding.hasErrors())
-            return UNAUTHORIZED;
+            return new ResponseEntity<>(UNAUTHORIZED);
 
         return super.login(loginViewModel);
     }
 
     @PutMapping("change-password")
-    public HttpStatus changePassword(@Valid @RequestBody PasswordChangeViewModel viewModel, @NotNull BindingResult binding) {
+    public ResponseEntity<?> changePassword(@Valid @RequestBody PasswordChangeViewModel viewModel, @NotNull BindingResult binding) {
         if (binding.hasErrors())
-            return BAD_REQUEST;
+            return ResponseEntity.badRequest().build();
 
         return super.changePassword(viewModel);
     }

@@ -25,31 +25,36 @@ public abstract class BaseController {
         this.userService = userService;
     }
 
-    protected HttpStatus login(@NotNull LoginViewModel loginViewModel) {
+    protected ResponseEntity<?> login(@NotNull LoginViewModel loginViewModel) {
         var authenticated = userService.authenticate(loginViewModel.username(), loginViewModel.password());
 
-        return authenticated
+        var code = authenticated
                 ? HttpStatus.OK
                 : HttpStatus.UNAUTHORIZED;
+
+        return new ResponseEntity<>(code);
     }
 
-    protected HttpStatus changePassword(@NotNull PasswordChangeViewModel viewModel) {
+    protected ResponseEntity<?> changePassword(@NotNull PasswordChangeViewModel viewModel) {
         var result = userService.changePassword(viewModel.username(), viewModel.oldPassword(), viewModel.newPassword());
 
-        return result
+        var code = result
                 ? HttpStatus.OK
                 : HttpStatus.BAD_REQUEST;
+
+        return new ResponseEntity<>(code);
     }
 
-    protected HttpStatus setIsActiveStatus(@NotNull String username, boolean isActive) {
+    protected ResponseEntity<?> setIsActiveStatus(@NotNull String username, boolean isActive) {
         var r = userService.setIsActive(username, isActive);
 //        if (r.isEmpty())
 //            return HttpStatus.NOT_FOUND;
 //
 //        return r.get() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR;
 
-        return r.map(aBoolean -> aBoolean ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR).orElse(HttpStatus.NOT_FOUND);
+        var code = r.map(aBoolean -> aBoolean ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR).orElse(HttpStatus.NOT_FOUND);
 
+        return new ResponseEntity<>(code);
     }
 
     protected Map<String, String> handleValidationErrors(@NotNull BindingResult bindingResult) {
