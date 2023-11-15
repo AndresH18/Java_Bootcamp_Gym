@@ -1,10 +1,12 @@
 package com.javabootcamp.gym.data.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "Users", schema = "dbo")
 public class User implements IModel {
 
     @Id
@@ -19,14 +21,18 @@ public class User implements IModel {
     @NotNull
     private String username = "";
     @NotNull
+    @JsonIgnore
     private String password = "";
     @Column(name = "is_active")
+    @JsonIgnore
     private boolean isActive;
 
     @OneToOne(mappedBy = "user"/*, cascade = CascadeType.REMOVE*/)
+    @JsonBackReference
     private Trainee trainee;
 
     @OneToOne(mappedBy = "user"/*, cascade = CascadeType.REMOVE*/)
+    @JsonBackReference
     private Trainer trainer;
 
     public User(int id, @NotNull String firstName, @NotNull String lastName, @NotNull String username, @NotNull String password, boolean isActive) {
@@ -110,5 +116,13 @@ public class User implements IModel {
     public User setTrainee(Trainee trainee) {
         this.trainee = trainee;
         return this;
+    }
+
+    public Trainer getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(Trainer trainer) {
+        this.trainer = trainer;
     }
 }

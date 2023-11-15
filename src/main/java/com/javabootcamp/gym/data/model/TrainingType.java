@@ -1,12 +1,16 @@
 package com.javabootcamp.gym.data.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "TrainingTypes")
+@Table(name = "TrainingTypes", schema = "dbo")
 public class TrainingType implements IModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,9 +20,11 @@ public class TrainingType implements IModel {
     private String name;
 
     @OneToMany(mappedBy = "specialization")
-    private Set<Trainer> trainers;
+    @JsonBackReference
+    private List<Trainer> trainers;
 
     @OneToMany(mappedBy = "trainingType")
+    @JsonIgnore
     private Set<Training> trainings;
 
     public TrainingType(int id, @NotNull String name) {
@@ -33,7 +39,6 @@ public class TrainingType implements IModel {
     public TrainingType() {
     }
 
-    // TODO: equals(), hashcode()
 
     @Override
     public int getId() {
@@ -51,5 +56,21 @@ public class TrainingType implements IModel {
 
     public void setName(@NotNull String name) {
         this.name = name;
+    }
+
+    public List<Trainer> getTrainers() {
+        return trainers;
+    }
+
+    public void setTrainers(List<Trainer> trainers) {
+        this.trainers = trainers;
+    }
+
+    public Set<Training> getTrainings() {
+        return trainings;
+    }
+
+    public void setTrainings(Set<Training> trainings) {
+        this.trainings = trainings;
     }
 }

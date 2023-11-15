@@ -17,14 +17,15 @@ public class UserHelper {
                 + lastName.split(" ")[0].toLowerCase();
     }
 
-    public static User createUser(String firstName, String lastName, String username, long count) {
+    public static User createUser(@NotNull String firstName, @NotNull String lastName, @NotNull String username, long count) {
         username = username + count;
         var password = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
 
         return new User(firstName, lastName, username, password);
     }
 
-    public static User createUser(String firstName, String lastName, UserRepository userRepository, Logger logger) {
+
+    public static User createUser(@NotNull String firstName,@NotNull String lastName,@NotNull UserRepository userRepository, Logger logger) {
         var username = UserHelper.createUsernamePrefix(firstName, lastName);
         logger.trace("create: username prefix '{}'", username);
 
