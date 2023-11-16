@@ -107,4 +107,16 @@ GET http://localhost:8080/training-types?size=5&page=2
 <> 2023-11-14T192831.200.json
 
 
+# Actuators
+### Health
+GET http://localhost:8080/actuator/health
+
+### DB Health
+GET http://localhost:8080/actuator/db-health
+
+### Loggers
+GET http://localhost:8080/actuator/loggers
+
+### Info
+GET http://localhost:8080/actuator/prometheus
 

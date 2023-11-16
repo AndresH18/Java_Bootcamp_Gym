@@ -4,10 +4,8 @@ import jakarta.annotation.PostConstruct;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -24,7 +22,7 @@ import java.util.stream.Stream;
 
 import static com.javabootcamp.gym.data.IDataSource.MemoryModels.*;
 
-@Component
+@Deprecated
 public class InMemoryDataSource implements IDataSource {
     private final Logger logger = LoggerFactory.getLogger(InMemoryDataSource.class);
     private final Map<Class<? extends IModel>, Set<?>> data;
@@ -34,7 +32,6 @@ public class InMemoryDataSource implements IDataSource {
         data = new HashMap<>();
     }
 
-    @Autowired
     InMemoryDataSource(InMemoryDataLoader loader) {
         this();
         this.loader = loader;
@@ -166,7 +163,7 @@ public class InMemoryDataSource implements IDataSource {
 }
 
 
-@Component
+@Deprecated
 class InMemoryDataLoader {
     private final ResourceLoader resourceLoader;
     private final Logger logger = LoggerFactory.getLogger(InMemoryDataLoader.class);
@@ -181,7 +178,6 @@ class InMemoryDataLoader {
     @Value("${data.mock.training}")
     private String trainingResourceName;
 
-    @Autowired
     public InMemoryDataLoader(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }

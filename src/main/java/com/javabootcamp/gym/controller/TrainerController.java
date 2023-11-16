@@ -5,7 +5,6 @@ import com.javabootcamp.gym.data.dto.TrainerTrainingDto;
 import com.javabootcamp.gym.data.dto.TrainingFilterDto;
 import com.javabootcamp.gym.data.dto.UpdateTrainerDto;
 import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
-import com.javabootcamp.gym.data.viewmodels.PasswordChangeViewModel;
 import com.javabootcamp.gym.data.viewmodels.TrainerRegistrationViewModel;
 import com.javabootcamp.gym.services.TrainerService;
 import com.javabootcamp.gym.services.user.UserService;
@@ -44,8 +43,7 @@ public class TrainerController extends BaseController implements IRegistrationCo
         }
 
         var trainer = trainerService.create(trainerRegistrationViewModel);
-        if (trainer == null || trainer.getUser() == null)
-            return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
+        if (trainer == null || trainer.getUser() == null) return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
 
         var user = trainer.getUser();
 
@@ -55,23 +53,15 @@ public class TrainerController extends BaseController implements IRegistrationCo
     @Override
     @GetMapping("{username}")
     public ResponseEntity<TrainerProfileDto> getProfile(@PathVariable String username) {
-        if (username == null)
-            return ResponseEntity.badRequest().build();
+        if (username == null) return ResponseEntity.badRequest().build();
 
         var trainer = trainerService.getByUsername(username);
 
-        if (trainer == null)
-            return new ResponseEntity<>(NOT_FOUND);
+        if (trainer == null) return new ResponseEntity<>(NOT_FOUND);
 
         var dto = TrainerProfileDto.convert(trainer);
 
         return ResponseEntity.ok(dto);
-    }
-
-    @PatchMapping("{username}/status")
-    @Override
-    public ResponseEntity<?> setIsActiveStatus(@NotNull @PathVariable String username, @RequestParam(name = "isActive", defaultValue = "false") boolean isActive) {
-        return super.setIsActiveStatus(username, isActive);
     }
 
     @PutMapping("{username}")
@@ -88,21 +78,5 @@ public class TrainerController extends BaseController implements IRegistrationCo
         var o = trainerService.getTrainings(username, filterDto);
 
         return ResponseEntity.of(o);
-    }
-
-    @GetMapping("login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginViewModel loginViewModel, @NotNull BindingResult binding) {
-        if (binding.hasErrors())
-            return new ResponseEntity<>(UNAUTHORIZED);
-
-        return super.login(loginViewModel);
-    }
-
-    @PutMapping("change-password")
-    public ResponseEntity<?> changePassword(@Valid @RequestBody PasswordChangeViewModel viewModel, @NotNull BindingResult binding) {
-        if (binding.hasErrors())
-            return ResponseEntity.badRequest().build();
-
-        return super.changePassword(viewModel);
     }
 }

@@ -303,3 +303,7 @@ class User {
   "name": "user's name"
 }
 ```
+
+## Actuator - Health Checks
+https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html
+
