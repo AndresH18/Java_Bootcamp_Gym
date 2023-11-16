@@ -27,6 +27,10 @@ public class User implements IModel {
     @JsonIgnore
     private boolean isActive;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
+
     @OneToOne(mappedBy = "user"/*, cascade = CascadeType.REMOVE*/)
     @JsonBackReference
     private Trainee trainee;
@@ -124,5 +128,24 @@ public class User implements IModel {
 
     public void setTrainer(Trainer trainer) {
         this.trainer = trainer;
+    }
+
+    public User setId(Integer id) {
+        this.id = id;
+        return this;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public User setRole(Role role) {
+        this.role = role;
+        return this;
+    }
+
+    public enum Role {
+        TRAINER,
+        TRAINEE
     }
 }

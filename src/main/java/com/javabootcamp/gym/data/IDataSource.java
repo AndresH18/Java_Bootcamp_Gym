@@ -15,7 +15,7 @@ import static com.javabootcamp.gym.data.IDataSource.MemoryModels.*;
  * The IDataSource interface provides methods for creating, retrieving, updating, and deleting
  * entities of a specific type.
  */
-@SuppressWarnings("ClassEscapesDefinedScope")
+@Deprecated
 public interface IDataSource {
     /**
      * Creates a new entity of the specified type.
