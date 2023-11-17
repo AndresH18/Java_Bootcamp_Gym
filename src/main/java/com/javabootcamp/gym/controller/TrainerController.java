@@ -1,16 +1,14 @@
 package com.javabootcamp.gym.controller;
 
-import com.javabootcamp.gym.data.dto.TrainerProfileDto;
-import com.javabootcamp.gym.data.dto.TrainerTrainingDto;
-import com.javabootcamp.gym.data.dto.TrainingFilterDto;
-import com.javabootcamp.gym.data.dto.UpdateTrainerDto;
-import com.javabootcamp.gym.data.viewmodels.LoginViewModel;
+import com.javabootcamp.gym.data.dto.*;
 import com.javabootcamp.gym.data.viewmodels.TrainerRegistrationViewModel;
 import com.javabootcamp.gym.services.TrainerService;
+import com.javabootcamp.gym.services.security.SecurityService;
 import com.javabootcamp.gym.services.user.UserService;
 import jakarta.validation.Valid;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,14 +23,16 @@ public class TrainerController extends BaseController implements IRegistrationCo
 
     private final TrainerService trainerService;
 
-    public TrainerController(UserService userService, TrainerService trainerService) {
+    private final SecurityService securityService;
+
+    public TrainerController(UserService userService, TrainerService trainerService, SecurityService securityService) {
         super(userService);
         this.trainerService = trainerService;
+        this.securityService = securityService;
     }
 
     @Override
-    @PostMapping
-    @SuppressWarnings("DuplicatedCode")
+    @PostMapping("register")
     public ResponseEntity<?> register(@Valid @RequestBody TrainerRegistrationViewModel trainerRegistrationViewModel, @NotNull BindingResult binding) {
         var response = new HashMap<String, Object>();
         if (binding.hasErrors()) {
@@ -47,12 +47,13 @@ public class TrainerController extends BaseController implements IRegistrationCo
 
         var user = trainer.getUser();
 
-        return ResponseEntity.ok(new LoginViewModel(user.getUsername(), user.getPassword()));
+        return ResponseEntity.ok(new LoginDto(user.getUsername(), user.getPassword()));
     }
 
     @Override
     @GetMapping("{username}")
     public ResponseEntity<TrainerProfileDto> getProfile(@PathVariable String username) {
+        // NOTE: No need to check if user is authenticated because the filter checks for that.
         if (username == null) return ResponseEntity.badRequest().build();
 
         var trainer = trainerService.getByUsername(username);
@@ -65,18 +66,34 @@ public class TrainerController extends BaseController implements IRegistrationCo
     }
 
     @PutMapping("{username}")
-    public ResponseEntity<?> updateTrainee(@PathVariable String username, @Valid @RequestBody UpdateTrainerDto dto, BindingResult binding) {
-        return super.update(username, dto, binding, trainerService, this);
+    public ResponseEntity<?> updateTrainee(@PathVariable String username,
+                                           @Valid @RequestBody UpdateTrainerDto dto,
+                                           BindingResult binding,
+                                           Authentication authentication) {
+
+
+        var match = securityService.matchUsernameResponse(authentication, username, () ->
+                        super.update(username, dto, binding, trainerService, this),
+                () -> new ResponseEntity<>(FORBIDDEN));
+
+        return match.get();
     }
 
     @GetMapping("{username}/trainings")
-    public ResponseEntity<List<TrainerTrainingDto>> getTrainers(@PathVariable String username, @Valid @ModelAttribute TrainingFilterDto filterDto, BindingResult binding) {
-        if (binding.hasErrors() || username == null) {
-            // BAD_REQUEST
-            return ResponseEntity.badRequest().build();
-        }
-        var o = trainerService.getTrainings(username, filterDto);
+    public ResponseEntity<List<TrainerTrainingDto>> getTrainings(@PathVariable String username,
+                                                                 @Valid @ModelAttribute TrainingFilterDto filterDto,
+                                                                 BindingResult binding,
+                                                                 Authentication authentication) {
 
-        return ResponseEntity.of(o);
+        return securityService.matchUsername(authentication, username, () -> {
+                    if (binding.hasErrors()) {
+                        // BAD_REQUEST
+                        return ResponseEntity.badRequest().build();
+                    }
+                    var o = trainerService.getTrainings(username, filterDto);
+
+                    return ResponseEntity.of(o);
+                },
+                () -> new ResponseEntity<>(FORBIDDEN));
     }
 }

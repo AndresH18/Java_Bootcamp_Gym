@@ -33,26 +33,6 @@ public class TrainingService {
     }
 
     @Nullable
-    public Training create(int traineeId, int trainerId, int trainingTypeId, String name, int duration, @NotNull LocalDate date) {
-        logger.trace("create: traineeId={}, trainerId={}, trainingTypeId={}, duration={}, date={}", traineeId, trainerId, trainingTypeId, duration, date);
-        if (trainerId <= 0 || traineeId <= 0 || trainingTypeId <= 0 || duration <= 0 || !ServiceHelper.isValidDate(date)) {
-            logger.trace("create: invalid id(s)");
-            return null;
-        }
-        var trainee = ServiceHelper.findById(traineeId, traineeRepository);
-        var trainer = ServiceHelper.findById(trainerId, trainerRepository);
-        var trainingType = ServiceHelper.findById(trainingTypeId, trainingTypeRepository);
-
-        if (ServiceHelper.areAnyNull(trainee, trainer, trainingType))
-            return null;
-
-        logger.info("Creating training");
-        var training = new Training(trainer, trainee, trainingType, name, duration, date);
-
-        return trainingRepository.save(training);
-    }
-
-    @Nullable
     public Training create(@NotNull TrainingDto dto) {
         try {
             var trainee = traineeRepository.findFirstByUserUsername(dto.traineeUsername());

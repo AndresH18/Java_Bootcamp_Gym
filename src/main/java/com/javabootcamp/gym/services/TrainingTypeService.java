@@ -26,16 +26,6 @@ public class TrainingTypeService {
     }
 
     @NotNull
-    public Optional<List<TrainingType>> getAll() {
-        try {
-            return Optional.of(repository.findAll());
-        } catch (Exception e) {
-            logger.error("Failed to get TrainingTypes", e);
-            return Optional.empty();
-        }
-    }
-
-    @NotNull
     public Optional<List<TrainingType>> getAll(int page, int size) {
         try {
             if (size <= 0)

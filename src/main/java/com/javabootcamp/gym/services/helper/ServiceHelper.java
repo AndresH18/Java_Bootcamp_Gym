@@ -43,12 +43,12 @@ public class ServiceHelper {
      * Applies a function to retrieve an entity based on the provided username,
      * performs actions on the entity using a consumer, and returns the entity.
      *
-     * @param <T>      The type of the entity extending {@code IModel}.
-     * @param <R>      The type of the entity to which the function will be applied
-     * @param username The username to retrieve the entity.
-     * @param function The function to retrieve the entity based on the username.
-     * @param consumer The consumer to perform actions on the retrieved entity.
-     * @param convert  The function that will convert from {@code <T>} to {@code <R>}
+     * @param <T>       The type of the entity extending {@code IModel}.
+     * @param <R>       The type of the entity to which the function will be applied
+     * @param username  The username to retrieve the entity.
+     * @param function  The function to retrieve the entity based on the username.
+     * @param consumer  The consumer to perform actions on the retrieved entity.
+     * @param converter The function that will convert from {@code <T>} to {@code <R>}
      * @return The retrieved entity after applying the actions, or {@code null}
      * if the entity is not found based on the provided username.
      * @throws NullPointerException if any of the parameters (username, function, consumer) is null.
@@ -56,7 +56,7 @@ public class ServiceHelper {
     public static <T extends IModel, R> T apply(@NotNull String username,
                                                 @NotNull Function<String, Optional<T>> function,
                                                 @NotNull Consumer<R> consumer,
-                                                @NotNull Function<T, R> convert) {
+                                                @NotNull Function<T, R> converter) {
         Objects.requireNonNull(username, "Username must not be null");
         Objects.requireNonNull(function, "Function must not be null");
         Objects.requireNonNull(consumer, "Consumer must not be null");
@@ -72,7 +72,7 @@ public class ServiceHelper {
         var m = optionalT.get();
 
         // Apply convert function
-        var c = convert.apply(m);
+        var c = converter.apply(m);
 
         // Apply the consumer to perform actions on the entity
         consumer.accept(c);
@@ -87,6 +87,12 @@ public class ServiceHelper {
                 return true;
         }
         return false;
+    }
+
+    public static void requireNonNull(Object... objects) {
+        for (Object object : objects)
+            Objects.requireNonNull(object);
+
     }
 
     /**

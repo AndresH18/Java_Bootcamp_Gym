@@ -33,3 +33,7 @@ management:
       exposure:
         include: "health,loggers,info,prometheus"
 
+security:
+  jwt:
+    secret: "ThisIsTheSecretUsedToCreateTheJWTTokenButItNeedsToBeVeryLong"
+

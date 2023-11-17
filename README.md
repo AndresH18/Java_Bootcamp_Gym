@@ -292,12 +292,14 @@ the `com.fasterxml.jackson.annotation` package:
   ```
 - `JsonIgnore`: allows us to mark a property so that it is ignored when converting to json. For example, we don't want
   to show a user's password, so we annotate this field so that it is ignored
+
 ```java
 class User {
-  String name;
-  String password;
+    String name;
+    String password;
 }
 ```
+
 ```json
 {
   "name": "user's name"
@@ -305,5 +307,13 @@ class User {
 ```
 
 ## Actuator - Health Checks
+
 https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html
 
+## Pièces de Résistance
+
+Implementations that I really liked
+
+- [SecurityService.java](src/main/java/com/javabootcamp/gym/services/security/SecurityService.java), use of `Supplier`s and `Function`s
+- [ServiceHelper.java](src/main/java/com/javabootcamp/gym/services/helper/ServiceHelper.java), use of `Function`s and `Consumer`s
+  - [UpdateServiceHelper.java](src/main/java/com/javabootcamp/gym/services/helper/UpdateServiceHelper.java)

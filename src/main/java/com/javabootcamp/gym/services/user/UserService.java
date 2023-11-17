@@ -39,16 +39,6 @@ public class UserService implements IAuthentication, IUserCreator {
         }
     }
 
-    @Nullable
-    public User get(int id) {
-        try {
-            return repository.findById(id).orElse(null);
-        } catch (Exception e) {
-            logger.error("Error getting user ({})", id);
-            return null;
-        }
-    }
-
     public Optional<User> get(@NotNull String username) {
         return repository.findByUsernameIgnoreCase(username);
     }
