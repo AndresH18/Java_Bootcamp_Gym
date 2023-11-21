@@ -1,6 +1,6 @@
 package com.javabootcamp.gym.security;
 
-import com.javabootcamp.gym.services.security.SecurityService;
+import com.javabootcamp.gym.security.services.SecurityService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(@NotNull HttpServletRequest request) throws ServletException {
         return super.shouldNotFilter(request);
     }
 

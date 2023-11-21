@@ -80,10 +80,12 @@ public class JwtTokenProvider extends AbstractJwtTokenProvider {
         return getClaim(token, Claims::getSubject);
     }
 
-    private Date getExpiration(String token) {
+    @Nullable
+    public Date getExpiration(String token) {
         return getClaim(token, Claims::getExpiration);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private boolean isExpired(String token) {
         return getExpiration(token).before(getDate());
     }

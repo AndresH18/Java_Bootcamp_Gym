@@ -1,6 +1,8 @@
-package com.javabootcamp.gym.services.security;
+package com.javabootcamp.gym.security.services;
 
 import com.javabootcamp.gym.data.dto.LoginDto;
+import com.javabootcamp.gym.security.data.JwtRepository;
+import com.javabootcamp.gym.security.data.JwtSecurityToken;
 import com.javabootcamp.gym.security.JwtAuthenticationToken;
 import com.javabootcamp.gym.security.JwtTokenProvider;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
@@ -13,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -113,14 +117,16 @@ public class SecurityService {
     }
 
 
-    private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authManager;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtRepository jwtRepository;
 
 
     @Autowired
-    public SecurityService(JwtTokenProvider jwtTokenProvider, AuthenticationManager authManager) {
+    public SecurityService(JwtTokenProvider jwtTokenProvider, AuthenticationManager authManager, JwtRepository jwtRepository) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.authManager = authManager;
+        this.jwtRepository = jwtRepository;
     }
 
     /**
@@ -137,12 +143,14 @@ public class SecurityService {
 
             if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails userDetails) {
                 var token = jwtTokenProvider.getToken(userDetails);
+                saveToken(token);
                 return token;
             }
 
             return null;
 
         } catch (Exception e) {
+            // TODO: add logger statement
             return null;
         }
     }
@@ -251,6 +259,22 @@ public class SecurityService {
             }
             return false;
         };
+    }
+
+    /**
+     * Save the token (or something that identifies the token) in the Database
+     *
+     * @param token The JWT to save
+     */
+    private void saveToken(@NotNull String token) {
+        var expirationDate = jwtTokenProvider.getExpiration(token);
+        Objects.requireNonNull(expirationDate);
+
+        var expiration = expirationDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        var signature = token.split("\\.")[2];
+        var jwt = new JwtSecurityToken(signature, expiration);
+
+        jwtRepository.save(jwt);
     }
 
     @Deprecated(forRemoval = true)

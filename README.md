@@ -310,10 +310,16 @@ class User {
 
 https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html
 
+## Security
+- **Brute Force*+  
+    Continue creating GymAuthenticationProvider. Add checks in todo and register login attempts
+- **Logout**:  
+    Store jwts in table and use enabled field. When logged out, disable (or delete jwt(signature)) from db
+
 ## Pièces de Résistance
 
 Implementations that I really liked
 
-- [SecurityService.java](src/main/java/com/javabootcamp/gym/services/security/SecurityService.java), use of `Supplier`s and `Function`s
+- [SecurityService.java](src/main/java/com/javabootcamp/gym/security/services/SecurityService.java), use of `Supplier`s and `Function`s
 - [ServiceHelper.java](src/main/java/com/javabootcamp/gym/services/helper/ServiceHelper.java), use of `Function`s and `Consumer`s
   - [UpdateServiceHelper.java](src/main/java/com/javabootcamp/gym/services/helper/UpdateServiceHelper.java)

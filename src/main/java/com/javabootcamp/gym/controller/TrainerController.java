@@ -3,7 +3,7 @@ package com.javabootcamp.gym.controller;
 import com.javabootcamp.gym.data.dto.*;
 import com.javabootcamp.gym.data.viewmodels.TrainerRegistrationViewModel;
 import com.javabootcamp.gym.services.TrainerService;
-import com.javabootcamp.gym.services.security.SecurityService;
+import com.javabootcamp.gym.security.services.SecurityService;
 import com.javabootcamp.gym.services.user.UserService;
 import jakarta.validation.Valid;
 import org.jetbrains.annotations.NotNull;

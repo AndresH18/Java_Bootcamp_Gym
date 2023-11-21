@@ -1,4 +1,4 @@
-package com.javabootcamp.gym.services.security;
+package com.javabootcamp.gym.security.services;
 
 import com.javabootcamp.gym.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

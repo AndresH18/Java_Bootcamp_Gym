@@ -1,13 +1,14 @@
 package com.javabootcamp.gym.configuration;
 
+import com.javabootcamp.gym.security.GymAuthenticationProvider;
 import com.javabootcamp.gym.security.GymPasswordEncoder;
 import com.javabootcamp.gym.security.JwtAuthenticationFilter;
+import com.javabootcamp.gym.security.data.LoginAttemptRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -42,21 +43,20 @@ public class SecurityConfig {
         return http.build();
     }
 
-
     @Bean
     public AuthenticationManager authenticationManager(
             UserDetailsService userDetailsService,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            LoginAttemptRepository loginAttemptRepository
     ) {
-        var authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(passwordEncoder);
+        var authenticationProvider = new GymAuthenticationProvider(userDetailsService, loginAttemptRepository, passwordEncoder);
 
         return new ProviderManager(authenticationProvider);
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        // TODO: use safe password encoder
         return new GymPasswordEncoder();
     }
 }
