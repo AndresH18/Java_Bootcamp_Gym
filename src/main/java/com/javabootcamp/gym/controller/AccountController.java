@@ -4,12 +4,15 @@ import com.javabootcamp.gym.data.dto.LoginDto;
 import com.javabootcamp.gym.data.dto.PasswordChangeDto;
 import com.javabootcamp.gym.security.services.SecurityService;
 import com.javabootcamp.gym.services.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -80,5 +83,22 @@ public class AccountController {
                 () -> new ResponseEntity<>(FORBIDDEN));
 
         return match.get();
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(Authentication authentication,
+                                    HttpServletRequest request,
+                                    HttpServletResponse response) {
+
+        var r = securityService.logout(authentication,
+                () -> {
+                    SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+                    logoutHandler.logout(request, response, authentication);
+
+                    return ResponseEntity.ok();
+                },
+                ResponseEntity::internalServerError);
+
+        return r.get().build();
     }
 }

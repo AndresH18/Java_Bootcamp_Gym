@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.ZoneId;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static org.springframework.security.authentication.UsernamePasswordAuthenticationToken.unauthenticated;
@@ -176,8 +177,32 @@ public class SecurityService {
      */
     public boolean isValidToken(@NotNull String jwtToken) {
         var b = jwtTokenProvider.validate(jwtToken);
+        if (b) {
+            var signature = jwtTokenProvider.getTokenSignature(jwtToken);
+            b = jwtRepository.existsBySignatureAndRevokedIsFalse(signature);
+        }
 
         return b;
+    }
+
+    public <T> Supplier<T> logout(@NotNull Authentication authentication,
+                                  @NotNull Supplier<T> success,
+                                  @NotNull Supplier<T> failure) {
+        if (authentication instanceof JwtAuthenticationToken auth) {
+            var token = auth.getToken();
+            var signature = jwtTokenProvider.getTokenSignature(token);
+
+            var jwt = jwtRepository.findBySignature(signature);
+            // delete?
+            jwt.ifPresent(jwtSecurityToken -> jwtSecurityToken.setRevoked(true));
+            jwt.ifPresent(jwtRepository::save);
+
+//            jwt.ifPresent(jwtRepository::delete);
+
+            return success;
+        }
+
+        return failure;
     }
 
     /**
@@ -217,7 +242,6 @@ public class SecurityService {
 
         ServiceHelper.requireNonNull(authentication, username, success, failure);
         return matchResponse(authentication, username, this::usernameMatch, success, failure);
-
     }
 
 
@@ -271,7 +295,7 @@ public class SecurityService {
         Objects.requireNonNull(expirationDate);
 
         var expiration = expirationDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        var signature = token.split("\\.")[2];
+        var signature = jwtTokenProvider.getTokenSignature(token);
         var jwt = new JwtSecurityToken(signature, expiration);
 
         jwtRepository.save(jwt);

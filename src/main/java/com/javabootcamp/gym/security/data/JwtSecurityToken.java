@@ -13,12 +13,12 @@ public class JwtSecurityToken {
     private String signature;
     private LocalDate expiration;
     @Column(name = "is_revoked")
-    private boolean isRevoked;
+    private boolean revoked;
 
-    public JwtSecurityToken(String signature, LocalDate expiration, boolean isRevoked) {
+    public JwtSecurityToken(String signature, LocalDate expiration, boolean revoked) {
         this.signature = signature;
         this.expiration = expiration;
-        this.isRevoked = isRevoked;
+        this.revoked = revoked;
     }
 
     public JwtSecurityToken(String signature, LocalDate expiration) {
@@ -49,10 +49,10 @@ public class JwtSecurityToken {
     }
 
     public boolean isRevoked() {
-        return isRevoked;
+        return revoked;
     }
 
     public void setRevoked(boolean revoked) {
-        isRevoked = revoked;
+        this.revoked = revoked;
     }
 }

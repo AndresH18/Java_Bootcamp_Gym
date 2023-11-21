@@ -9,14 +9,10 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Component
 public class JwtTokenProvider extends AbstractJwtTokenProvider {
-//    private static final String SECRET_KEY = "This+is+my+secret+key+for+jwt+security+but+it+must+be+long+so+here+we+go+with+this";
 
     public JwtTokenProvider() {
         super(LoggerFactory.getLogger(JwtTokenProvider.class));
@@ -31,6 +27,7 @@ public class JwtTokenProvider extends AbstractJwtTokenProvider {
                 .builder()
                 .claims(extraClaims)
                 .subject(userDetails.getUsername())
+                .id(UUID.randomUUID().toString())
                 .issuedAt(getDate())
                 .expiration(getExpiration())
                 .signWith(getKey())
@@ -81,8 +78,19 @@ public class JwtTokenProvider extends AbstractJwtTokenProvider {
     }
 
     @Nullable
+    public String getId(@NotNull String token) {
+        Objects.requireNonNull(token, "Token cannot be null");
+
+        return getClaim(token, Claims::getId);
+    }
+
+    @Nullable
     public Date getExpiration(String token) {
         return getClaim(token, Claims::getExpiration);
+    }
+
+    public String getTokenSignature(@NotNull String token) {
+        return token.split("\\.")[2];
     }
 
     @SuppressWarnings("DataFlowIssue")

@@ -13,7 +13,6 @@ public class LoginAttempt {
     private String username;
     @Column(name = "attempt_time")
     private LocalDateTime attemptTime;
-
     @Column(name = "success")
     private boolean success;
 

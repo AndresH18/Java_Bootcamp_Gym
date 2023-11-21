@@ -52,8 +52,9 @@ public class GymAuthenticationProvider extends DaoAuthenticationProvider {
                 logger.debug("Bad credentials for '{}'", userDetails.getUsername());
 
             loginAttempt.setSuccess(false);
-            loginAttemptRepository.save(loginAttempt);
             throw e;
+        } finally {
+            loginAttemptRepository.save(loginAttempt);
         }
     }
 

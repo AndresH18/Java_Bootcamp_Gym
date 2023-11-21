@@ -28,13 +28,13 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(requests -> {
 
-            requests.requestMatchers(HttpMethod.POST, "/*/register", "/account/login").permitAll();
+            requests.requestMatchers(HttpMethod.POST, "/*/register", "/account/login", "/account/logout").permitAll();
 
             requests.anyRequest().authenticated();
         });
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//
+
 //        http.logout(logout -> {
 //            logout.permitAll();
 //            logout.logoutUrl("/account/logout");
