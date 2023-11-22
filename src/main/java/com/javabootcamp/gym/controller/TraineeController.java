@@ -51,6 +51,7 @@ public class TraineeController extends BaseController implements IRegistrationCo
         var user = trainee.getUser();
 
         return ResponseEntity.ok(new LoginDto(user.getUsername(), user.getPassword()));
+//        return ResponseEntity.ok(new LoginDto(user.getUsername(), user.getPassword()));
     }
 
     @GetMapping("{username}")

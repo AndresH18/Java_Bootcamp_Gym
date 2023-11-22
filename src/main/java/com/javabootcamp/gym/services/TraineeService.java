@@ -56,7 +56,7 @@ public class TraineeService implements IUpdateService<UpdateTraineeDto> {
 
         if (!ServiceHelper.isValidDate(dateOfBirth)) return null;
 
-        var user = userService.createUser(firstName, lastName);
+        var user = userService.createUser(firstName, lastName, User.Role.TRAINEE);
 
         return traineeRepository.save(new Trainee(dateOfBirth, address, user));
     }

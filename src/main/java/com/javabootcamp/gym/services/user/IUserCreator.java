@@ -6,5 +6,5 @@ import org.jetbrains.annotations.Nullable;
 
 public interface IUserCreator {
     @Nullable
-    User createUser(@NotNull String firstName, @NotNull String lastName);
+    User createUser(@NotNull String firstName, @NotNull String lastName, User.Role role);
 }

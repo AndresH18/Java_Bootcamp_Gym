@@ -57,7 +57,7 @@ public final class TrainerService implements IUpdateService<UpdateTrainerDto> {
         if (specialization.isEmpty())
             return null;
 
-        var user = userService.createUser(firstName, lastName);
+        var user = userService.createUser(firstName, lastName, User.Role.TRAINER);
 
         return trainerRepository.save(new Trainer(specialization.get(), user));
     }
@@ -94,7 +94,7 @@ public final class TrainerService implements IUpdateService<UpdateTrainerDto> {
         if (specialization.isEmpty())
             return null;
 
-        var user = userService.createUser(firstName, lastName);
+        var user = userService.createUser(firstName, lastName, User.Role.TRAINER);
 
         return trainerRepository.save(new Trainer(specialization.get(), user));
     }

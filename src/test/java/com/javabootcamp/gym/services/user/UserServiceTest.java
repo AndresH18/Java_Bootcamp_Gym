@@ -15,7 +15,7 @@ class UserServiceTest {
         // arrange
         var repo = mock(UserRepository.class);
         when(repo.existsUserByUsernameAndPassword(anyString(), anyString())).thenReturn(true);
-        var service = new UserService(repo);
+        var service = new UserService(repo, null);
 
         // act
         var r = service.authenticate("Hello", "World");

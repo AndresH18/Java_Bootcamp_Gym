@@ -26,6 +26,7 @@ public class User implements IModel, UserDetails {
     private String username = "";
     @NotNull
     @JsonIgnore
+    @Column(name = "password_hash")
     private String password = "";
     @Column(name = "is_active")
     @JsonIgnore
@@ -143,11 +144,9 @@ public class User implements IModel, UserDetails {
         return role;
     }
 
-    public User setRole(Role role) {
+    public void setRole(Role role) {
         this.role = role;
-        return this;
     }
-
 
     public enum Role {
         TRAINER,

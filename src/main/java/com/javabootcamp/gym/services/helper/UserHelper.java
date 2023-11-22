@@ -4,6 +4,7 @@ import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.UserRepository;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.UUID;
 
@@ -14,26 +15,34 @@ public class UserHelper {
 
     public static @NotNull String createUsernamePrefix(@NotNull String firstName, @NotNull String lastName) {
         return firstName.split(" ")[0].toLowerCase() + "."
-                + lastName.split(" ")[0].toLowerCase();
+               + lastName.split(" ")[0].toLowerCase();
     }
 
-    public static User createUser(@NotNull String firstName, @NotNull String lastName, @NotNull String username, long count) {
+    public static User createUser(@NotNull String firstName, @NotNull String lastName, @NotNull String username, long count, PasswordEncoder passwordEncoder) {
         username = username + count;
         var password = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
+
+        // TODO: encode password
+//       var passwordHash = passwordEncoder.encode(password);
 
         return new User(firstName, lastName, username, password);
     }
 
 
-    public static User createUser(@NotNull String firstName,@NotNull String lastName,@NotNull UserRepository userRepository, Logger logger) {
+    public static User createUser(@NotNull String firstName,
+                                  @NotNull String lastName,
+                                  User.Role role,
+                                  @NotNull UserRepository userRepository,
+                                  PasswordEncoder passwordEncoder,
+                                  Logger logger) {
         var username = UserHelper.createUsernamePrefix(firstName, lastName);
         logger.trace("create: username prefix '{}'", username);
 
         var count = userRepository.countUserByUsernameStartingWith(username);
         logger.trace("create: username count: {}", count);
 
-        var user = UserHelper.createUser(firstName, lastName, username, count);
-        logger.trace("create: username='{}', password='{}'", user.getUsername(), user.getPassword());
+        var user = UserHelper.createUser(firstName, lastName, username, count, passwordEncoder);
+        user.setRole(role);
 
         user = userRepository.save(user);
         logger.info("create: created user");
