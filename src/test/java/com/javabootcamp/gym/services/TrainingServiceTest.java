@@ -1,115 +1,92 @@
-//package com.javabootcamp.gym.services;
-//
-//import com.javabootcamp.gym.data.dao.TrainingDao;
-//import com.javabootcamp.gym.data.model.Training;
-//import org.junit.jupiter.api.Test;
-//
-//import java.time.LocalDate;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.mockito.Mockito.*;
-//
-//class TrainingServiceTest {
-//    @Test
-//    void create_validIds() {
-//        // arrange
-//        LocalDate date = LocalDate.now().minusYears(1);
-//
-//        TrainingDao mock = mock(TrainingDao.class);
-//        when(mock.create(any(Training.class))).thenAnswer(a -> {
-//            Training t = a.getArgument(0);
-//            t.setId(1);
-//            return t;
-//        });
-//
-//        TrainingService service = new TrainingService(mock);
-//
-//        // act
-//        var r = service.create(2, 3, 4, "Weights", 10, date);
-//
-//        // assert
-//        assertNotNull(r);
-//        assertEquals(1, r.getId());
-//        assertEquals(2, r.getTraineeId());
-//        assertEquals(3, r.getTrainerId());
-//        assertEquals(4, r.getTrainingTypeId());
-//        assertEquals("Weights", r.getName());
-//        assertEquals(10, r.getDuration());
-//        assertEquals(date, r.getDate());
-//    }
-//
-//    @Test
-//    void create_inValidIds() {
-//        // arrange
-//        LocalDate date = LocalDate.now().minusYears(1);
-//
-//        TrainingDao mock = mock(TrainingDao.class);
-//        when(mock.create(any(Training.class))).thenAnswer(a -> {
-//            Training t = a.getArgument(0);
-//            t.setId(1);
-//            return t;
-//        });
-//
-//        TrainingService service = new TrainingService(mock);
-//
-//        // act
-//        var r = service.create(-1, 0, 1, "Weights", 10, date);
-//
-//        // assert
-//        assertNull(r);
-//    }
-//
-//    @Test
-//    void create_inValidDate() {
-//        // arrange
-//        LocalDate date = LocalDate.now().plusDays(1);
-//
-//        TrainingDao mock = mock(TrainingDao.class);
-//        when(mock.create(any(Training.class))).thenAnswer(a -> {
-//            Training t = a.getArgument(0);
-//            t.setId(1);
-//            return t;
-//        });
-//
-//        TrainingService service = new TrainingService(mock);
-//
-//        // act
-//        var r = service.create(2, 3, 4, "Weights", 10, date);
-//
-//        // assert
-//        assertNull(r);
-//    }
-//
-//
-//    @Test
-//    void getById() {
-//        // arrange
-//        TrainingDao mock = mock(TrainingDao.class);
-//        when(mock.getById(anyInt())).thenReturn(new Training(1, 1, 1, 1, "Weights", LocalDate.now(), 1));
-//
-//        TrainingService service = new TrainingService(mock);
-//
-//        // act
-//        var r = service.getById(1);
-//
-//        // assert
-//        assertNotNull(r);
-//        verify(mock).getById(anyInt());
-//    }
-//
-//    @Test
-//    void getById_invalidId_returnsNull() {
-//        // arrange
-//        TrainingDao mock = mock(TrainingDao.class);
-//
-//        TrainingService service = new TrainingService(mock);
-//
-//        // act
-//        var r = service.getById(-1);
-//
-//        // assert
-//        assertNull(r);
-//        verifyNoInteractions(mock);
-//    }
-//}
+package com.javabootcamp.gym.services;
+
+import com.javabootcamp.gym.data.dto.TrainingDto;
+import com.javabootcamp.gym.data.model.Trainee;
+import com.javabootcamp.gym.data.model.Trainer;
+import com.javabootcamp.gym.data.model.Training;
+import com.javabootcamp.gym.data.model.TrainingType;
+import com.javabootcamp.gym.data.repository.TraineeRepository;
+import com.javabootcamp.gym.data.repository.TrainerRepository;
+import com.javabootcamp.gym.data.repository.TrainingRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+class TrainingServiceTest {
+
+    private static TrainingRepository trainingRepository;
+    private static TraineeRepository traineeRepository;
+    private static TrainerRepository trainerRepository;
+
+    private TrainingService service;
+
+    @BeforeEach
+    public void beforeEach() {
+        trainingRepository = mock(TrainingRepository.class);
+        traineeRepository = mock(TraineeRepository.class);
+        trainerRepository = mock(TrainerRepository.class);
+
+        service = new TrainingService(trainingRepository, traineeRepository, trainerRepository);
+    }
+
+    @Test
+    void create_exceptionThrown_returnsNull() {
+        when(traineeRepository.findFirstByUserUsername(anyString())).thenThrow(new RuntimeException());
+
+        var t = service.create(new TrainingDto("trainee", "trainer", "training name", LocalDate.now(), 10));
+
+        assertNull(t);
+    }
+
+    @Test
+    void create_traineeNotFound_returnNull() {
+        when(traineeRepository.findFirstByUserUsername(anyString()))
+                .thenReturn(Optional.empty());
+        when(trainerRepository.findFirstByUserUsername(anyString()))
+                .thenReturn(Optional.of(new Trainer()));
+
+        var t = service.create(new TrainingDto("trainee", "trainer", "training name", LocalDate.now(), 10));
+
+        assertNull(t);
+    }
+
+    @Test
+    void create_trainerNotFound_returnNull() {
+        when(traineeRepository.findFirstByUserUsername(anyString()))
+                .thenReturn(Optional.of(new Trainee()));
+        when(trainerRepository.findFirstByUserUsername(anyString()))
+                .thenReturn(Optional.empty());
+
+        var t = service.create(new TrainingDto("trainee", "trainer", "training name", LocalDate.now(), 10));
+
+        assertNull(t);
+    }
+
+    @Test
+    void create_returnsNotNull() {
+        var trainer = new Trainer(1, new TrainingType(11, "Running"), null);
+        var trainee = new Trainee(2, LocalDate.now(), "House");
+        var dto = new TrainingDto("trainee-username", "trainer-username", "training-name", LocalDate.now(), 50);
+
+        when(traineeRepository.findFirstByUserUsername(anyString())).thenReturn(Optional.of(trainee));
+        when(trainerRepository.findFirstByUserUsername(anyString())).thenReturn(Optional.of(trainer));
+        when(trainingRepository.save(any())).thenAnswer(a -> {
+            Training training = a.getArgument(0);
+            training.setId(333);
+            return training;
+        });
+
+        var t = service.create(dto);
+
+        assertNotNull(t);
+        assertEquals(trainer, t.getTrainer());
+        assertEquals(trainee, t.getTrainee());
+        assertEquals(trainer.getSpecialization(), t.getTrainingType());
+    }
+
+}
