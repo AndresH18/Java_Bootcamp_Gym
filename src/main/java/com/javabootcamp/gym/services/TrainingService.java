@@ -5,7 +5,6 @@ import com.javabootcamp.gym.data.model.Training;
 import com.javabootcamp.gym.data.repository.TraineeRepository;
 import com.javabootcamp.gym.data.repository.TrainerRepository;
 import com.javabootcamp.gym.data.repository.TrainingRepository;
-import com.javabootcamp.gym.data.repository.TrainingTypeRepository;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,22 +13,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @Service
 public class TrainingService {
     private final Logger logger = LoggerFactory.getLogger(TrainingService.class);
     private final TrainingRepository trainingRepository;
     private final TraineeRepository traineeRepository;
     private final TrainerRepository trainerRepository;
-    private final TrainingTypeRepository trainingTypeRepository;
 
     @Autowired
-    public TrainingService(@NotNull TrainingRepository trainingRepository, TraineeRepository traineeRepository, TrainerRepository trainerRepository, TrainingTypeRepository trainingTypeRepository) {
+    public TrainingService(@NotNull TrainingRepository trainingRepository, TraineeRepository traineeRepository, TrainerRepository trainerRepository) {
         this.trainingRepository = trainingRepository;
         this.traineeRepository = traineeRepository;
         this.trainerRepository = trainerRepository;
-        this.trainingTypeRepository = trainingTypeRepository;
     }
 
     @Nullable
@@ -51,13 +46,5 @@ public class TrainingService {
             logger.error("Error creating training", e);
             return null;
         }
-
-    }
-
-    @Nullable
-    public Training getById(int id) {
-        logger.trace("getById: id={}", id);
-
-        return ServiceHelper.findById(id, trainingRepository);
     }
 }

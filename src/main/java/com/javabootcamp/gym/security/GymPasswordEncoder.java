@@ -3,6 +3,7 @@ package com.javabootcamp.gym.security;
 import org.springframework.stereotype.Component;
 
 @Component
+@Deprecated(forRemoval = true)
 public class GymPasswordEncoder implements org.springframework.security.crypto.password.PasswordEncoder {
 
     @Override

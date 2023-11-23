@@ -8,7 +8,6 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +47,11 @@ public class UserService implements IAuthentication, IUserCreator {
     }
 
     public boolean changePassword(@NotNull String username, @NotNull String oldPassword, @NotNull String newPassword) {
+
         try {
+            oldPassword = passwordEncoder.encode(oldPassword);
+            newPassword = passwordEncoder.encode(newPassword);
+
             var o = repository.findByUsernameAndPassword(username, oldPassword);
             if (o.isEmpty())
                 return false;
@@ -61,7 +64,7 @@ public class UserService implements IAuthentication, IUserCreator {
 
             return true;
         } catch (Exception e) {
-            logger.error("Error updating user");
+            logger.error("Error updating user", e);
             return false;
         }
     }

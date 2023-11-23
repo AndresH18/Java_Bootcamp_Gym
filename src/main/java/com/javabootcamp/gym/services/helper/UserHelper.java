@@ -35,6 +35,7 @@ public class UserHelper {
                                   @NotNull UserRepository userRepository,
                                   PasswordEncoder passwordEncoder,
                                   Logger logger) {
+
         var username = UserHelper.createUsernamePrefix(firstName, lastName);
         logger.trace("create: username prefix '{}'", username);
 

@@ -1,7 +1,6 @@
 package com.javabootcamp.gym.configuration;
 
 import com.javabootcamp.gym.security.GymAuthenticationProvider;
-import com.javabootcamp.gym.security.GymPasswordEncoder;
 import com.javabootcamp.gym.security.JwtAuthenticationFilter;
 import com.javabootcamp.gym.security.data.LoginAttemptRepository;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +16,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -24,8 +30,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
-        // TODO: delete this
         http.csrf(AbstractHttpConfigurer::disable);
+        http.cors(cors -> {
+            cors.configurationSource(corsConfigurationSource());
+        });
+
 
         http.authorizeHttpRequests(requests -> {
 
@@ -57,8 +66,17 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // TODO: use safe password encoder
         return new BCryptPasswordEncoder();
 //        return new GymPasswordEncoder();
+    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("*"));
+        configuration.setAllowedMethods(List.of("*"));
+        configuration.setAllowedHeaders(List.of("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
