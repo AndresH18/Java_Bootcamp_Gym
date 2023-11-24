@@ -311,15 +311,71 @@ class User {
 https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html
 
 ## Security
-- **Brute Force*+  
-    Continue creating GymAuthenticationProvider. Add checks in todo and register login attempts
-- **Logout**:  
-    Store jwts in table and use enabled field. When logged out, disable (or delete jwt(signature)) from db
 
+- **Brute Force*+  
+  Continue creating GymAuthenticationProvider. Add checks in todo and register login attempts
+- **Logout**:  
+  Store jwts in table and use enabled field. When logged out, disable (or delete jwt(signature)) from db
+
+## Swagger
+
+Include dependencies
+
+```groovy
+dependencies {
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.2.0'
+}
+```
+
+Allow access to endpoints.
+
+`http://localhost:8080/v3/api-docs`
+`http://localhost:8080/swagger-ui.html`
+
+### Document
+
+- To add documentation of the api as a whole, use `@OpenAPIDefinition` at the application start point. Like this:
+  ```java
+  
+  @OpenAPIDefinition(
+          info = @Info(
+                  title = "Gym CRM System",
+                  description = "API Definitions of the Gym crm Microservice",
+                  version = "1.0.0"
+          )
+  )
+  public class GymApplication {
+  
+      public static void main(String[] args) {
+          SpringApplication.run(GymApplication.class, args);
+      }
+  
+  }
+  ```
+- For controllers, use `@Tag`:
+```java
+@Tag(name = "Account endpoint", description = "Account actions")
+public class AccountController {
+    // . . .
+}
+```
+
+- For the methods, use `@Operation`:
+```java
+public class AccountController {
+  @Operation(summary = "Logs the user in")
+  public ResponseEntity<?> login() {
+        // . . . 
+    }
+}
+```
 ## Pièces de Résistance
 
 Implementations that I really liked
 
-- [SecurityService.java](src/main/java/com/javabootcamp/gym/security/services/SecurityService.java), use of `Supplier`s and `Function`s
-- [ServiceHelper.java](src/main/java/com/javabootcamp/gym/services/helper/ServiceHelper.java), use of `Function`s and `Consumer`s
-  - [UpdateServiceHelper.java](src/main/java/com/javabootcamp/gym/services/helper/UpdateServiceHelper.java)
+- [SecurityService.java](src/main/java/com/javabootcamp/gym/security/services/SecurityService.java), use of `Supplier`s
+  and `Function`s
+- [ServiceHelper.java](src/main/java/com/javabootcamp/gym/services/helper/ServiceHelper.java), use of `Function`s
+  and `Consumer`s
+    - [UpdateServiceHelper.java](src/main/java/com/javabootcamp/gym/services/helper/UpdateServiceHelper.java)

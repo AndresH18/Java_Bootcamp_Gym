@@ -4,6 +4,8 @@ import com.javabootcamp.gym.data.dto.LoginDto;
 import com.javabootcamp.gym.data.dto.PasswordChangeDto;
 import com.javabootcamp.gym.security.services.SecurityService;
 import com.javabootcamp.gym.services.user.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -12,15 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RestController
 @RequestMapping("/account")
+@Tag(name = "Account endpoint", description = "Account actions")
 public class AccountController {
     private final UserService userService;
     private final SecurityService securityService;
@@ -32,6 +35,7 @@ public class AccountController {
     }
 
     @PostMapping("login")
+    @Operation(summary = "Logs the user in")
     public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginDto, @NotNull BindingResult binding) {
         if (binding.hasErrors()) return new ResponseEntity<>(UNAUTHORIZED);
 //

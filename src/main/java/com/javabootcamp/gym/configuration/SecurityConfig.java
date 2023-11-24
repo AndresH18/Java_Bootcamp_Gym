@@ -16,12 +16,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -31,15 +29,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
-        http.cors(cors -> {
-            cors.configurationSource(corsConfigurationSource());
-        });
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
 
         http.authorizeHttpRequests(requests -> {
 
             requests.requestMatchers(HttpMethod.POST, "/*/register", "/account/login", "/account/logout").permitAll();
-
+// allow swagger to be accessed without authentication
+            requests.requestMatchers(HttpMethod.GET, "/swagger-ui.html", "/swagger-ui/*", "/swagger-resources/*", "/v3/api-docs").permitAll();
+//            requests.requestMatchers(HttpMethod.GET,
+//                    "/v3/api-docs",
+//                    "/v2/api-docs",
+//                    "/swagger-resources/**",
+//                    "/swagger-ui.html",
+//                    "/swagger-ui",
+//                    "/configuration/**",
+//                    "/webjars/**",
+//                    "/swagger-ui/*"
+//            ).permitAll();
             requests.anyRequest().authenticated();
         });
 
@@ -69,6 +76,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
 //        return new GymPasswordEncoder();
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
