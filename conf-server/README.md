@@ -41,6 +41,9 @@ For example:
 spring.cloud.config.server.git.uri=${user.home}/source/repos/gym-config
 ```
 
+> [!NOTE] We can use the file system for local development (using application-dev.properties, or another local
+> environment), and when we deploy we use a production environment using the repository url.
+
 ### File System
 
 To set configuration data from the filesystem, we do the following
@@ -49,7 +52,9 @@ To set configuration data from the filesystem, we do the following
 spring.profiles.active=native
 spring.cloud.config.server.native.search-locations=file:///<absolute-route-to-[folder|file]>
 ```
+
 For example
+
 ```properties
 spring.profiles.active=native
 spring.cloud.config.server.native.search-locations=file:///${user.dir}/resources/gym_app.properties
