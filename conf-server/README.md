@@ -100,6 +100,19 @@ The endpoints follow the following format, having a configuration file `gym.prop
   REPORTING_SERVICES_PORT: 8081
   ```
 
+## Security
 
+To enable security for the configuration server, we add the following dependency:
 
+```groovy
+implementation 'org.springframework.boot:spring-boot-starter-security'
+```
+
+This will enable username and password authentication by default. however, they are randomly generated at runtime. To
+set a username and password, we set the following properties:
+```properties
+spring.security.user.name=username
+spring.security.user.password=password
+```
+Clients also can configure these properties to enable them to get their configuration
 

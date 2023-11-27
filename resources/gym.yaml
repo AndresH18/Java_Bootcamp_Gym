@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost;databaseName=gym_crm;Trusted_Connection=True;TrustServerCertificate=true;
+    username: gym_admin
+    password: gym_administrator

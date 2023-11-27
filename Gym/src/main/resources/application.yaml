@@ -11,6 +11,15 @@ data:
     training: "mock_data\\training.csv"
 
 spring:
+  application:
+    name: gym
+  config:
+    import: "optional:configserver:http://localhost:8888"
+  security:
+    user:
+      name: Username123
+      password: Password123
+
   jpa:
     hibernate:
       naming:
@@ -19,10 +28,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLServerDialect
 
-  datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://localhost;databaseName=gym_crm;Trusted_Connection=True;TrustServerCertificate=true;
-    username: gym_admin
-    password: gym_administrator
+#  datasource:
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    url: jdbc:sqlserver://localhost;databaseName=gym_crm;Trusted_Connection=True;TrustServerCertificate=true;
+#    username: gym_admin
+#    password: gym_administrator
 
 

@@ -379,3 +379,29 @@ Implementations that I really liked
 - [ServiceHelper.java](src/main/java/com/javabootcamp/gym/services/helper/ServiceHelper.java), use of `Function`s
   and `Consumer`s
     - [UpdateServiceHelper.java](src/main/java/com/javabootcamp/gym/services/helper/UpdateServiceHelper.java)
+
+
+## Configuration
+To enable cloud configuration, we add the following to the `build.gradle`
+```groovy
+ext {
+    set('springCloudVersion', "2022.0.3")
+}
+
+dependencies {
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+```
+
+### Security
+If the configuration server has default security enable we can set the following properties
+```properties
+spring.security.user.name=username
+spring.security.user.password=password
+```
