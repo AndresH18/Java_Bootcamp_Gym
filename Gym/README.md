@@ -399,9 +399,18 @@ dependencyManagement {
 }
 ```
 
+And set this property:
+```properties
+spring.config.import=optional:configserver:<config-server-url>
+```
+For example
+```properties
+spring.config.import=optional:configserver:http://localhost:8888
+```
 ### Security
 If the configuration server has default security enable we can set the following properties
+
 ```properties
-spring.security.user.name=username
-spring.security.user.password=password
+spring.cloud.config.username=username
+spring.cloud.config.password=username
 ```

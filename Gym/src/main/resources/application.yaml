@@ -15,10 +15,13 @@ spring:
     name: gym
   config:
     import: "optional:configserver:http://localhost:8888"
-  security:
-    user:
-      name: Username123
-      password: Password123
+  cloud:
+#    security:
+#      username: Username123
+#      password: Password1233
+    config:
+      username: Username123
+      password: Password1233
 
   jpa:
     hibernate:
