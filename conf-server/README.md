@@ -24,9 +24,10 @@ public class ConfServerApplication {
 }
 ```
 
-## Configuration Data
+## Client
+### Configuration Data
 
-### Repository
+#### Repository
 
 We can store the configurations inside of a repository by setting the following properties in `application.properties`
 _(or yaml)_:
@@ -44,7 +45,7 @@ spring.cloud.config.server.git.uri=${user.home}/source/repos/gym-config
 > [!NOTE] We can use the file system for local development (using application-dev.properties, or another local
 > environment), and when we deploy we use a production environment using the repository url.
 
-### File System
+#### File System
 
 To set configuration data from the filesystem, we do the following
 
@@ -61,7 +62,7 @@ spring.cloud.config.server.native.search-locations=file:///${user.dir}/resources
 # como este projecto tiene varios modulos, entonces la ubicacion es proyect/resources/gym_app.resources
 ```
 
-## Endpoints
+### Endpoints
 
 The endpoints follow the following format, having a configuration file `gym.properties` with "REPORTING_SERVICES_PORT:
 8081" in the repository:
@@ -100,7 +101,7 @@ The endpoints follow the following format, having a configuration file `gym.prop
   REPORTING_SERVICES_PORT: 8081
   ```
 
-## Security
+### Security
 
 To enable security for the configuration server, we add the following dependency:
 
@@ -116,3 +117,36 @@ spring.security.user.password=password
 ```
 Clients also can configure these properties to enable them to get their configuration
 
+## Client
+To enable cloud configuration, we add the following to the `build.gradle`
+```groovy
+ext {
+    set('springCloudVersion', "2022.0.3")
+}
+
+dependencies {
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+```
+
+And set this property:
+```properties
+spring.config.import=optional:configserver:<config-server-url>
+```
+For example
+```properties
+spring.config.import=optional:configserver:http://localhost:8888
+```
+### Security
+If the configuration server has default security enable we can set the following properties
+
+```properties
+spring.cloud.config.username=username
+spring.cloud.config.password=username
+```

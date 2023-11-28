@@ -1,27 +1,12 @@
-logging:
-  level:
-    root: info
-
-data:
-  mock:
-    user: "mock_data\\user.csv"
-    training_type: "mock_data\\training.csv"
-    trainee: "mock_data\\trainee.csv"
-    trainer: "mock_data\\trainer.csv"
-    training: "mock_data\\training.csv"
-
 spring:
   application:
-    name: gym
-  config:
-    import: "optional:configserver:http://localhost:8888"
-  cloud:
-#    security:
-#      username: Username123
-#      password: Password1233
-    config:
-      username: Username123
-      password: Password1233
+    name: gym-service
+  #  config:
+  #    import: "optional:configserver:http://localhost:8888"
+  #  cloud:
+  #    config:
+  #      username: Username123
+  #      password: Password123
 
   jpa:
     hibernate:
@@ -31,10 +16,27 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLServerDialect
 
+server:
+  port: 8081
 #  datasource:
 #    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 #    url: jdbc:sqlserver://localhost;databaseName=gym_crm;Trusted_Connection=True;TrustServerCertificate=true;
 #    username: gym_admin
 #    password: gym_administrator
+logging:
+  level:
+    root: info
 
 
+data:
+  mock:
+    user: "mock_data\\user.csv"
+    training_type: "mock_data\\training.csv"
+    trainee: "mock_data\\trainee.csv"
+    trainer: "mock_data\\trainer.csv"
+    training: "mock_data\\training.csv"
+
+# jwt security key
+#security:
+#  jwt:
+#    secret:
