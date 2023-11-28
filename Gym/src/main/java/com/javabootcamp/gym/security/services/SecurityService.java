@@ -8,6 +8,8 @@ import com.javabootcamp.gym.security.JwtTokenProvider;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -117,7 +119,7 @@ public class SecurityService {
         return matchFunction.apply(authentication, value) ? success : failure;
     }
 
-
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final AuthenticationManager authManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtRepository jwtRepository;
@@ -151,7 +153,7 @@ public class SecurityService {
             return null;
 
         } catch (Exception e) {
-            // TODO: add logger statement
+            logger.error("Cannot authenticate user", e);
             return null;
         }
     }

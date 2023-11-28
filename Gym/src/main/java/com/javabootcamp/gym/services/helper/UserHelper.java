@@ -19,11 +19,11 @@ public class UserHelper {
     }
 
     public static User createUser(@NotNull String firstName, @NotNull String lastName, @NotNull String username, long count, PasswordEncoder passwordEncoder) {
-        username = username + count;
+        if (count > 0)
+            username = username + count;
         var password = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
 
-        // TODO: encode password
-//       var passwordHash = passwordEncoder.encode(password);
+        var passwordHash = passwordEncoder.encode(password);
 
         return new User(firstName, lastName, username, password);
     }

@@ -35,7 +35,9 @@ public class SecurityConfig {
         http.authorizeHttpRequests(requests -> {
 
             requests.requestMatchers(HttpMethod.POST, "/*/register", "/account/login", "/account/logout").permitAll();
-// allow swagger to be accessed without authentication
+            // dev-debug routes
+            requests.requestMatchers("/dev/*").permitAll();
+            // allow swagger to be accessed without authentication
             requests.requestMatchers(HttpMethod.GET, "/swagger-ui.html", "/swagger-ui/*", "/swagger-resources/*", "/v3/api-docs").permitAll();
 //            requests.requestMatchers(HttpMethod.GET,
 //                    "/v3/api-docs",

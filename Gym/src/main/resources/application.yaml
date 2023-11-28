@@ -27,7 +27,6 @@ logging:
   level:
     root: info
 
-
 data:
   mock:
     user: "mock_data\\user.csv"
