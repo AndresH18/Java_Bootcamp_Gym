@@ -15,3 +15,24 @@ logging:
   level:
     root: info
 
+
+#amazon:
+#  dynamodb:
+#    endpoint: <endpoint>
+#    region: us-east-1
+#  aws:
+#    access-key: "AKIATBFNAGKZ44IUD75D"
+#    secret-key: "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"
+##    secret-key: <secret-key>
+cloud:
+  aws:
+    credentials:
+      access-key: "AKIATBFNAGKZ44IUD75D"
+      secret-key: "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"
+    region:
+      auto: false
+      static: us-east-1
+    sqs:
+      endpoint: sqs-endpoint
+      queue-name: queue-name
+
