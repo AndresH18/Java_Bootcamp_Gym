@@ -3,6 +3,7 @@ package com.javabootcamp.reportingservice.data.dynamo;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @DynamoDbBean
@@ -11,7 +12,16 @@ public class Year {
 
     private List<Month> months;
 
-//    @DynamoDbPartitionKey
+    public Year(String year) {
+        this();
+        this.year = year;
+    }
+
+    public Year() {
+        months = new ArrayList<>();
+    }
+
+    //    @DynamoDbPartitionKey
 
     public String getYear() {
         return year;

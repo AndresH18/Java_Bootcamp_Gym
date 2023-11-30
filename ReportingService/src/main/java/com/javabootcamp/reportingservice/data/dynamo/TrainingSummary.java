@@ -2,8 +2,8 @@ package com.javabootcamp.reportingservice.data.dynamo;
 
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @DynamoDbBean
@@ -15,13 +15,26 @@ public class TrainingSummary {
     private boolean active;
     private List<Year> years;
 
+    public TrainingSummary(String trainerUsername, String trainerFirstName, String trainerLastName, boolean active) {
+        this();
+        this.trainerUsername = trainerUsername;
+        this.trainerFirstName = trainerFirstName;
+        this.trainerLastName = trainerLastName;
+        this.active = active;
+    }
+
+    public TrainingSummary() {
+        years = new ArrayList<>();
+    }
+
     @DynamoDbPartitionKey
     public String getTrainerUsername() {
         return trainerUsername;
     }
 
-    public void setTrainerUsername(String trainerUsername) {
+    public TrainingSummary setTrainerUsername(String trainerUsername) {
         this.trainerUsername = trainerUsername;
+        return this;
     }
 
     public String getTrainerFirstName() {
@@ -52,7 +65,8 @@ public class TrainingSummary {
         return years;
     }
 
-    public void setYears(List<Year> years) {
+    public TrainingSummary setYears(List<Year> years) {
         this.years = years;
+        return this;
     }
 }

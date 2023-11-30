@@ -6,6 +6,13 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 public class Training {
     private int duration;
 
+    public Training(int duration) {
+        this.duration = duration;
+    }
+
+    public Training() {
+    }
+
     public int getDuration() {
         return duration;
     }

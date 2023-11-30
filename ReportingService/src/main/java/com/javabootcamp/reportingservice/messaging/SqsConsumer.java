@@ -21,7 +21,12 @@ public class SqsConsumer {
     }
 
     @SqsListener(value = "${cloud.aws.sqs.queue-name}", deletionPolicy = SqsMessageDeletionPolicy.ON_SUCCESS)
-    public void ReportTraining(TrainingMessage dto) {
+    public void ReportTraining(TrainingMessage message) {
+        if (message.delete()) {
+            service.delete(message);
+        } else {
+            service.create(message);
+        }
 
     }
 }

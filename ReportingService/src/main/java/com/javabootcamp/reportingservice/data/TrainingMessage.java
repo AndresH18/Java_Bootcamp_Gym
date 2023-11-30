@@ -6,7 +6,8 @@ public record TrainingMessage(
         String trainerLastName,
         boolean active,
         int duration,
-        String date,
+        String year,
+        String month,
         boolean delete
 ) {
 }
