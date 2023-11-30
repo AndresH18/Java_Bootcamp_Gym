@@ -20,4 +20,19 @@ public class Training {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Training training = (Training) o;
+
+        return duration == training.duration;
+    }
+
+    @Override
+    public int hashCode() {
+        return duration;
+    }
 }

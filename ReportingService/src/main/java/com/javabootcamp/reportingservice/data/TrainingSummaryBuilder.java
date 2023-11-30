@@ -13,7 +13,7 @@ public class TrainingSummaryBuilder {
         return new TrainingSummaryBuilder();
     }
 
-    private TrainingSummary summary;
+    private final TrainingSummary summary;
     private Training training;
     private String yearString;
     private String monthString;

@@ -2,7 +2,10 @@ package com.javabootcamp.reportingservice.services;
 
 import com.javabootcamp.reportingservice.data.TrainingMessage;
 import com.javabootcamp.reportingservice.data.TrainingSummaryBuilder;
-import com.javabootcamp.reportingservice.data.dynamo.*;
+import com.javabootcamp.reportingservice.data.dynamo.Month;
+import com.javabootcamp.reportingservice.data.dynamo.Training;
+import com.javabootcamp.reportingservice.data.dynamo.TrainingSummary;
+import com.javabootcamp.reportingservice.data.dynamo.Year;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import software.amazon.awssdk.services.dynamodb.model.ResourceNotFoundException;
 import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -78,7 +82,14 @@ public class TrainingSummaryService implements IReportingService<TrainingMessage
 
     @Override
     public void delete(TrainingMessage message) {
+        var summary = getSummary(message.trainerUsername());
+        if (summary == null)
+            return;
 
+        var trainings = getTrainings(summary, message.year(), message.month());
+        trainings.remove(new Training(message.duration()));
+
+        table.updateItem(summary);
     }
 
     private TrainingSummary getSummary(String username) {
@@ -92,6 +103,12 @@ public class TrainingSummaryService implements IReportingService<TrainingMessage
 
     private Month getMonth(Year year, String month) {
         return getFirst(year.getMonths(), m -> m.getMonth().equalsIgnoreCase(month)).orElse(null);
+    }
+
+    private List<Training> getTrainings(TrainingSummary summary, String year, String month) {
+        var y = getYear(summary, year);
+        var m = getMonth(y, month);
+        return m.getTrainings();
     }
 
     private Year addYear(TrainingSummary summary, String year) {

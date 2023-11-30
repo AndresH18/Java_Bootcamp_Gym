@@ -5,6 +5,7 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @DynamoDbBean
 public class TrainingSummary {
@@ -68,5 +69,32 @@ public class TrainingSummary {
     public TrainingSummary setYears(List<Year> years) {
         this.years = years;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TrainingSummary summary = (TrainingSummary) o;
+
+        if (active != summary.active) return false;
+        if (!Objects.equals(trainerUsername, summary.trainerUsername))
+            return false;
+        if (!Objects.equals(trainerFirstName, summary.trainerFirstName))
+            return false;
+        if (!Objects.equals(trainerLastName, summary.trainerLastName))
+            return false;
+        return Objects.equals(years, summary.years);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = trainerUsername != null ? trainerUsername.hashCode() : 0;
+        result = 31 * result + (trainerFirstName != null ? trainerFirstName.hashCode() : 0);
+        result = 31 * result + (trainerLastName != null ? trainerLastName.hashCode() : 0);
+        result = 31 * result + (active ? 1 : 0);
+        result = 31 * result + (years != null ? years.hashCode() : 0);
+        return result;
     }
 }
