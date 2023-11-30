@@ -53,7 +53,6 @@ public class TrainingSummaryService implements IReportingService<TrainingMessage
         var summary = getSummary(message.trainerUsername());
 
         if (summary != null) {
-            // TODO: check if firstName, lastName, isActive has changed. If so, update
             updateInformation(summary, message);
             var year = getYear(summary, message.year());
 
