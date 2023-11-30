@@ -33,7 +33,7 @@ public class DynamoDbConfiguration {
                     .table(TrainingSummary.class.getSimpleName(),
                             TableSchema.fromBean(TrainingSummary.class));
         } catch (Exception e) {
-            return null;
+            throw e;
         }
     }
 

@@ -22,8 +22,7 @@ public class Year {
         months = new ArrayList<>();
     }
 
-    //    @DynamoDbPartitionKey
-
+    @DynamoDbPartitionKey
     public String getYear() {
         return year;
     }
@@ -47,14 +46,11 @@ public class Year {
 
         Year year1 = (Year) o;
 
-        if (!Objects.equals(year, year1.year)) return false;
-        return Objects.equals(months, year1.months);
+        return Objects.equals(year, year1.year);
     }
 
     @Override
     public int hashCode() {
-        int result = year != null ? year.hashCode() : 0;
-        result = 31 * result + (months != null ? months.hashCode() : 0);
-        return result;
+        return year != null ? year.hashCode() : 0;
     }
 }

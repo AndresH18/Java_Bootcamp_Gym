@@ -1,6 +1,7 @@
 package com.javabootcamp.reportingservice.data.dynamo;
 
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,8 @@ public class Month {
     public Month() {
         trainings = new ArrayList<>();
     }
-    //    @DynamoDbPartitionKey
 
+    @DynamoDbPartitionKey
     public String getMonth() {
         return month;
     }
@@ -44,14 +45,11 @@ public class Month {
 
         Month month1 = (Month) o;
 
-        if (!Objects.equals(month, month1.month)) return false;
-        return Objects.equals(trainings, month1.trainings);
+        return Objects.equals(month, month1.month);
     }
 
     @Override
     public int hashCode() {
-        int result = month != null ? month.hashCode() : 0;
-        result = 31 * result + (trainings != null ? trainings.hashCode() : 0);
-        return result;
+        return month != null ? month.hashCode() : 0;
     }
 }

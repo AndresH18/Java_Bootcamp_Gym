@@ -1,6 +1,7 @@
 package com.javabootcamp.reportingservice.data.dynamo;
 
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbIgnore;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
 import java.util.ArrayList;
@@ -16,14 +17,6 @@ public class TrainingSummary {
     private boolean active;
     private List<Year> years;
 
-    public TrainingSummary(String trainerUsername, String trainerFirstName, String trainerLastName, boolean active) {
-        this();
-        this.trainerUsername = trainerUsername;
-        this.trainerFirstName = trainerFirstName;
-        this.trainerLastName = trainerLastName;
-        this.active = active;
-    }
-
     public TrainingSummary() {
         years = new ArrayList<>();
     }
@@ -33,9 +26,8 @@ public class TrainingSummary {
         return trainerUsername;
     }
 
-    public TrainingSummary setTrainerUsername(String trainerUsername) {
+    public void setTrainerUsername(String trainerUsername) {
         this.trainerUsername = trainerUsername;
-        return this;
     }
 
     public String getTrainerFirstName() {
@@ -66,9 +58,8 @@ public class TrainingSummary {
         return years;
     }
 
-    public TrainingSummary setYears(List<Year> years) {
+    public void setYears(List<Year> years) {
         this.years = years;
-        return this;
     }
 
     @Override
@@ -83,9 +74,7 @@ public class TrainingSummary {
             return false;
         if (!Objects.equals(trainerFirstName, summary.trainerFirstName))
             return false;
-        if (!Objects.equals(trainerLastName, summary.trainerLastName))
-            return false;
-        return Objects.equals(years, summary.years);
+        return Objects.equals(trainerLastName, summary.trainerLastName);
     }
 
     @Override
@@ -94,7 +83,6 @@ public class TrainingSummary {
         result = 31 * result + (trainerFirstName != null ? trainerFirstName.hashCode() : 0);
         result = 31 * result + (trainerLastName != null ? trainerLastName.hashCode() : 0);
         result = 31 * result + (active ? 1 : 0);
-        result = 31 * result + (years != null ? years.hashCode() : 0);
         return result;
     }
 }

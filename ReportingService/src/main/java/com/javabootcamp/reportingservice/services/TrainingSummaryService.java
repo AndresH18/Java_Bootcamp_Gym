@@ -53,6 +53,8 @@ public class TrainingSummaryService implements IReportingService<TrainingMessage
         var summary = getSummary(message.trainerUsername());
 
         if (summary != null) {
+            // TODO: check if firstName, lastName, isActive has changed. If so, update
+            updateInformation(summary, message);
             var year = getYear(summary, message.year());
 
             if (year == null)
@@ -71,6 +73,8 @@ public class TrainingSummaryService implements IReportingService<TrainingMessage
                     .setFirstName(message.trainerFirstName())
                     .setLastName(message.trainerLastName())
                     .setTraining(new Training(message.duration()))
+                    .setYear(message.year())
+                    .setMonth(message.month())
                     .setActive(message.active());
 
             summary = builder.build();
@@ -92,9 +96,20 @@ public class TrainingSummaryService implements IReportingService<TrainingMessage
         table.updateItem(summary);
     }
 
+
+    private void updateInformation(TrainingSummary summary, TrainingMessage message) {
+        summary.setTrainerFirstName(message.trainerFirstName());
+        summary.setTrainerLastName(message.trainerLastName());
+        summary.setActive(message.active());
+    }
+
     private TrainingSummary getSummary(String username) {
-        TrainingSummary summary = table.getItem(Key.builder().partitionValue(username).build());
-        return summary;
+        try {
+            TrainingSummary summary = table.getItem(Key.builder().partitionValue(username).build());
+            return summary;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private Year getYear(TrainingSummary summary, String year) {
@@ -126,16 +141,21 @@ public class TrainingSummaryService implements IReportingService<TrainingMessage
 
     private void createTableIfNotExists(DynamoDbClient client) {
         if (!doesTableExist()) {
-            table.createTable();
+            try {
+                table.createTable();
+                // The 'dynamoDbClient' instance that's passed to the builder for the DynamoDbWaiter is the same instance
+                // that was passed to the builder of the DynamoDbEnhancedClient instance used to create the 'customerDynamoDbTable'.
+                // This means that the same Region that was configured on the standard 'dynamoDbClient' instance is used for all service clients.
+                try (DynamoDbWaiter waiter = DynamoDbWaiter.builder().client(client).build()) { // DynamoDbWaiter is Autocloseable
 
-            // The 'dynamoDbClient' instance that's passed to the builder for the DynamoDbWaiter is the same instance
-            // that was passed to the builder of the DynamoDbEnhancedClient instance used to create the 'customerDynamoDbTable'.
-            // This means that the same Region that was configured on the standard 'dynamoDbClient' instance is used for all service clients.
-            try (DynamoDbWaiter waiter = DynamoDbWaiter.builder().client(client).build()) { // DynamoDbWaiter is Autocloseable
-                ResponseOrException<DescribeTableResponse> response = waiter.waitUntilTableExists(builder -> builder.tableName(TrainingSummary.class.getSimpleName()).build()).matched();
-                DescribeTableResponse tableDescription = response.response().orElseThrow(() -> new RuntimeException("TrainingSummary table was not created."));
-                // The actual error can be inspected in response.exception()
-                logger.info("TrainingSummary table was created.");
+
+                    ResponseOrException<DescribeTableResponse> response = waiter.waitUntilTableExists(builder -> builder.tableName(TrainingSummary.class.getSimpleName()).build()).matched();
+                    DescribeTableResponse tableDescription = response.response().orElseThrow(() -> new RuntimeException("TrainingSummary table was not created."));
+                    // The actual error can be inspected in response.exception()
+                    logger.info("TrainingSummary table was created.");
+                } catch (Exception e) {
+                    logger.error("Error creating table", e);
+                }
             } catch (Exception e) {
                 logger.error("Error creating table", e);
             }
