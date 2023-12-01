@@ -1,0 +1,13 @@
+#############################################################
+##### Configuration file for using configuration server #####
+#############################################################
+
+spring:
+  config:
+    import: configserver:http://localhost:8888
+  cloud:
+    config:
+      username: Username123
+      password: Password123
+    discovery:
+      enabled: true

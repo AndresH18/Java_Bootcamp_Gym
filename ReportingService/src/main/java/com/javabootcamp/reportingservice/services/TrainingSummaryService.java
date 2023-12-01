@@ -80,7 +80,6 @@ public class TrainingSummaryService implements IReportingService<TrainingMessage
         }
         // update if exists, create if doesnt exists
         table.updateItem(summary);
-
     }
 
     @Override

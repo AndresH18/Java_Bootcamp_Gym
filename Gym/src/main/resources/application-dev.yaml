@@ -1,24 +1,35 @@
-# logging
-logging:
-  level:
-    root: debug
+##################################################################
+######### Configuration file for local development ###############
+###------------------------------------------------------------###
+### Database is SQL Server, localhost instance ----------------###
+###------------------------------------------------------------###
+### Configuration server is optional, must specify host -------###
+###------------------------------------------------------------###
+### Disables Discovery Service---------------------------------###
+##################################################################
 
-# database configuration
+# hibernate configuration
 spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost;databaseName=gym_crm;Trusted_Connection=True;TrustServerCertificate=true;
+    username: gym_admin
+    password: gym_administrator
   jpa:
     hibernate:
       ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
         show_sql: true
         format_sql: true
   config:
-    import: "configserver:http://localhost:8888"
+    import: "optional:configserver:"
   cloud:
-    config:
-      username: Username123
-      password: Password123
-
+    discovery:
+      enabled: false
 
 # health checks - actuator
 management:
@@ -40,8 +51,12 @@ management:
       exposure:
         include: "health,loggers,info,prometheus"
 
-
+# Security
 security:
   jwt:
     secret: "ThisIsTheSecretUsedToCreateTheJWTTokenButItNeedsToBeVeryLong"
 
+# logging
+logging:
+  level:
+    root: debug

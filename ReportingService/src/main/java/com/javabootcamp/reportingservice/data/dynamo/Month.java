@@ -14,7 +14,7 @@ public class Month {
 
     public Month(String month) {
         this();
-        this.month = month;
+        setMonth(month);
     }
 
     public Month() {
@@ -27,7 +27,7 @@ public class Month {
     }
 
     public void setMonth(String month) {
-        this.month = month;
+        this.month = month.toUpperCase();
     }
 
     public List<Training> getTrainings() {

@@ -5,12 +5,14 @@ import com.javabootcamp.reportingservice.messaging.SqsConsumer;
 import com.javabootcamp.reportingservice.services.TrainingSummaryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
- @RequestMapping("dev")
+@RequestMapping("dev")
+@Profile("dev")
 public class TestClass {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final SqsConsumer consumer;
@@ -34,6 +36,6 @@ public class TestClass {
                 "NOV",
                 true);
 
-        consumer.ReportTraining(m);
+        consumer.ReportTraining(m.toString());
     }
 }

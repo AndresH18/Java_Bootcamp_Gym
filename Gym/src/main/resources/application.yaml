@@ -1,41 +1,18 @@
 spring:
   application:
     name: gym-service
-  #  config:
-  #    import: "optional:configserver:http://localhost:8888"
-  #  cloud:
-  #    config:
-  #      username: Username123
-  #      password: Password123
 
   jpa:
     hibernate:
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        physical-strategy:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.SQLServerDialect
+        dialect:
 
 server:
   port: 8081
-#  datasource:
-#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-#    url: jdbc:sqlserver://localhost;databaseName=gym_crm;Trusted_Connection=True;TrustServerCertificate=true;
-#    username: gym_admin
-#    password: gym_administrator
+
 logging:
   level:
     root: info
-
-data:
-  mock:
-    user: "mock_data\\user.csv"
-    training_type: "mock_data\\training.csv"
-    trainee: "mock_data\\trainee.csv"
-    trainer: "mock_data\\trainer.csv"
-    training: "mock_data\\training.csv"
-
-# jwt security key
-#security:
-#  jwt:
-#    secret:

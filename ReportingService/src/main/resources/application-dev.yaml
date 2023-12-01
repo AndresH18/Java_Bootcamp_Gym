@@ -1,14 +1,22 @@
+###################################################################
+######### Configuration file for local development ################
+###-------------------------------------------------------------###
+### Configuration server is optional, must specify host --------###
+###------------------------------------------------------------###
+### Disables Discovery Service---------------------------------###
+###################################################################
+
 spring:
   config:
-    import: "optional:configserver:http://localhost:8888"
+    import: "optional:configserver:"
   cloud:
-    config:
-      username: Username123
-      password: Password123
+    discovery:
+      enabled: false
 
 logging:
   level:
-    root: debug
+    root: trace
+
 management:
   endpoint:
     health:

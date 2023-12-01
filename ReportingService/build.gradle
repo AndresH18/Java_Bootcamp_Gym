@@ -22,6 +22,8 @@ ext {
 }
 
 dependencies {
+    implementation 'org.springframework:spring-messaging:5.3.24'
+
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
@@ -31,10 +33,6 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     implementation 'org.springframework.cloud:spring-cloud-aws-messaging:2.2.6.RELEASE'
 
-
-//    implementation 'com.amazonaws:aws-java-sdk-sqs'
-//    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-dynamodb
-//    implementation 'com.amazonaws:aws-java-sdk-dynamodb:1.12.597'
     implementation(platform('software.amazon.awssdk:bom:2.21.33'))
     implementation 'software.amazon.awssdk:dynamodb-enhanced'
 
