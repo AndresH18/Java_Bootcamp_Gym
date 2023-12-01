@@ -1,7 +1,6 @@
 package com.javabootcamp.reportingservice.data.dynamo;
 
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
 @DynamoDbBean
 public class Training {
@@ -13,8 +12,7 @@ public class Training {
 
     public Training() {
     }
-
-    @DynamoDbPartitionKey
+    
     public int getDuration() {
         return duration;
     }

@@ -1,10 +1,8 @@
 package com.javabootcamp.reportingservice.messaging;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javabootcamp.reportingservice.configuration.prometheus.ConsumerMetrics;
 import com.javabootcamp.reportingservice.data.TrainingMessage;
 import com.javabootcamp.reportingservice.services.TrainingSummaryService;
 import org.slf4j.Logger;
@@ -19,13 +17,15 @@ public class SqsConsumer {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final TrainingSummaryService service;
+    private final ConsumerMetrics metrics;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 
     @Autowired
-    public SqsConsumer(TrainingSummaryService service) {
+    public SqsConsumer(TrainingSummaryService service, ConsumerMetrics metrics) {
         this.service = service;
+        this.metrics = metrics;
     }
 
     @SqsListener(value = "gym-reporting-service-queue", deletionPolicy = SqsMessageDeletionPolicy.ON_SUCCESS)
@@ -39,6 +39,7 @@ public class SqsConsumer {
             } else {
                 service.create(trainingMessage);
             }
+            metrics.incrementMessagesReceived();
         } catch (JsonProcessingException exception) {
             logger.error("Couldn't parse json to TrainingMessage", exception);
             throw new RuntimeException("Error parsing json", exception);

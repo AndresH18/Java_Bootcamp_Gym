@@ -27,13 +27,9 @@ public class DynamoDbConfiguration {
 
     @Bean
     public DynamoDbTable<TrainingSummary> trainingSummaryDynamoDbTable(DynamoDbEnhancedClient dynamoDbEnhancedClient) {
-        try {
-            return dynamoDbEnhancedClient
-                    .table(TrainingSummary.class.getSimpleName(),
-                            TableSchema.fromBean(TrainingSummary.class));
-        } catch (Exception e) {
-            throw e;
-        }
+        return dynamoDbEnhancedClient
+                .table(TrainingSummary.class.getSimpleName(),
+                        TableSchema.fromBean(TrainingSummary.class));
     }
 
     @Bean

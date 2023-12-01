@@ -36,7 +36,7 @@ public class SecurityConfig {
 
             requests.requestMatchers(HttpMethod.POST, "/*/register", "/account/login", "/account/logout").permitAll();
             // dev-debug routes
-            requests.requestMatchers("/dev/*").permitAll();
+            requests.requestMatchers("/dev/*", "/actuator/**").permitAll();
             // allow swagger to be accessed without authentication
             requests.requestMatchers(HttpMethod.GET, "/swagger-ui.html", "/swagger-ui/*", "/swagger-resources/*", "/v3/api-docs").permitAll();
 //            requests.requestMatchers(HttpMethod.GET,

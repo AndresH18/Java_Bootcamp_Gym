@@ -1,6 +1,7 @@
 package com.javabootcamp.gym.messaging.report;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javabootcamp.gym.configuration.prometheus.ReportingServiceMetrics;
 import com.javabootcamp.gym.messaging.TrainingMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,14 +26,16 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
 
     private final ObjectMapper mapper = new ObjectMapper();
     private final QueueMessagingTemplate queueMessagingTemplate;
+    private final ReportingServiceMetrics metrics;
 
     private final BlockingQueue<TrainingMessage> queue;
     private final ExecutorService executor;
     private final AtomicBoolean running;
 
     @Autowired
-    public ReportingServiceAsync(QueueMessagingTemplate queueMessagingTemplate) {
+    public ReportingServiceAsync(QueueMessagingTemplate queueMessagingTemplate, ReportingServiceMetrics metrics) {
         this.queueMessagingTemplate = queueMessagingTemplate;
+        this.metrics = metrics;
         this.running = new AtomicBoolean(true);
         this.queue = new LinkedBlockingQueue<>();
         this.executor = Executors.newSingleThreadExecutor();
@@ -65,6 +68,7 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
                 try {
                     TrainingMessage message = queue.take();
                     send(message);
+                    postSend();
                 } catch (InterruptedException e) {
                     LOGGER.error("Thread interrupted while sending message", e);
                     Thread.currentThread().interrupt();
@@ -112,6 +116,10 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
     private Message<String> buildMessage(String messageString) {
         var builder = org.springframework.messaging.support.MessageBuilder.withPayload(messageString);
         return builder.build();
+    }
+
+    private void postSend() {
+        metrics.incrementMessagesSent();
     }
 
     /**

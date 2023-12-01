@@ -48,28 +48,29 @@ public class DevController {
     public void sendMessageToAwsSqs() {
 
         var messages = new TrainingMessage[]{
-//                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 1, "2020", "JUN", false),
-////                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 2, "2020", "JUN", false),
-//                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 3, "2020", "JUN", false),
-////                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 5, "2020", "JUL", false),
-////                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 5, "2020", "JUL", true),
-////                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 6, "2020", "JUL", false),
-//                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 1, "2020", "OCT", false),
-//                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 2, "2020", "OCT", false),
-////                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 2, "2020", "OCT", true),
-////                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 4, "2020", "OCT", false),
-////                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 4, "2020", "OCT", false),
-////                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 1, "2020", "DIC", false),
-////                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 3, "2023", "JUN", false),
-////                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 10, "2023", "SEP", false),
-////                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 5, "2023", "DIC", false),
-////                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 5, "2023", "DIC", true),
-//
+                // 10 andres.hoyos
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 1, "2020", "JUN", false),
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 2, "2020", "JUN", false),
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 3, "2020", "JUN", false),
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 5, "2020", "JUL", false),
+//                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 5, "2020", "JUL", true),
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 6, "2020", "JUL", false),
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 1, "2020", "OCT", false),
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 2, "2020", "OCT", false),
+//                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 2, "2020", "OCT", true),
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 4, "2020", "OCT", false),
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 4, "2020", "OCT", false),
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 1, "2020", "DIC", false),
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 3, "2023", "JUN", false),
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 10, "2023", "SEP", false),
+                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 5, "2023", "DIC", false),
+//                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 5, "2023", "DIC", true),
+                // 3 david.velasquez
                 new TrainingMessage("david.velasquez", "David", "Velasquez", false, 10, "2022", "JAN", false),
                 new TrainingMessage("david.velasquez", "David", "Velasquez", false, 5, "2022", "DEC", false),
                 new TrainingMessage("david.velasquez", "David", "Velasquez", false, 5, "2023", "DEC", false),
-//                new TrainingMessage("david.velasquez", "David", "Velasquez", false, 5, "2023", "DEC", true),
-//                new TrainingMessage("david.velasquez", "David", "Velasquez", false, 1, "2023", "DEC", true)
+                new TrainingMessage("david.velasquez", "David", "Velasquez", false, 5, "2023", "DEC", true),
+                new TrainingMessage("david.velasquez", "David", "Velasquez", false, 1, "2023", "DEC", false)
         };
 
         for (TrainingMessage message : messages) {
