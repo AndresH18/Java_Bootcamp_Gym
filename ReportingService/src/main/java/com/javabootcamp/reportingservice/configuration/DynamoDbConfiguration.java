@@ -37,7 +37,6 @@ public class DynamoDbConfiguration {
 
         DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
                 .dynamoDbClient(dynamoDbClient).build();
-
         return enhancedClient;
     }
 

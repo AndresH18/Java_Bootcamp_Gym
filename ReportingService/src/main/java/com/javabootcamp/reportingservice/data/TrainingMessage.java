@@ -5,9 +5,14 @@ public record TrainingMessage(
         String trainerFirstName,
         String trainerLastName,
         boolean active,
-        int duration,
+        Integer duration,
         String year,
         String month,
         boolean delete
 ) {
+
+    public TrainingMessage {
+        year = year.toUpperCase();
+        month = month.toUpperCase();
+    }
 }

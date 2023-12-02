@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +24,8 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
     private static final int RETRY_COOLDOWN = 1;
 
     private final ObjectMapper mapper = new ObjectMapper();
-    private final QueueMessagingTemplate queueMessagingTemplate;
+    //    private final QueueMessagingTemplate queueMessagingTemplate;
+    private final SqsQueue sqs;
     private final ReportingServiceMetrics metrics;
 
     private final BlockingQueue<TrainingMessage> queue;
@@ -33,8 +33,9 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
     private final AtomicBoolean running;
 
     @Autowired
-    public ReportingServiceAsync(QueueMessagingTemplate queueMessagingTemplate, ReportingServiceMetrics metrics) {
-        this.queueMessagingTemplate = queueMessagingTemplate;
+    public ReportingServiceAsync(/*QueueMessagingTemplate queueMessagingTemplate, */SqsQueue sqs, ReportingServiceMetrics metrics) {
+        this.sqs = sqs;
+//        this.queueMessagingTemplate = queueMessagingTemplate;
         this.metrics = metrics;
         this.running = new AtomicBoolean(true);
         this.queue = new LinkedBlockingQueue<>();
@@ -90,9 +91,8 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
         do {
             LOGGER.info("Thread {}. Sending message. Transaction_ID={}", Thread.currentThread().getId(), transactionId);
             try {
-                var json = mapper.writeValueAsString(message);
-                var m = buildMessage(json);
-                queueMessagingTemplate.send(m);
+                var m = mapper.writeValueAsString(message);
+                sqs.sendMessage(m);
                 success = true;
             } catch (Exception e) {
                 LOGGER.error("Thread %d. Failed to send message. Attempt %d. Retrying in %d. Transaction_ID=%s"
@@ -115,6 +115,7 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
 
     private Message<String> buildMessage(String messageString) {
         var builder = org.springframework.messaging.support.MessageBuilder.withPayload(messageString);
+
         return builder.build();
     }
 

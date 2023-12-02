@@ -52,6 +52,7 @@ public class DevController {
                 new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 1, "2020", "JUN", false),
                 new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 2, "2020", "JUN", false),
                 new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 3, "2020", "JUN", false),
+
                 new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 5, "2020", "JUL", false),
 //                new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 5, "2020", "JUL", true),
                 new TrainingMessage("andres.hoyos", "Andres", "Hoyos", true, 6, "2020", "JUL", false),
@@ -69,7 +70,7 @@ public class DevController {
                 new TrainingMessage("david.velasquez", "David", "Velasquez", false, 10, "2022", "JAN", false),
                 new TrainingMessage("david.velasquez", "David", "Velasquez", false, 5, "2022", "DEC", false),
                 new TrainingMessage("david.velasquez", "David", "Velasquez", false, 5, "2023", "DEC", false),
-                new TrainingMessage("david.velasquez", "David", "Velasquez", false, 5, "2023", "DEC", true),
+//                new TrainingMessage("david.velasquez", "David", "Velasquez", false, 5, "2023", "DEC", true),
                 new TrainingMessage("david.velasquez", "David", "Velasquez", false, 1, "2023", "DEC", false)
         };
 
