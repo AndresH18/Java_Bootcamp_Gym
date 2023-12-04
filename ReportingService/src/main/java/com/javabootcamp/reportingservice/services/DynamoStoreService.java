@@ -21,10 +21,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
 
 @Service
 public class DynamoStoreService implements IStoreService<TrainingMessage>, DisposableBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(DynamoStoreService.class);
+
 
     private final DynamoDbTable<TrainingSummary> table;
     private final BlockingQueue<TrainingMessage> queue;
@@ -44,6 +46,27 @@ public class DynamoStoreService implements IStoreService<TrainingMessage>, Dispo
 
 
     private void create(TrainingMessage message) {
+        var training = updateTraining(message, message::duration);
+
+        table.updateItem(training);
+
+    }
+
+
+    private void delete(TrainingMessage message) {
+        var training = updateTraining(message, () -> -(message.duration()));
+
+        table.updateItem(training);
+    }
+
+    /**
+     * Updates the training summary based on the provided message and supplier.
+     *
+     * @param message  The TrainingMessage containing information for the update.
+     * @param supplier A supplier providing an Integer value used for the update.
+     * @return The updated {@link TrainingSummary}after the modifications.
+     */
+    private TrainingSummary updateTraining(TrainingMessage message, Supplier<Integer> supplier) {
         var training = getTrainingSummary(message.trainerUsername());
         if (training == null) {
             training = new TrainingSummary(message.trainerUsername(), message.trainerFirstName(), message.trainerLastName(), message.active());
@@ -55,22 +78,17 @@ public class DynamoStoreService implements IStoreService<TrainingMessage>, Dispo
             training.setSummary(summary);
         }
 
-        var months = summary.get(message.year());
-        if (months == null) {
-            months = new HashMap<>();
-            summary.put(message.year(), months);
-        }
+        var months = summary.computeIfAbsent(message.year(), k -> new HashMap<>());
+//        var months = summary.get(message.year());
+//        if (months == null) {
+//            months = new HashMap<>();
+//            summary.put(message.year(), months);
+//        }
 
         var monthValue = months.get(message.month());
-        monthValue = message.duration() + (monthValue != null ? monthValue : 0);
+        monthValue = supplier.get() + (monthValue != null ? monthValue : 0);
         months.put(message.month(), monthValue);
-
-        table.updateItem(training);
-
-    }
-
-    private void delete(TrainingMessage message) {
-
+        return training;
     }
 
     private TrainingSummary getTrainingSummary(String username) {
@@ -129,7 +147,8 @@ public class DynamoStoreService implements IStoreService<TrainingMessage>, Dispo
 
 
                     ResponseOrException<DescribeTableResponse> response = waiter.waitUntilTableExists(builder -> builder.tableName(TrainingSummary.class.getSimpleName()).build()).matched();
-                    DescribeTableResponse tableDescription = response.response().orElseThrow(() -> new RuntimeException("TrainingSummary table was not created."));
+                    /*DescribeTableResponse tableDescription = */
+                    response.response().orElseThrow(() -> new RuntimeException("TrainingSummary table was not created."));
                     // The actual error can be inspected in response.exception()
                     LOGGER.info("TrainingSummary table was created.");
                 } catch (Exception e) {

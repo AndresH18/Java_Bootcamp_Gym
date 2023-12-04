@@ -32,12 +32,15 @@ public class TrainingController extends BaseController {
             var errors = handleValidationErrors(binding);
             return new ResponseEntity<>(errors, BAD_REQUEST);
         }
+        try {
+            var training = service.create(dto);
 
-        var training = service.create(dto);
+            if (training == null)
+                return ResponseEntity.internalServerError().build();
 
-        if (training == null)
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
-
-        return ResponseEntity.ok().build();
+        }
     }
 }

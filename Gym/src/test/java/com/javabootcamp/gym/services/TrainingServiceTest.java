@@ -31,7 +31,7 @@ class TrainingServiceTest {
         traineeRepository = mock(TraineeRepository.class);
         trainerRepository = mock(TrainerRepository.class);
 
-        service = new TrainingService(trainingRepository, traineeRepository, trainerRepository);
+        service = new TrainingService(trainingRepository, traineeRepository, trainerRepository, null);
     }
 
     @Test

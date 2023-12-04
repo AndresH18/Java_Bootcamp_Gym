@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -55,10 +54,11 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
      * @param message The message to be sent
      * @return Returns {@code true} if the message was added to the queue, {@code false} otherwise
      */
-    public boolean sendMessage(TrainingMessage message) {
+    public boolean sendMessageAsync(TrainingMessage message) {
         LOGGER.info("Queuing message");
         return queue.offer(message);
     }
+
 
     /**
      * Starts the processing of information in a separate thread.
@@ -113,12 +113,6 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
         } while (attempt <= MAX_RETRIES && !success);
     }
 
-    private Message<String> buildMessage(String messageString) {
-        var builder = org.springframework.messaging.support.MessageBuilder.withPayload(messageString);
-
-        return builder.build();
-    }
-
     private void postSend() {
         metrics.incrementMessagesSent();
     }
@@ -142,4 +136,10 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
     public void destroy() throws Exception {
         shutdown();
     }
+
+    @Override
+    public boolean sendMessage(TrainingMessage message) {
+        throw new UnsupportedOperationException("Class does not support synchronous send operation");
+    }
+
 }
