@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 public class TraineeRegistrationViewModel extends RegistrationViewModel {
 
-    @DateTimeFormat(pattern = "yyyy-M-d")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past(message = "Date must be in the past")
     @NotNull
     private LocalDate dateOfBirth;

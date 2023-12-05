@@ -23,7 +23,6 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
     private static final int RETRY_COOLDOWN = 1;
 
     private final ObjectMapper mapper = new ObjectMapper();
-    //    private final QueueMessagingTemplate queueMessagingTemplate;
     private final SqsQueue sqs;
     private final ReportingServiceMetrics metrics;
 
@@ -141,5 +140,4 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
     public boolean sendMessage(TrainingMessage message) {
         throw new UnsupportedOperationException("Class does not support synchronous send operation");
     }
-
 }
