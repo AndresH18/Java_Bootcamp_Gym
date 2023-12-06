@@ -1,0 +1,37 @@
+###################################################################
+######### Configuration file for local development ################
+###-------------------------------------------------------------###
+### Configuration server is optional, must specify host --------###
+###------------------------------------------------------------###
+### Disables Discovery Service---------------------------------###
+###################################################################
+
+spring:
+  config:
+    import: "optional:configserver:"
+  cloud:
+    discovery:
+      enabled: false
+
+logging:
+  level:
+    root: debug
+
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    loggers:
+      enabled: true
+    prometheus:
+      enabled: true
+    info:
+      enabled: true
+  endpoints:
+    jmx:
+      exposure:
+        include: "health"
+    web:
+      exposure:
+        include: "health,loggers,info,prometheus"

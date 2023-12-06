@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "cloud.aws.sqs.endpoint",
+      "type": "java.lang.String",
+      "description": "Description for cloud.aws.sqs.endpoint."
+    },
+    {
+      "name": "cloud.aws.sqs.queue-name",
+      "type": "java.lang.String",
+      "description": "The name for the sqs queue."
+    }
+  ]
+}

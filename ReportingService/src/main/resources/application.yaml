@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: reporting-service
+
+server:
+  port: 8082
+
+logging:
+  level:
+    root: info

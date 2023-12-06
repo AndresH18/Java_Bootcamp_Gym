@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: gym-service
+
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy:
+    properties:
+      hibernate:
+        dialect:
+
+server:
+  port: 8081
+
+logging:
+  level:
+    root: info
