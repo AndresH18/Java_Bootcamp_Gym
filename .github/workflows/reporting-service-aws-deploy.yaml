@@ -1,4 +1,4 @@
-name: Deploy Gym microservice to AWS
+name: Deploy Reporting Service microservice to AWS
 
 on:
   workflow_dispatch:
