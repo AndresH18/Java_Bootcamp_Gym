@@ -45,5 +45,5 @@ jobs:
           aws-region: "us-east-1"
 
       - name: Upload package to S3 bucket
-        run: aws s3 cp deploys/gym_deploy.zip s3://gym-deploy-bucket
+        run: aws s3 cp deploys/reporting-service_deploy.zip s3://gym-deploy-bucket
 #        run: aws s3 cp deploys/gym_deploy.zip s3://${{secrets.DEPLOY_BUCKET_NAME}}
