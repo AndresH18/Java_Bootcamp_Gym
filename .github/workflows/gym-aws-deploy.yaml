@@ -11,10 +11,12 @@ on:
 #      - "aws"
     paths:
       - "/Gym"
-#
-#  pull_request:
-#    paths:
-#      - "/Gym"
+
+  pull_request:
+    paths:
+      - "/Gym"
+    branches:
+      - "main"
 #    branches-ignore:
 #      - "dev"
 #      - "aws"

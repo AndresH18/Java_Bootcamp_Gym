@@ -12,9 +12,12 @@ on:
     paths:
       - "/ReportingService"
 #
-#  pull_request:
-#    paths:
-#      - "/ReportingService"
+  pull_request:
+    paths:
+      - "/ReportingService"
+
+    branches:
+      - "main"
 #    branches-ignore:
 #      - "dev"
 #      - "aws"
