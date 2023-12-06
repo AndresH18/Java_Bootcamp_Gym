@@ -3,7 +3,6 @@ package com.javabootcamp.reportingservice.controller.devonly;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javabootcamp.reportingservice.data.TrainingMessage;
 import com.javabootcamp.reportingservice.messaging.SqsConsumer;
-import com.javabootcamp.reportingservice.services.IStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -26,11 +25,9 @@ public class DevController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final SqsConsumer consumer;
-    private final IStoreService<TrainingMessage> service;
 
-    public DevController(SqsConsumer consumer, IStoreService<TrainingMessage> service) {
+    public DevController(SqsConsumer consumer) {
         this.consumer = consumer;
-        this.service = service;
     }
 
     @GetMapping

@@ -40,7 +40,6 @@ public class TraineeController extends BaseController implements IRegistrationCo
             var errors = handleValidationErrors(binding);
             response.put("errors", errors);
             return ResponseEntity.badRequest().body(response);
-//                    new ResponseEntity<Map<String, Object>>(response, BAD_REQUEST);
         }
 
         var trainee = traineeService.create(viewModel);
