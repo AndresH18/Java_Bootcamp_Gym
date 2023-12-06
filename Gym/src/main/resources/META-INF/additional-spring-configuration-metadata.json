@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "security.jwt.secret",
+      "type": "java.lang.String",
+      "description": "JWT secret 'key'. Must be 32 bytes long (32 characters), Base64 compliant"
+    },
+    {
+      "name": "cloud.aws.sqs.endpoint",
+      "type": "java.lang.String",
+      "description": "Description for cloud.aws.sqs.endpoint."
+    },
+    {
+      "name": "cloud.aws.sqs.queue-name",
+      "type": "java.lang.String",
+      "description": "The name for the sqs queue."
+    }
+  ]
+}

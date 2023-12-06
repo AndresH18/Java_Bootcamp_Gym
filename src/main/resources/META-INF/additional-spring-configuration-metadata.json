@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "security.jwt.secret",
-      "type": "java.lang.String",
-      "description": "JWT secret 'key'. Must be 32 bytes long (32 characters), Base64 compliant"
-  }
-] }
