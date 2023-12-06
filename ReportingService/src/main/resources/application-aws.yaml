@@ -1,0 +1,16 @@
+#####################################################
+####### Configuration file for using with aws #######
+#####################################################
+
+cloud:
+  aws:
+    region:
+      auto: false
+      static: us-east-1
+    sqs:
+      endpoint: https://sqs.us-east-1.amazonaws.com/208668734131/gym-reporting-service-queue.fifo
+      queue-name: gym-reporting-service-queue.fifo
+
+# This port is necessary for elastic beanstalk
+server:
+  port: 5000

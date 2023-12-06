@@ -1,7 +1,11 @@
 spring:
   application:
     name: reporting-service
-
+  config:
+    import: "optional:configserver:"
+  cloud:
+    discovery:
+      enabled: false
 server:
   port: 8082
 

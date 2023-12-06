@@ -6,12 +6,12 @@ on:
     branches:
       - "aws"
 
-#    branches-ignore:
-#      - "dev"
-#      - "aws"
+    #    branches-ignore:
+    #      - "dev"
+    #      - "aws"
     paths:
       - "/ReportingService"
-#
+  #
   pull_request:
     paths:
       - "/ReportingService"
@@ -23,19 +23,54 @@ on:
 #      - "aws"
 
 jobs:
-#  test:
-#    run tests
+  #  test:
+  #    run tests
 
   build:
-#    needs: test
+    #    needs: test
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-      - name: Create ZIP for deployment
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Create JAR for deployment
         run: |
           mkdir deploys
-          zip -r deploys/reporting-service_deploy.zip ./ReportingService
+          cd ReportingService/
+          chmod +x ./gradlew
+          ./gradlew bootJar -Pspring.profiles.active=aws
+          ls build
+          cd build
+          ls libs
+          cd libs
+          ls -l
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: report-service-artifact
+          path: ReportingService/build/libs/ReportingService-1.0.0.jar
+
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download jar artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: report-service-artifact
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -45,5 +80,15 @@ jobs:
           aws-region: "us-east-1"
 
       - name: Upload package to S3 bucket
-        run: aws s3 cp deploys/reporting-service_deploy.zip s3://gym-deploy-bucket
-#        run: aws s3 cp deploys/gym_deploy.zip s3://${{secrets.DEPLOY_BUCKET_NAME}}
+        run: aws s3 cp ReportingService-1.0.0.jar s3://gym-deploy-bucket
+      #        run: aws s3 cp deploys/gym_deploy.zip s3://${{ secrets.DEPLOY_BUCKET_NAME }}
+
+#      - name: Create new ElasticBeanstalk Application Version
+#        run: |
+#          aws elasticbeanstalk create-application-version --application-name gym-stack-ReportBeanstalkApplication-9XLLMJMFICFN --source-bundle S3Bucket=gym-deploy-bucket,S3Key=ReportingService-1.0.0-plain.jar --version-label "ver-${{ github.sha }}" --description "commit-sha-${{ github.sha }}"
+#
+#      - name: Deploy new ElasticBeanstalk Application Version
+#        run: |
+#          aws elasticbeanstalk update-environment --environment-name ReportEnvironment --version-label "ver-${{ github.sha }}"
+##          aws elasticbeanstalk update-environment --environment-name ${{ env.BEANSTALK_ENVIRONMENT_NAME }} --version-label "ver-${{ github.sha }}"
+
