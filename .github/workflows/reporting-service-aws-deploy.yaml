@@ -1,4 +1,4 @@
-name: Deploy Gym microservice to AWS
+name: Deploy Reporting Service microservice to AWS
 
 on:
   workflow_dispatch:
@@ -12,9 +12,12 @@ on:
     paths:
       - "/ReportingService"
 #
-#  pull_request:
-#    paths:
-#      - "/ReportingService"
+  pull_request:
+    paths:
+      - "/ReportingService"
+
+    branches:
+      - "main"
 #    branches-ignore:
 #      - "dev"
 #      - "aws"
