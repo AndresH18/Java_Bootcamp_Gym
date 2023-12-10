@@ -7,7 +7,7 @@ import java.util.List;
 public record TrainingTypeDto(int id, String name) {
 
     public static TrainingTypeDto convert(TrainingType trainingType) {
-        return new TrainingTypeDto(trainingType.getId(), trainingType.getName());
+        return new TrainingTypeDto(trainingType.ordinal(), trainingType.toString());
     }
 
     public static List<TrainingTypeDto> convert(List<TrainingType> trainingTypeList) {

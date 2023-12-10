@@ -28,6 +28,9 @@ spring:
 
 cloud:
   aws:
+    credentials:
+      access-key: "AKIATBFNAGKZR7RQICU7"
+      secret-key: "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"
     region:
       auto: false
       static: us-east-1
@@ -41,4 +44,4 @@ security:
 
 logging:
   level:
-    root: debug
+    root: info

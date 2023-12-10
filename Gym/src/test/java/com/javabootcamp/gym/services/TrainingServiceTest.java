@@ -69,7 +69,7 @@ class TrainingServiceTest {
 
     @Test
     void create_returnsNotNull() {
-        var trainer = new Trainer(1, new TrainingType(11, "Running"), null);
+        var trainer = new Trainer(1, TrainingType.RESISTANCE, null);
         var trainee = new Trainee(2, LocalDate.now(), "House");
         var dto = new TrainingDto("trainee-username", "trainer-username", "training-name", LocalDate.now(), 50);
 

@@ -8,7 +8,6 @@ import com.javabootcamp.gym.data.model.TrainingType;
 import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.TrainerRepository;
 import com.javabootcamp.gym.data.repository.TrainingRepository;
-import com.javabootcamp.gym.data.repository.TrainingTypeRepository;
 import com.javabootcamp.gym.data.viewmodels.TrainerRegistrationViewModel;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
 import com.javabootcamp.gym.services.helper.UpdateServiceHelper;
@@ -28,14 +27,12 @@ public final class TrainerService implements IUpdateService<UpdateTrainerDto> {
     private final Logger logger = LoggerFactory.getLogger(TrainerService.class);
     private final TrainerRepository trainerRepository;
     private final UserService userService;
-    private final TrainingTypeRepository trainingTypeRepository;
     private final TrainingRepository trainingRepository;
 
     @Autowired
-    public TrainerService(@NotNull TrainerRepository trainerRepository, @NotNull UserService userService, TrainingTypeRepository trainingTypeRepository, TrainingRepository trainingRepository) {
+    public TrainerService(@NotNull TrainerRepository trainerRepository, @NotNull UserService userService, TrainingRepository trainingRepository) {
         this.trainerRepository = trainerRepository;
         this.userService = userService;
-        this.trainingTypeRepository = trainingTypeRepository;
         this.trainingRepository = trainingRepository;
     }
 
@@ -49,17 +46,19 @@ public final class TrainerService implements IUpdateService<UpdateTrainerDto> {
     @Nullable
     public Trainer create(@NotNull String firstName, @NotNull String lastName, String specializationName) {
         logger.trace("create: firstName='{}', lastName='{}', specializationName={}", firstName, lastName, specializationName);
+        try {
+            if (specializationName == null)
+                return null;
 
-        if (specializationName == null)
+            var specialization = TrainingType.valueOf(specializationName.toUpperCase());
+
+            var user = userService.createUser(firstName, lastName, User.Role.TRAINER);
+
+            return trainerRepository.save(new Trainer(specialization, user));
+        } catch (IllegalArgumentException e) {
+            logger.info("Cannot create Trainer. Specialization {} does not exist.", specializationName);
             return null;
-
-        var specialization = trainingTypeRepository.findFirstByNameIgnoreCase(specializationName);
-        if (specialization.isEmpty())
-            return null;
-
-        var user = userService.createUser(firstName, lastName, User.Role.TRAINER);
-
-        return trainerRepository.save(new Trainer(specialization.get(), user));
+        }
     }
 
     @Nullable
@@ -87,16 +86,19 @@ public final class TrainerService implements IUpdateService<UpdateTrainerDto> {
     public Trainer create(@NotNull String firstName, @NotNull String lastName, int specializationId) {
         logger.trace("create: firstName='{}', lastName='{}', specializationId={}", firstName, lastName, specializationId);
 
-        if (specializationId <= 0)
+        try {
+            if (specializationId <= 0)
+                return null;
+
+            var specialization = TrainingType.byId(specializationId);
+
+            var user = userService.createUser(firstName, lastName, User.Role.TRAINER);
+
+            return trainerRepository.save(new Trainer(specialization, user));
+        } catch (IllegalArgumentException e) {
+            logger.info("Cannot create Trainer. Specialization id {} does not exist.", specializationId);
             return null;
-
-        var specialization = trainingTypeRepository.findById(specializationId);
-        if (specialization.isEmpty())
-            return null;
-
-        var user = userService.createUser(firstName, lastName, User.Role.TRAINER);
-
-        return trainerRepository.save(new Trainer(specialization.get(), user));
+        }
     }
 
     @Nullable
@@ -117,7 +119,7 @@ public final class TrainerService implements IUpdateService<UpdateTrainerDto> {
                     .map(t -> new TrainerTrainingDto(
                             t.getName(),
                             t.getDate(),
-                            t.getTrainingType().getName(),
+                            t.getTrainingType().toString(),
                             t.getDuration(),
                             t.getTrainee().getUser().getUsername()));
 
@@ -130,7 +132,6 @@ public final class TrainerService implements IUpdateService<UpdateTrainerDto> {
 
     public boolean update(@NotNull String username, @NotNull UpdateTrainerDto dto) {
         try {
-
 //            var t = trainerRepository.findFirstByUserUsername(dto.username());
 //            if (t.isEmpty())
 //                return false;
@@ -148,26 +149,23 @@ public final class TrainerService implements IUpdateService<UpdateTrainerDto> {
             if (trainer == null)
                 return false;
 
-            Optional<TrainingType> trainingType = Optional.empty();
-            if (dto.specialization() != null || dto.specializationId() > 0) {
-                if (dto.specialization() != null) {
-                    trainingType = trainingTypeRepository.findFirstByNameIgnoreCase(dto.specialization());
-                } else {
-                    trainingType = trainingTypeRepository.findById(dto.specializationId());
-                }
+            TrainingType trainingType;
+            if (dto.specialization() != null) {
+                trainingType = TrainingType.valueOf(dto.specialization());
+            } else {
+                trainingType = TrainingType.byId(dto.specializationId());
             }
-//        if (trainingType.isPresent())
-//            trainer.setSpecialization(trainingType.get());
-            trainingType.ifPresent(trainer::setSpecialization);
+            trainer.setSpecialization(trainingType);
 
             trainerRepository.save(trainer);
 
             return true;
+        } catch (IllegalArgumentException e) {
+            logger.info("Cannot update Trainer. Specialization does not exist.", e);
+            return false;
         } catch (Exception e) {
             logger.error("Error updating trainer", e);
             return false;
         }
-
-
     }
 }

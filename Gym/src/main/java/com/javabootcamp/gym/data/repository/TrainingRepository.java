@@ -16,12 +16,11 @@ public interface TrainingRepository extends JpaRepository<Training, Integer> {
             select t from Training t
                 join t.trainee tr
                 join t.trainer trn
-                join t.trainingType tt
             where tr.user.username = :username
                 and (:dateFrom is null or t.date >= :dateFrom)
                 and (:dateTo is null or t.date <= :dateTo)
                 and (:trainerUsername is null or trn.user.username = :trainerUsername)
-                and (:trainingTypeName is null or tt.name = :trainingTypeName)
+                and (:trainingTypeName is null or t.trainingType = :trainingTypeName)
             """)
     List<Training> getTraineeTrainings(@NotNull @Param("username") String username,
                                        @Nullable LocalDate dateFrom,
@@ -33,12 +32,11 @@ public interface TrainingRepository extends JpaRepository<Training, Integer> {
             select t from Training t
                 join t.trainee tr
                 join t.trainer trn
-                join t.trainingType tt
             where trn.user.username = :username
                 and (:dateFrom is null or t.date >= :dateFrom)
                 and (:dateTo is null or t.date <= :dateTo)
                 and (:traineeUsername is null or trn.user.username = :traineeUsername)
-                and (:trainingTypeName is null or tt.name = :trainingTypeName)
+                and (:trainingTypeName is null or t.trainingType = :trainingTypeName)
             """)
     List<Training> getTrainerTrainings(@NotNull @Param("username") String username,
                                        @Nullable LocalDate dateFrom,

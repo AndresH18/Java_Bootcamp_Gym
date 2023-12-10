@@ -23,7 +23,7 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
     private static final int RETRY_COOLDOWN = 1;
 
     private final ObjectMapper mapper = new ObjectMapper();
-    private final SqsQueue sqs;
+    private final ISqsQueue sqs;
     private final ReportingServiceMetrics metrics;
 
     private final BlockingQueue<TrainingMessage> queue;
@@ -31,7 +31,7 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
     private final AtomicBoolean running;
 
     @Autowired
-    public ReportingServiceAsync(/*QueueMessagingTemplate queueMessagingTemplate, */SqsQueue sqs, ReportingServiceMetrics metrics) {
+    public ReportingServiceAsync(/*QueueMessagingTemplate queueMessagingTemplate, */ISqsQueue sqs, ReportingServiceMetrics metrics) {
         this.sqs = sqs;
 //        this.queueMessagingTemplate = queueMessagingTemplate;
         this.metrics = metrics;
@@ -51,11 +51,13 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
      * This method returns immediately
      *
      * @param message The message to be sent
-     * @return Returns {@code true} if the message was added to the queue, {@code false} otherwise
+//     * @return Returns {@code true} if the message was added to the queue, {@code false} otherwise
      */
-    public boolean sendMessageAsync(TrainingMessage message) {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    @Override
+    public void sendMessage(TrainingMessage message) {
         LOGGER.info("Queuing message");
-        return queue.offer(message);
+        queue.offer(message);
     }
 
 
@@ -134,10 +136,5 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
     @Override
     public void destroy() throws Exception {
         shutdown();
-    }
-
-    @Override
-    public boolean sendMessage(TrainingMessage message) {
-        throw new UnsupportedOperationException("Class does not support synchronous send operation");
     }
 }

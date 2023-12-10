@@ -16,6 +16,6 @@ public record TrainerProfileDto(String firstName, String lastName, String specia
         }).toList();
 
         var u = trainer.getUser();
-        return new TrainerProfileDto(u.getFirstName(), u.getLastName(), trainer.getSpecialization().getName(), u.isActive(), trainees);
+        return new TrainerProfileDto(u.getFirstName(), u.getLastName(), trainer.getSpecialization().toString(), u.isActive(), trainees);
     }
 }

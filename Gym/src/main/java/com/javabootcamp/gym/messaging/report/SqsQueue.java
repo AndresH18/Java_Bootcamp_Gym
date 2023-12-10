@@ -5,7 +5,7 @@ import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
 
 import java.util.UUID;
 
-public class SqsQueue {
+public class SqsQueue implements ISqsQueue {
     private static final String MESSAGE_GROUP_ID = "report";
     private final SqsClient client;
     private final String sqsEndpoint;
@@ -17,6 +17,7 @@ public class SqsQueue {
         this.queueName = queueName;
     }
 
+    @Override
     public void sendMessage(String message) {
         SendMessageRequest request = SendMessageRequest.builder()
                 .queueUrl(sqsEndpoint)

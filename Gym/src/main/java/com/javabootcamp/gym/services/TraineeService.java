@@ -88,7 +88,7 @@ public class TraineeService implements IUpdateService<UpdateTraineeDto> {
                     .map(t -> new TraineeTrainingDto(
                             t.getName(),
                             t.getDate(),
-                            t.getTrainingType().getName(),
+                            t.getTrainingType().toString(),
                             t.getDuration(),
                             t.getTrainer().getUser().getUsername()));
 

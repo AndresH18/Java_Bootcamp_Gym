@@ -75,7 +75,7 @@ public class DevController {
         };
 
         for (TrainingMessage message : messages) {
-            reportingServiceAsync.sendMessageAsync(message);
+            reportingServiceAsync.sendMessage(message);
         }
     }
 }

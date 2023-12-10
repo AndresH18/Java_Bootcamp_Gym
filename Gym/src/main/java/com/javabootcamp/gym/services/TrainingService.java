@@ -76,6 +76,6 @@ public class TrainingService {
 
         var message = new TrainingMessage(trainerUsername, trainerFirstName, trainerLastName, isActive, duration, year, month, false);
 
-        reportingService.sendMessageAsync(message);
+        reportingService.sendMessage(message);
     }
 }
