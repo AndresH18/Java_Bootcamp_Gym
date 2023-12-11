@@ -7,9 +7,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://gym-crm-db.cwzsp1bit6fj.us-east-1.rds.amazonaws.com:3306/gym
-    username: SuperUsernameGym
-    password: a3VtUsTTJ4WKq4UHEutE
+    url: ${DATASOURCE_URL} # jdbc:mysql://gym-crm-db.cwzsp1bit6fj.us-east-1.rds.amazonaws.com:3306/gym
+    username: ${DATASOURCE_USERNAME} #SuperUsernameGym
+    password: ${DATASOURCE_PASSWORD} #a3VtUsTTJ4WKq4UHEutE
   jpa:
     hibernate:
       ddl-auto: update
@@ -29,14 +29,14 @@ spring:
 cloud:
   aws:
     credentials:
-      access-key: "AKIATBFNAGKZR7RQICU7"
-      secret-key: "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"
+      access-key: ${ACCESS_KEY}
+      secret-key: ${SECRET_KEY}
     region:
       auto: false
       static: us-east-1
     sqs:
-      endpoint: https://sqs.us-east-1.amazonaws.com/208668734131/gym-reporting-service-queue.fifo
-      queue-name: gym-reporting-service-queue.fifo
+      endpoint: ${SQS_ENDPOINT} #https://sqs.us-east-1.amazonaws.com/208668734131/gym-reporting-service-queue.fifo
+      queue-name: ${SQS_NAME} #gym-reporting-service-queue.fifo
 
 security:
   jwt:
