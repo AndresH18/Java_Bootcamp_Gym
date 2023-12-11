@@ -60,7 +60,7 @@ jobs:
           path: ReportingService/build/libs/ReportingService-1.0.0.jar
 
 
-  deploy:
+  send-to-s3:
     needs: build
     runs-on: ubuntu-latest
 

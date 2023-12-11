@@ -15,6 +15,7 @@ on:
   pull_request:
     paths:
       - "/Gym"
+
     branches:
       - "main"
 #    branches-ignore:
@@ -53,7 +54,7 @@ jobs:
           name: gym-service-artifact
           path: Gym/build/libs/Gym-0.0.1-SNAPSHOT.jar
 
-  deploy:
+  send-to-s3:
     needs: build
     runs-on: ubuntu-latest
 
@@ -74,3 +75,9 @@ jobs:
 
       - name: Upload package to S3 bucket
         run: aws s3 cp Gym-0.0.1-SNAPSHOT.jar s3://gym-deploy-bucket
+
+#  deploy-ec2:
+#    needs: send-to-s3
+#    runs-on: ubuntu-latest
+#
+#    steps:
