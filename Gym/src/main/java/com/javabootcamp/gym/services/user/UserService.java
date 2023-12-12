@@ -49,14 +49,16 @@ public class UserService implements IAuthentication, IUserCreator {
     public boolean changePassword(@NotNull String username, @NotNull String oldPassword, @NotNull String newPassword) {
 
         try {
-            oldPassword = passwordEncoder.encode(oldPassword);
-            newPassword = passwordEncoder.encode(newPassword);
-
-            var o = repository.findByUsernameAndPasswordHash(username, oldPassword);
+            var o = repository.findByUsernameIgnoreCase(username);
             if (o.isEmpty())
                 return false;
 
             var user = o.get();
+
+            if (!passwordEncoder.matches(oldPassword, user.getPassword()))
+                return false;
+
+            newPassword = passwordEncoder.encode(newPassword);
 
             user.setPassword(newPassword);
 
@@ -64,7 +66,7 @@ public class UserService implements IAuthentication, IUserCreator {
 
             return true;
         } catch (Exception e) {
-            logger.error("Error updating user", e);
+            logger.error("Error updating password", e);
             return false;
         }
     }
