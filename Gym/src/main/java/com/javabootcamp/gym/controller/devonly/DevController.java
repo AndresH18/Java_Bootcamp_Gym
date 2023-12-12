@@ -4,6 +4,7 @@ import com.javabootcamp.gym.data.model.User;
 import com.javabootcamp.gym.data.repository.UserRepository;
 import com.javabootcamp.gym.messaging.TrainingMessage;
 import com.javabootcamp.gym.messaging.report.ReportingServiceAsync;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,11 @@ public class DevController {
             user.setPassword(passwordHash);
         }
         userRepository.saveAll(users);
+    }
+    @GetMapping("/get-ip")
+    public String getClientIp(HttpServletRequest request) {
+        String clientIP = request.getRemoteAddr();
+        return "Client's IP Address: " + clientIP;
     }
 
     @GetMapping("send-message-to-aws-sqs")

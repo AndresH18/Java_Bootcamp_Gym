@@ -26,7 +26,7 @@ public class UserService implements IAuthentication, IUserCreator {
     }
 
     public boolean authenticate(@NotNull String username, @NotNull String password) {
-        return repository.existsUserByUsernameAndPassword(username, password);
+        return repository.existsUserByUsernameAndPasswordHash(username, password);
     }
 
     @SuppressWarnings({"finally", "ReturnInsideFinallyBlock"})
@@ -52,7 +52,7 @@ public class UserService implements IAuthentication, IUserCreator {
             oldPassword = passwordEncoder.encode(oldPassword);
             newPassword = passwordEncoder.encode(newPassword);
 
-            var o = repository.findByUsernameAndPassword(username, oldPassword);
+            var o = repository.findByUsernameAndPasswordHash(username, oldPassword);
             if (o.isEmpty())
                 return false;
 

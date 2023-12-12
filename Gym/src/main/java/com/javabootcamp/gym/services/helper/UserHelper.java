@@ -25,9 +25,11 @@ public class UserHelper {
 
         var passwordHash = passwordEncoder.encode(password);
 
-        return new User(firstName, lastName, username, password);
-    }
+        var u = new User(firstName, lastName, username, passwordHash);
+        u.setPlainPassword(password);
 
+        return u;
+    }
 
     public static User createUser(@NotNull String firstName,
                                   @NotNull String lastName,

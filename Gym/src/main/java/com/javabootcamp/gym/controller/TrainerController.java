@@ -47,7 +47,7 @@ public class TrainerController extends BaseController implements IRegistrationCo
 
         var user = trainer.getUser();
 
-        return ResponseEntity.ok(new LoginDto(user.getUsername(), user.getPassword()));
+        return ResponseEntity.ok(new LoginDto(user.getUsername(), user.getPlainPassword()));
     }
 
     @Override

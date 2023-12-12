@@ -39,7 +39,7 @@ class UserServiceTest {
     public void authenticate() {
         // arrange
         var repo = mock(UserRepository.class);
-        when(repo.existsUserByUsernameAndPassword(anyString(), anyString())).thenReturn(true);
+        when(repo.existsUserByUsernameAndPasswordHash(anyString(), anyString())).thenReturn(true);
         var service = new UserService(repo, passwordEncoder);
 
         // act
@@ -97,7 +97,7 @@ class UserServiceTest {
     @Test
     void changePassword_userNotFound_returnsFalse() {
         // arrange
-        when(userRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(Optional.empty());
+        when(userRepository.findByUsernameAndPasswordHash(anyString(), anyString())).thenReturn(Optional.empty());
         var service = new UserService(userRepository, passwordEncoder);
 
         // act
@@ -120,7 +120,7 @@ class UserServiceTest {
         user.setRole(role);
 
         // arrange
-        when(userRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(Optional.of(user));
+        when(userRepository.findByUsernameAndPasswordHash(anyString(), anyString())).thenReturn(Optional.of(user));
         when(userRepository.save(any())).thenThrow(new RuntimeException());
 
         var service = new UserService(userRepository, passwordEncoder);
@@ -146,7 +146,7 @@ class UserServiceTest {
         user.setRole(role);
 
         // arrange
-        when(userRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(Optional.of(user));
+        when(userRepository.findByUsernameAndPasswordHash(anyString(), anyString())).thenReturn(Optional.of(user));
         when(userRepository.save(any())).thenReturn(any());
 
         var service = new UserService(userRepository, passwordEncoder);
