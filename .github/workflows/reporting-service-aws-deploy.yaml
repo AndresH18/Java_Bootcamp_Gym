@@ -4,23 +4,16 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "aws"
+      - main
 
-    #    branches-ignore:
-    #      - "dev"
-    #      - "aws"
     paths:
       - "/ReportingService"
   #
   pull_request:
+    branches:
+      - main
     paths:
       - "/ReportingService"
-
-    branches:
-      - "main"
-#    branches-ignore:
-#      - "dev"
-#      - "aws"
 
 jobs:
   #  test:

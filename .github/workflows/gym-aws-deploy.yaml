@@ -4,11 +4,8 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "aws"
+      - main
 
-    #    branches-ignore:
-    #      - "dev"
-    #      - "aws"
     paths:
       - "/Gym"
 
@@ -17,10 +14,7 @@ on:
       - "/Gym"
 
     branches:
-      - "main"
-#    branches-ignore:
-#      - "dev"
-#      - "aws"
+      - main
 
 jobs:
   #  test:

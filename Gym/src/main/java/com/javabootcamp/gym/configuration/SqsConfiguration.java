@@ -12,7 +12,6 @@ import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsClient;
 
@@ -48,7 +47,7 @@ public class SqsConfiguration {
     public SqsClient sqsClient() {
         SqsClient client = SqsClient.builder()
                 .region(Region.of(region))
-                .credentialsProvider(ProfileCredentialsProvider.create())
+//                .credentialsProvider(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
                 .build();
 
         return client;
@@ -58,7 +57,7 @@ public class SqsConfiguration {
     @Profile("aws")
     public QueueMessagingTemplate queueMessagingTemplate(AmazonSQSAsync amazonSQSAsync) {
         var template = new QueueMessagingTemplate(amazonSQSAsync);
-        template.setDefaultDestinationName(queueName); //
+        template.setDefaultDestinationName(queueName);
         return template;
     }
 
