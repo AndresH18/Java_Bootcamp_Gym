@@ -63,12 +63,12 @@ public final class TrainerService implements IUpdateService<UpdateTrainerDto> {
 
     @Nullable
     public Trainer create(@NotNull TrainerRegistrationViewModel vm) {
-        if (vm.getSpecialization() != null && !vm.getSpecialization().isBlank()) {
+//        if (vm.getSpecialization() != null && !vm.getSpecialization().isBlank()) {
             return create(vm.getFirstName(), vm.getLastName(), vm.getSpecialization());
-        } else {
-            return create(vm.getFirstName(), vm.getLastName(), vm.getSpecializationId());
-        }
-
+//        }
+//        else {
+//            return create(vm.getFirstName(), vm.getLastName(), vm.getSpecializationId());
+//        }
     }
 
     /**
@@ -83,6 +83,7 @@ public final class TrainerService implements IUpdateService<UpdateTrainerDto> {
      * @see com.javabootcamp.gym.data.model.TrainingType
      */
     @Nullable
+    @Deprecated
     public Trainer create(@NotNull String firstName, @NotNull String lastName, int specializationId) {
         logger.trace("create: firstName='{}', lastName='{}', specializationId={}", firstName, lastName, specializationId);
 
