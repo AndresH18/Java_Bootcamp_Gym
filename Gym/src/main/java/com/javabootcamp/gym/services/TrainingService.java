@@ -60,7 +60,6 @@ public class TrainingService {
         }
     }
 
-
     private void onCreateSuccessful(Training training) {
         if (reportingService == null)
             return;
