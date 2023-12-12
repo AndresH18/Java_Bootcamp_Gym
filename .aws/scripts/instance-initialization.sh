@@ -1,12 +1,28 @@
 #!/usr/bin/bash
-#
+
 # Script: instance-initialization.sh
 # Description: This script will install java 21 corretto and check for the newest
-#   application version to download from s3 bucket
+#   application version to download from s3 bucket, and run it (setting the active profile to 'aws').
+#   It will also check download and set the environment variables.
+#
+#   Must explicitly set the 'MICROSERVICE_NAME' environment variable outside of script
+#
 # Interesting links:
 #   - https://stackoverflow.com/questions/31062365/get-last-modified-object-from-s3-using-aws-cli/31064378#31064378
 
 sudo yum install java-21-amazon-corretto-devel -y
+
+# create environment variables
+ENV_VARIABLE_SCRIPT="environment-variables.sh"
+
+if [ ! -f "$ENV_VARIABLE_SCRIPT" ]; then
+  echo "Retrieving environment file"
+  aws s3 cp s3://gym-deploy-bucket/"$ENV_VARIABLE_SCRIPT" .
+fi
+
+echo "Sourcing environment variables script '$ENV_VARIABLE_SCRIPT'..."
+source "$ENV_VARIABLE_SCRIPT"
+
 
 if [[ -z "$MICROSERVICE_NAME" ]]; then
   echo "Error, environment variables are not valid"

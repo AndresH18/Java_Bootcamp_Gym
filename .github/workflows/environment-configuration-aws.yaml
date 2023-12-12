@@ -24,7 +24,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
           aws-region: "us-east-1"
 
-      - name: run create file
+      - name: Create and upload files
         env:
           ACCESS_KEY: ${{ secrets.ACCESS_KEY_ID }}
           SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
@@ -37,5 +37,6 @@ jobs:
           cd .aws/scripts
           bash create-environment-variables.sh
           aws s3 cp environment-variables.sh s3://gym-deploy-bucket
+          aws s3 cp instance-initialization.sh s3://gym-deploy-bucket
           
           
