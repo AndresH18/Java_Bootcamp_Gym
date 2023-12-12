@@ -1,0 +1,41 @@
+name: Environment Configuration
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - workflow-test
+      - dev
+      - QA
+    paths:
+      - ".aws/scripts/*"
+
+jobs:
+  configure-aws-environment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+          aws-region: "us-east-1"
+
+      - name: run create file
+        env:
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY_ID }}
+          SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+          DATA_SOURCE_URL: ${{ secrets.DATA_SOURCE_URL }}
+          DATA_SOURCE_USERNAME: ${{ secrets.DATA_SOURCE_USERNAME }}
+          DATA_SOURCE_PASSWORD: ${{ secrets.DATA_SOURCE_PASSWORD }}
+          SQS_ENDPOINT: ${{ secrets.SQS_ENDPOINT }}
+          SQS_NAME: ${{ secrets.SQS_NAME }}
+        run: |
+          cd .aws/scripts
+          bash create-environment-variables.sh
+          aws s3 cp environment-variables.sh s3://gym-deploy-bucket
+          
+          
