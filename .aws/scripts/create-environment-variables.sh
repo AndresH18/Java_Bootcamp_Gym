@@ -6,7 +6,7 @@
 #       "source environment-variables.sh" or ". environment-variables.sh"
 
 
-#sudo yum install java-21-amazon-corretto-devel -yum
+#sudo yum install java-21-amazon-corretto-devel -y
 
 #cd ~ || exit
 #echo -e "\n\n\n\n" >> .bashrc

@@ -64,6 +64,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
+    env:
+      SERVICE_FOLDER: reporting
     steps:
       - uses: actions/checkout@v3
 
@@ -80,7 +82,7 @@ jobs:
           aws-region: "us-east-1"
 
       - name: Upload package to S3 bucket
-        run: aws s3 cp ReportingService-1.0.0.jar s3://gym-deploy-bucket
+        run: aws s3 cp ReportingService-1.0.0.jar s3://gym-deploy-bucket/"$SERVICE_FOLDER"/
       #        run: aws s3 cp deploys/gym_deploy.zip s3://${{ secrets.DEPLOY_BUCKET_NAME }}
 
 #      - name: Create new ElasticBeanstalk Application Version

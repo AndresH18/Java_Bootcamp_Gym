@@ -4,16 +4,12 @@
 
 cloud:
   aws:
-#    credentials:
-#      access-key: "AKIATBFNAGKZR7RQICU7"
-#      secret-key: "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"
+    credentials:
+      access-key: ${ACCESS_KEY}
+      secret-key: ${SECRET_KEY}
     region:
       auto: false
-      static: us-east-1
+      static: ${REGION} # us-east-1
     sqs:
-      endpoint: https://sqs.us-east-1.amazonaws.com/208668734131/gym-reporting-service-queue.fifo
-      queue-name: gym-reporting-service-queue.fifo
-
-# This port is necessary for elastic beanstalk
-server:
-  port: 5000
+      endpoint: ${SQS_ENDPOINT} #https://sqs.us-east-1.amazonaws.com/208668734131/gym-reporting-service-queue.fifo
+      queue-name: ${SQS_NAME} #gym-reporting-service-queue.fifo
