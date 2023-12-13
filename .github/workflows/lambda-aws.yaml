@@ -1,0 +1,33 @@
+name: Create AWS Reporting Lambda
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - workflow-test
+      - dev
+      - QA
+    paths:
+      - ".aws/lambda.py"
+
+jobs:
+  configure-aws-environment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+          aws-region: "us-east-1"
+
+      - name: zip and deploy lambda to s3
+        run: |
+          cd .aws/
+          zip ../lambda.zip lambda.py
+          aws s3 mv ../lambda.zip s3://gym-deploy-bucket/lambda/
+          
+          

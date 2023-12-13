@@ -33,7 +33,7 @@ def lambda_handler(event, context):
         items = response['Items']
         table_contents = []
 
-        #        logger.info(f"Found {len(items)} items")
+        # logger.info(f"Found {len(items)} items")
         print(f"Found {len(items)} items")
         for item in items:
             #            logger.debug(f"processing item {item}")
