@@ -33,6 +33,7 @@ jobs:
           DATA_SOURCE_PASSWORD: ${{ secrets.DATA_SOURCE_PASSWORD }}
           SQS_ENDPOINT: ${{ secrets.SQS_ENDPOINT }}
           SQS_NAME: ${{ secrets.SQS_NAME }}
+          REGION: ${{ secrets.REGION }}
         run: |
           cd .aws/scripts
           bash create-environment-variables.sh

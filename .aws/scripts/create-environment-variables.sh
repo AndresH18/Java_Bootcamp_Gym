@@ -22,6 +22,7 @@ envVariables["DATASOURCE_USERNAME"]=$DATA_SOURCE_USERNAME
 envVariables["DATASOURCE_PASSWORD"]=$DATA_SOURCE_PASSWORD
 envVariables["SQS_ENDPOINT"]=$SQS_ENDPOINT
 envVariables["SQS_NAME"]=$SQS_NAME
+envVariables["REGION"]=$REGION
 
 # echo "${envVariables[@]}"
 for key in "${!envVariables[@]}"
