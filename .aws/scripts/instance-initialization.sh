@@ -41,10 +41,13 @@ fi
 cd deployments || { echo "Failed to change directory"; exit 1; }
 
 # list files, get 4th column (file name), sort, and get the last (higher version of file)
+echo "Searching latest version for $MICROSERVICE_NAME"
 RECENT_VERSION=$(aws s3 ls s3://gym-deploy-bucket/"$MICROSERVICE_NAME"/ | awk '{print $4}' | sort | tail -n 1)
 
 # download latest version
+echo "Downloading version $RECENT_VERSION for $MICROSERVICE_NAME"
 aws s3 cp s3://gym-deploy-bucket/"$MICROSERVICE_NAME"/"$RECENT_VERSION" .
 
 # run jar
+echo "Initiating $MICROSERVICE_NAME version $RECENT_VERSION"
 java -jar "$RECENT_VERSION" --spring.profiles.active=aws
