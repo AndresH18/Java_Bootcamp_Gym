@@ -5,7 +5,6 @@ import com.javabootcamp.reportingservice.data.dynamo.TrainingSummary;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
@@ -44,7 +43,7 @@ public class DynamoDbConfiguration {
     public DynamoDbClient dynamoDbClient() {
         DynamoDbClient dynamoDbClient = DynamoDbClient.builder()
                 .region(Region.of(region))
-                .credentialsProvider(ProfileCredentialsProvider.create())
+//                .credentialsProvider(ProfileCredentialsProvider.create())
                 .build();
 
         return dynamoDbClient;
