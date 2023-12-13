@@ -104,7 +104,7 @@ public class DynamoStoreService implements IStoreService<TrainingMessage>, Dispo
      * @param message The message to be sent
      * @return Returns {@code true} if the message was added to the queue, {@code false} otherwise
      */
-    public boolean send(TrainingMessage message) {
+    public boolean store(TrainingMessage message) {
         LOGGER.info("Queuing message");
         return queue.offer(message);
     }
@@ -120,7 +120,7 @@ public class DynamoStoreService implements IStoreService<TrainingMessage>, Dispo
         while (running.get()) {
             try {
                 TrainingMessage message = queue.take();
-                LOGGER.debug("Thread {}. Processing message", Thread.currentThread().getId());
+                LOGGER.info("Thread {}. Processing message", Thread.currentThread().getId());
                 if (message.delete()) {
                     delete(message);
                 } else {

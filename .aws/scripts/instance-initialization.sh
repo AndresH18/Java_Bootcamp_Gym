@@ -17,6 +17,8 @@ if [[ -z "$MICROSERVICE_NAME" ]]; then
   exit 1
 fi
 
+# download java
+echo "Downloading Java"
 sudo yum install java-21-amazon-corretto-devel -y
 
 # create environment variables
