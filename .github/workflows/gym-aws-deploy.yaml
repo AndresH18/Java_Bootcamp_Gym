@@ -5,16 +5,14 @@ on:
   push:
     branches:
       - main
-
     paths:
       - "/Gym"
 
   pull_request:
-    paths:
-      - "/Gym"
-
     branches:
       - main
+    paths:
+      - "/Gym"
 
 jobs:
   #  test:

@@ -4,9 +4,13 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - workflow-test
-      - dev
-      - QA
+      - main
+    paths:
+      - ".aws/lambda.py"
+
+  pull_request:
+    branches:
+      - main
     paths:
       - ".aws/lambda.py"
 
