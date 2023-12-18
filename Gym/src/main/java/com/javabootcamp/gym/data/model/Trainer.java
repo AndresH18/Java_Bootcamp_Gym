@@ -34,7 +34,11 @@ public class Trainer implements IModel, ICopy<Trainer> {
     }
 
     public Trainer(TrainingType specialization, User user) {
+        this(specialization);
         this.user = user;
+    }
+
+    public Trainer(TrainingType specialization) {
         this.specialization = specialization;
     }
 

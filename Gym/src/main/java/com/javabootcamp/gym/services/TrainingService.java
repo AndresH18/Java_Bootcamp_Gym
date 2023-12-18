@@ -2,11 +2,11 @@ package com.javabootcamp.gym.services;
 
 import com.javabootcamp.gym.data.dto.TrainingDto;
 import com.javabootcamp.gym.data.model.Training;
-import com.javabootcamp.gym.data.repository.TraineeRepository;
-import com.javabootcamp.gym.data.repository.TrainerRepository;
-import com.javabootcamp.gym.data.repository.TrainingRepository;
 import com.javabootcamp.gym.messaging.TrainingMessage;
 import com.javabootcamp.gym.messaging.report.IReportingService;
+import com.javabootcamp.gym.services.delegate.repository.TraineeRepositoryDelegate;
+import com.javabootcamp.gym.services.delegate.repository.TrainerRepositoryDelegate;
+import com.javabootcamp.gym.services.delegate.repository.TrainingRepositoryDelegate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -18,16 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TrainingService {
     private final Logger logger = LoggerFactory.getLogger(TrainingService.class);
-    private final TrainingRepository trainingRepository;
-    private final TraineeRepository traineeRepository;
-    private final TrainerRepository trainerRepository;
+    private final TrainingRepositoryDelegate trainingRepositoryDelegate;
+    private final TraineeRepositoryDelegate traineeRepositoryDelegate;
+    private final TrainerRepositoryDelegate trainerRepositoryDelegate;
     private final @Nullable IReportingService<TrainingMessage> reportingService;
 
     @Autowired
-    public TrainingService(@NotNull TrainingRepository trainingRepository, TraineeRepository traineeRepository, TrainerRepository trainerRepository, @Nullable IReportingService<TrainingMessage> reportingService) {
-        this.trainingRepository = trainingRepository;
-        this.traineeRepository = traineeRepository;
-        this.trainerRepository = trainerRepository;
+    public TrainingService(@NotNull TrainingRepositoryDelegate trainingRepositoryDelegate, TraineeRepositoryDelegate traineeRepositoryDelegate,
+                           TrainerRepositoryDelegate trainerRepositoryDelegate, @Nullable IReportingService<TrainingMessage> reportingService) {
+        this.trainingRepositoryDelegate = trainingRepositoryDelegate;
+        this.traineeRepositoryDelegate = traineeRepositoryDelegate;
+        this.trainerRepositoryDelegate = trainerRepositoryDelegate;
         this.reportingService = reportingService;
     }
 
@@ -36,8 +37,8 @@ public class TrainingService {
     public Training create(@NotNull TrainingDto dto) {
         logger.info("Initiating transaction");
         try {
-            var trainee = traineeRepository.findFirstByUserUsername(dto.traineeUsername());
-            var trainer = trainerRepository.findFirstByUserUsername(dto.trainerUsername());
+            var trainee = traineeRepositoryDelegate.findByUsername(dto.traineeUsername());
+            var trainer = trainerRepositoryDelegate.findByUsername(dto.trainerUsername());
 //            var trainingType = trainingTypeRepository.findFirstByNameIgnoreCase(dto.trainingTypeName());
 
             if (trainee.isEmpty() || trainer.isEmpty())
@@ -45,7 +46,7 @@ public class TrainingService {
 
             var training = new Training(trainer.get(), trainee.get(), trainer.get().getSpecialization(), dto.trainingName(), dto.duration(), dto.date());
 
-            training = trainingRepository.save(training);
+            training = trainingRepositoryDelegate.save(training);
 
             onCreateSuccessful(training);
 

@@ -45,17 +45,21 @@ public class Trainee implements IModel, ICopy<Trainee> {
     public Trainee() {
     }
 
-    public Trainee(int id, @NotNull LocalDate dateOfBirth, @NotNull String address) {
-        this.id = id;
+    public Trainee(@NotNull LocalDate dateOfBirth, @NotNull String address) {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
     }
 
-    public Trainee(@NotNull LocalDate dateOfBirth, @NotNull String address, User user) {
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
+    public Trainee(int id, @NotNull LocalDate dateOfBirth, @NotNull String address) {
+        this(dateOfBirth, address);
+        this.id = id;
+    }
+
+    public Trainee(@NotNull LocalDate dateOfBirth, @NotNull String address, @NotNull User user) {
+        this(dateOfBirth, address);
         this.user = user;
     }
+
 
     @Override
     public Trainee copyFrom(Trainee trainee) {

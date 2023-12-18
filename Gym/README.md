@@ -354,22 +354,42 @@ Allow access to endpoints.
   }
   ```
 - For controllers, use `@Tag`:
-```java
-@Tag(name = "Account endpoint", description = "Account actions")
-public class AccountController {
-    // . . .
-}
-```
+  ```java
+  @Tag(name = "Account endpoint", description = "Account actions")
+  public class AccountController {
+      // . . .
+  }
+  ```
 
 - For the methods, use `@Operation`:
-```java
-public class AccountController {
-  @Operation(summary = "Logs the user in")
-  public ResponseEntity<?> login() {
-        // . . . 
-    }
-}
-```
+  ```java
+  public class AccountController {
+    @Operation(summary = "Logs the user in")
+    public ResponseEntity<?> login() {
+          // . . . 
+      }
+  }
+  ```
+- To specify the possible returns status codes use `@ApiResponse` or `@ApiResponses`:
+  ```java
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Resource found"),
+          @ApiResponse(responseCode = "404", description = "Resource not found"),
+          @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
+  @GetMapping("/resource/{id}")
+  public ResponseEntity<Resource> getResourceById(@PathVariable Long id) {
+      // Your logic to fetch the resource
+      
+      if (resourceIsFound) {
+          return ResponseEntity.ok(resource);
+      } else {
+          return ResponseEntity.notFound().build();
+      }
+  }
+  ```
+  `@ApiResponses` annotation encapsulates multiple @ApiResponse annotations, each describing a specific HTTP response.
+
 ## Pièces de Résistance
 
 Implementations that I really liked
@@ -380,9 +400,10 @@ Implementations that I really liked
   and `Consumer`s
     - [UpdateServiceHelper.java](src/main/java/com/javabootcamp/gym/services/helper/UpdateServiceHelper.java)
 
-
 ## Configuration
+
 To enable cloud configuration, we add the following to the `build.gradle`
+
 ```groovy
 ext {
     set('springCloudVersion', "2022.0.3")
@@ -400,14 +421,19 @@ dependencyManagement {
 ```
 
 And set this property:
+
 ```properties
 spring.config.import=optional:configserver:<config-server-url>
 ```
+
 For example
+
 ```properties
 spring.config.import=optional:configserver:http://localhost:8888
 ```
+
 ### Security
+
 If the configuration server has default security enable we can set the following properties
 
 ```properties

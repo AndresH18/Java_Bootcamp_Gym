@@ -29,7 +29,7 @@ public class SqsQueue implements ISqsQueue {
         client.sendMessage(request);
     }
 
-    public void sendBatch(String... messages) {
-        // TODO: implement batch
-    }
+//    public void sendBatch(String... messages) {
+//        // implement batch
+//    }
 }
