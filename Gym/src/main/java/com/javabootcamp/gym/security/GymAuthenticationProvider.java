@@ -2,6 +2,7 @@ package com.javabootcamp.gym.security;
 
 import com.javabootcamp.gym.security.data.LoginAttempt;
 import com.javabootcamp.gym.security.data.LoginAttemptRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,12 +39,17 @@ public class GymAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-
-        // TODO: use implementation of chat gpt for custom authentication provider.
-        //  Check if user is not locked (can login) before calling 'super' method.
         String username = userDetails.getUsername();
+        LoginAttempt loginAttempt;
 
-        var loginAttempt = new LoginAttempt(username, LocalDateTime.now());
+        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+        if (attributes instanceof ServletRequestAttributes att) {
+            HttpServletRequest request = att.getRequest();
+            String ipAddress = request.getRemoteAddr();
+            loginAttempt = new LoginAttempt(username, LocalDateTime.now(), ipAddress);
+        } else {
+            loginAttempt = new LoginAttempt(username, LocalDateTime.now());
+        }
 
         try {
             checkIsLocked(username);
@@ -48,8 +57,9 @@ public class GymAuthenticationProvider extends DaoAuthenticationProvider {
             loginAttempt.setSuccess(true);
 
         } catch (AuthenticationException e) {
-            if (e instanceof BadCredentialsException)
+            if (e instanceof BadCredentialsException) {
                 logger.debug("Bad credentials for '{}'", userDetails.getUsername());
+            }
 
             loginAttempt.setSuccess(false);
             throw e;

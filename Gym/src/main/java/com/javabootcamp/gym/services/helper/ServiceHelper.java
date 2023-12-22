@@ -30,15 +30,6 @@ public class ServiceHelper {
         return true;
     }
 
-    public static <T extends IModel> @Nullable T findById(int id, JpaRepository<T, Integer> repo) {
-        if (id <= 0)
-            return null;
-
-        var t = repo.findById(id);
-
-        return t.orElse(null);
-    }
-
     /**
      * Applies a function to retrieve an entity based on the provided username,
      * performs actions on the entity using a consumer, and returns the entity.
@@ -81,20 +72,6 @@ public class ServiceHelper {
         return m;
     }
 
-    public static boolean areAnyNull(Object... objects) {
-        for (Object object : objects) {
-            if (object == null)
-                return true;
-        }
-        return false;
-    }
-
-    public static void requireNonNull(Object... objects) {
-        for (Object object : objects)
-            Objects.requireNonNull(object);
-
-    }
-
     /**
      * Checks if a date is valid.
      *
@@ -103,6 +80,12 @@ public class ServiceHelper {
      */
     public static boolean isValidDate(LocalDate date) {
         return LocalDate.now().isAfter(date);
+    }
+
+    public static void requireNonNull(Object... objects) {
+        for (Object object : objects)
+            Objects.requireNonNull(object);
+
     }
 
 }

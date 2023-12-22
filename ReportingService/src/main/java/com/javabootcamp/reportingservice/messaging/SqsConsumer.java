@@ -35,9 +35,9 @@ public class SqsConsumer {
         try {
             var trainingMessage = objectMapper.readValue(message, TrainingMessage.class);
 
-            if (!service.send(trainingMessage)) {
-                logger.warn("Could not send message");
-                throw new RuntimeException("Could not send message");
+            if (!service.store(trainingMessage)) {
+                logger.warn("Could not store message");
+                throw new RuntimeException("Could not store message");
             }
 
         } catch (JsonProcessingException exception) {

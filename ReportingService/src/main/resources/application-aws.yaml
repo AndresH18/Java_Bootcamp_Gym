@@ -1,0 +1,15 @@
+#####################################################
+####### Configuration file for using with aws #######
+#####################################################
+
+cloud:
+  aws:
+    credentials:
+      access-key: ${ACCESS_KEY}
+      secret-key: ${SECRET_KEY}
+    region:
+      auto: false
+      static: ${REGION} # us-east-1
+    sqs:
+      endpoint: ${SQS_ENDPOINT} #https://sqs.us-east-1.amazonaws.com/208668734131/gym-reporting-service-queue.fifo
+      queue-name: ${SQS_NAME} #gym-reporting-service-queue.fifo
