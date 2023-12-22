@@ -20,8 +20,8 @@ public class Training implements IModel {
     @Column(name = "training_date")
     private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name = "training_type_id")
+    @Column(name = "training_type")
+    @Enumerated(EnumType.STRING)
     private TrainingType trainingType;
 
     @ManyToOne

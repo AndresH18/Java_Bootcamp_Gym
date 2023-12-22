@@ -15,6 +15,8 @@ public class LoginAttempt {
     private LocalDateTime attemptTime;
     @Column(name = "success")
     private boolean success;
+    @Column(name = "ip_address")
+    private String ipAddress;
 
     public LoginAttempt(long id, String username, LocalDateTime attemptTime, boolean success) {
         this(username, attemptTime, success);
@@ -29,6 +31,11 @@ public class LoginAttempt {
 
     public LoginAttempt(String username, LocalDateTime attemptTime) {
         this(username, attemptTime, false);
+    }
+
+    public LoginAttempt(String username, LocalDateTime attemptTime, String ipAddress) {
+        this(username, attemptTime);
+        this.ipAddress = ipAddress;
     }
 
     public LoginAttempt() {
@@ -68,5 +75,13 @@ public class LoginAttempt {
     public LoginAttempt setSuccess(boolean success) {
         this.success = success;
         return this;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
 }

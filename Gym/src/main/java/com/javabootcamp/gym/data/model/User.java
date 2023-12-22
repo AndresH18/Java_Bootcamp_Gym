@@ -27,7 +27,9 @@ public class User implements IModel, UserDetails {
     @NotNull
     @JsonIgnore
     @Column(name = "password_hash")
-    private String password = "";
+    private String passwordHash = "";
+    @Transient
+    private String plainPassword;
     @Column(name = "is_active")
     @JsonIgnore
     private boolean isActive;
@@ -44,12 +46,12 @@ public class User implements IModel, UserDetails {
     @JsonBackReference
     private Trainer trainer;
 
-    public User(int id, @NotNull String firstName, @NotNull String lastName, @NotNull String username, @NotNull String password, boolean isActive) {
+    public User(int id, @NotNull String firstName, @NotNull String lastName, @NotNull String username, @NotNull String passwordHash, boolean isActive) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
+        this.passwordHash = passwordHash;
         this.isActive = isActive;
     }
 
@@ -58,11 +60,11 @@ public class User implements IModel, UserDetails {
         this.lastName = lastName;
     }
 
-    public User(@NotNull String firstName, @NotNull String lastName, @NotNull String username, @NotNull String password) {
+    public User(@NotNull String firstName, @NotNull String lastName, @NotNull String username, @NotNull String passwordHash) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
+        this.passwordHash = passwordHash;
     }
 
     public User() {
@@ -103,11 +105,11 @@ public class User implements IModel, UserDetails {
     }
 
     public @NotNull String getPassword() {
-        return password;
+        return passwordHash;
     }
 
     public void setPassword(@NotNull String password) {
-        this.password = password;
+        this.passwordHash = password;
     }
 
     public boolean isActive() {
@@ -146,6 +148,14 @@ public class User implements IModel, UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getPlainPassword() {
+        return plainPassword;
+    }
+
+    public void setPlainPassword(String plainPassword) {
+        this.plainPassword = plainPassword;
     }
 
     public enum Role {

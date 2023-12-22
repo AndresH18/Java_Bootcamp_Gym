@@ -1,6 +1,6 @@
 package com.javabootcamp.gym.security.services;
 
-import com.javabootcamp.gym.data.repository.UserRepository;
+import com.javabootcamp.gym.services.delegate.repository.UserRepositoryDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,16 +8,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
-    private final UserRepository repository;
+    private final UserRepositoryDelegate delegate;
 
     @Autowired
-    public UserDetailsService(UserRepository repository) {
-        this.repository = repository;
+    public UserDetailsService(UserRepositoryDelegate delegate) {
+        this.delegate = delegate;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var u = repository.findByUsernameIgnoreCase(username);
+        var u = delegate.findByUsername(username);
 
         return u.orElseThrow(() -> new UsernameNotFoundException("User (" + username + ") not found"));
     }

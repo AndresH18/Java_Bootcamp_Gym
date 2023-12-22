@@ -1,7 +1,7 @@
 package com.javabootcamp.gym.services.user;
 
 import com.javabootcamp.gym.data.model.User;
-import com.javabootcamp.gym.data.repository.UserRepository;
+import com.javabootcamp.gym.services.delegate.repository.UserRepositoryDelegate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 class UserServiceTest {
     private static PasswordEncoder passwordEncoder;
-    private static UserRepository userRepository;
+    private static UserRepositoryDelegate userRepository;
 
     private UserService service;
 
@@ -28,7 +28,7 @@ class UserServiceTest {
 
     @BeforeEach
     public void beforeEach() {
-        userRepository = mock(UserRepository.class);
+        userRepository = mock(UserRepositoryDelegate.class);
 
         service = new UserService(userRepository, passwordEncoder);
     }
@@ -38,8 +38,8 @@ class UserServiceTest {
 
     public void authenticate() {
         // arrange
-        var repo = mock(UserRepository.class);
-        when(repo.existsUserByUsernameAndPassword(anyString(), anyString())).thenReturn(true);
+        var repo = mock(UserRepositoryDelegate.class);
+        when(repo.existsUsernameAndPasswordHash(anyString(), anyString())).thenReturn(true);
         var service = new UserService(repo, passwordEncoder);
 
         // act
@@ -57,8 +57,8 @@ class UserServiceTest {
         String username = (firstname + "." + lastname + countReturn).toLowerCase();
         User.Role role = User.Role.TRAINEE;
         // arrange
-        var repo = mock(UserRepository.class);
-        when(repo.countUserByUsernameStartingWith(anyString())).thenReturn(countReturn);
+        var repo = mock(UserRepositoryDelegate.class);
+        when(repo.countUsernames(anyString())).thenReturn(countReturn);
         when(repo.save(any(User.class))).thenAnswer(a -> {
             User user = a.getArgument(0);
             user.setId(123);
@@ -82,8 +82,8 @@ class UserServiceTest {
     @Test
     public void createUser_returnsNul() {
         // arrange
-        var repo = mock(UserRepository.class);
-        when(repo.countUserByUsernameStartingWith(anyString())).thenThrow(new RuntimeException());
+        var repo = mock(UserRepositoryDelegate.class);
+        when(repo.findByUsername(anyString())).thenThrow(new RuntimeException());
 
         UserService service = new UserService(repo, passwordEncoder);
 
@@ -97,7 +97,7 @@ class UserServiceTest {
     @Test
     void changePassword_userNotFound_returnsFalse() {
         // arrange
-        when(userRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
         var service = new UserService(userRepository, passwordEncoder);
 
         // act
@@ -120,7 +120,7 @@ class UserServiceTest {
         user.setRole(role);
 
         // arrange
-        when(userRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
         when(userRepository.save(any())).thenThrow(new RuntimeException());
 
         var service = new UserService(userRepository, passwordEncoder);
@@ -146,7 +146,7 @@ class UserServiceTest {
         user.setRole(role);
 
         // arrange
-        when(userRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
         when(userRepository.save(any())).thenReturn(any());
 
         var service = new UserService(userRepository, passwordEncoder);
@@ -162,7 +162,7 @@ class UserServiceTest {
     @Test
     void get_returnsOptional() {
         // arrange
-        when(userRepository.findByUsernameIgnoreCase(anyString())).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
 
         // act
         var optional = service.get("SomeString");
@@ -175,7 +175,7 @@ class UserServiceTest {
     @Test
     void setIsActive_userNotFound_returnsEmptyOptional() {
         // arrange
-        when(userRepository.findByUsernameIgnoreCase(anyString())).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
 
         // act
         var optional = service.setIsActive("username", false);
@@ -188,7 +188,7 @@ class UserServiceTest {
     @Test
     void setIsActive_returnsOptionalFalse() {
         // arrange
-        when(userRepository.findByUsernameIgnoreCase(anyString())).thenThrow(new RuntimeException());
+        when(userRepository.findByUsername(anyString())).thenThrow(new RuntimeException());
 
         // act
         var optional = service.setIsActive("username", false);
@@ -204,7 +204,7 @@ class UserServiceTest {
         // arrange
         var user = new User();
         user.setActive(false);
-        when(userRepository.findByUsernameIgnoreCase(anyString())).thenReturn(Optional.of(user));
+        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
 
         // act
         var optional = service.setIsActive("username", true);

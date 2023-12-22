@@ -16,7 +16,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RestController
 @RequestMapping("trainings")
-public class TrainingController extends BaseController {
+public class TrainingController extends EntityController {
 
     private final TrainingService service;
 

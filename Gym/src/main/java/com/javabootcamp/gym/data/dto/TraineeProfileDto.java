@@ -14,7 +14,7 @@ public record TraineeProfileDto(String firstName, String lastName, LocalDate dat
     public static TraineeProfileDto convert(Trainee trainee) {
         var trainers = trainee.getTrainers().stream().map(t -> {
             var u = t.getUser();
-            return new Trainer(u.getUsername(), u.getFirstName(), u.getLastName(), t.getSpecialization().getName());
+            return new Trainer(u.getUsername(), u.getFirstName(), u.getLastName(), t.getSpecialization().toString());
         }).toList();
 
         var u = trainee.getUser();

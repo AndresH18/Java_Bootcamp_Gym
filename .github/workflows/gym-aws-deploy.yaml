@@ -4,37 +4,67 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "aws"
-
-#    branches-ignore:
-#      - "dev"
-#      - "aws"
+      - main
     paths:
       - "/Gym"
 
   pull_request:
+    branches:
+      - main
     paths:
       - "/Gym"
-    branches:
-      - "main"
-#    branches-ignore:
-#      - "dev"
-#      - "aws"
 
 jobs:
-#  test:
-#    run tests
+  #  test:
+  #    run tests
 
   build:
-#    needs: test
+    #    needs: test
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-      - name: Create ZIP for deployment
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Create jar for deployment
         run: |
           mkdir deploys
-          zip -r deploys/gym_deploy.zip ./Gym
+          cd Gym/
+          chmod +x ./gradlew
+          ./gradlew bootJar -Pspring.profiles.active=aws
+          ARTIFACT_FILE=$(find build/libs -name "*.jar" -type f)
+          echo "ARTIFACT_FILE=${ARTIFACT_FILE}" >> "$GITHUB_ENV"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: gym-service-artifact
+          path: Gym/${{ env.ARTIFACT_FILE }}
+
+  send-to-s3:
+    needs: build
+    runs-on: ubuntu-latest
+
+    env:
+      SERVICE_FOLDER: crm
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create local artifact directory
+        run: mkdir artifacts
+
+      - name: Download jar artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: gym-service-artifact
+          path: artifacts/
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -43,6 +73,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
           aws-region: "us-east-1"
 
-      - name: Upload package to S3 bucket
-        run: aws s3 cp deploys/gym_deploy.zip s3://gym-deploy-bucket
-#        run: aws s3 cp deploys/gym_deploy.zip s3://${{secrets.DEPLOY_BUCKET_NAME}}
+      - name: Upload artifact to S3 bucket
+        run: |
+          cd artifacts
+          aws s3 cp . s3://gym-deploy-bucket/"$SERVICE_FOLDER"/ --recursive

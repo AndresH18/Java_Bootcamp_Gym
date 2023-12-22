@@ -1,8 +1,6 @@
 package com.javabootcamp.gym.data.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -19,9 +17,8 @@ public class Trainer implements IModel, ICopy<Trainer> {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "specialization_id")
-    @JsonManagedReference
+    @Column(name = "specialization")
+    @Enumerated(EnumType.STRING)
     private TrainingType specialization;
 
     @OneToMany(mappedBy = "trainer")
@@ -37,7 +34,11 @@ public class Trainer implements IModel, ICopy<Trainer> {
     }
 
     public Trainer(TrainingType specialization, User user) {
+        this(specialization);
         this.user = user;
+    }
+
+    public Trainer(TrainingType specialization) {
         this.specialization = specialization;
     }
 

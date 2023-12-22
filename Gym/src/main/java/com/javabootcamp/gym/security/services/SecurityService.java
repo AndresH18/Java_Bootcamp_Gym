@@ -1,10 +1,11 @@
 package com.javabootcamp.gym.security.services;
 
 import com.javabootcamp.gym.data.dto.LoginDto;
-import com.javabootcamp.gym.security.data.JwtRepository;
-import com.javabootcamp.gym.security.data.JwtSecurityToken;
+import com.javabootcamp.gym.helper.Result;
 import com.javabootcamp.gym.security.JwtAuthenticationToken;
 import com.javabootcamp.gym.security.JwtTokenProvider;
+import com.javabootcamp.gym.security.data.JwtRepository;
+import com.javabootcamp.gym.security.data.JwtSecurityToken;
 import com.javabootcamp.gym.services.helper.ServiceHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,7 +21,6 @@ import org.springframework.stereotype.Service;
 import java.time.ZoneId;
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static org.springframework.security.authentication.UsernamePasswordAuthenticationToken.unauthenticated;
@@ -139,7 +139,7 @@ public class SecurityService {
      * @return a JWT or null if user can't be authenticated
      */
     @Nullable
-    public String authenticate(LoginDto dto) {
+    public Result<String, ?> authenticate(LoginDto dto) {
         try {
             Authentication authentication =
                     authManager.authenticate(unauthenticated(dto.username(), dto.password()));
@@ -147,10 +147,10 @@ public class SecurityService {
             if (authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails userDetails) {
                 var token = jwtTokenProvider.getToken(userDetails);
                 saveToken(token);
-                return token;
+                return Result.value(token);
             }
 
-            return null;
+            return Result.error("Wrong username or password");
 
         } catch (Exception e) {
             logger.error("Cannot authenticate user", e);
