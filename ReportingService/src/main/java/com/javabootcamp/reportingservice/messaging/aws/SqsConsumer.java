@@ -1,26 +1,27 @@
-package com.javabootcamp.reportingservice.messaging;
+package com.javabootcamp.reportingservice.messaging.aws;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javabootcamp.reportingservice.configuration.prometheus.ConsumerMetrics;
 import com.javabootcamp.reportingservice.data.TrainingMessage;
+import com.javabootcamp.reportingservice.messaging.IMessageConsumer;
 import com.javabootcamp.reportingservice.services.IStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.aws.messaging.listener.SqsMessageDeletionPolicy;
 import org.springframework.cloud.aws.messaging.listener.annotation.SqsListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SqsConsumer {
+@Profile("aws")
+public class SqsConsumer implements IMessageConsumer<String> {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final IStoreService<TrainingMessage> service;
     private final ConsumerMetrics metrics;
-
     private final ObjectMapper objectMapper = new ObjectMapper();
-
 
     @Autowired
     public SqsConsumer(IStoreService<TrainingMessage> service, ConsumerMetrics metrics) {
@@ -28,6 +29,7 @@ public class SqsConsumer {
         this.metrics = metrics;
     }
 
+    @Override
     @SqsListener(value = "gym-reporting-service-queue.fifo", deletionPolicy = SqsMessageDeletionPolicy.ON_SUCCESS)
     public void consumeMessage(String message) {
         metrics.incrementMessagesReceived();
