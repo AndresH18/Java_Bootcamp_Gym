@@ -1,0 +1,17 @@
+##########################################################################
+####### Configuration file for using with eureka discovery service #######
+##########################################################################
+
+#spring:
+#  cloud:
+#    config:
+#      uri: http://gym-discovery-container:8888
+spring:
+  cloud:
+    discovery:
+      enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://gym-discovery-container:8761/eureka
