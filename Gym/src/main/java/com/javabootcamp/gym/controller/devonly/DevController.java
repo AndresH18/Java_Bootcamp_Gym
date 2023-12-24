@@ -50,7 +50,7 @@ public class DevController {
         return "Client's IP Address: " + clientIP;
     }
 
-    @GetMapping("send-message-to-aws-sqs")
+    @GetMapping("send-message-to-report-queue")
     public void sendMessageToAwsSqs() {
 
         var messages = new TrainingMessage[]{

@@ -1,11 +1,13 @@
-package com.javabootcamp.reportingservice.services;
+package com.javabootcamp.reportingservice.services.aws;
 
 import com.javabootcamp.reportingservice.data.TrainingMessage;
 import com.javabootcamp.reportingservice.data.dynamo.TrainingSummary;
+import com.javabootcamp.reportingservice.services.IStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
@@ -24,9 +26,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 @Service
+@Profile("aws")
 public class DynamoStoreService implements IStoreService<TrainingMessage>, DisposableBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(DynamoStoreService.class);
-
 
     private final DynamoDbTable<TrainingSummary> table;
     private final BlockingQueue<TrainingMessage> queue;
@@ -49,7 +51,6 @@ public class DynamoStoreService implements IStoreService<TrainingMessage>, Dispo
         var training = updateTraining(message, message::duration);
 
         table.updateItem(training);
-
     }
 
 

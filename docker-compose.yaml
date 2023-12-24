@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  crm-service:
+#    image: gym-crm:latest
+    container_name: gym-crm-container-v2
+    build:
+      context: .docker
+      dockerfile: crm-service.Dockerfile
+
+networks:
+  gym-network:
+    driver: bridge
