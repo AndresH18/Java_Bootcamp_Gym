@@ -2,11 +2,11 @@ name: Environment Configuration
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - ".aws/scripts/*"
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - ".aws/scripts/*"
 
 jobs:
   configure-aws-environment:

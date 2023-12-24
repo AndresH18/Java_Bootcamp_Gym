@@ -2,17 +2,17 @@ name: Deploy Reporting Service microservice to AWS
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - "/ReportingService"
-
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "/ReportingService"
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - "/ReportingService"
+#
+#  pull_request:
+#    branches:
+#      - main
+#    paths:
+#      - "/ReportingService"
 
 jobs:
   #  test:

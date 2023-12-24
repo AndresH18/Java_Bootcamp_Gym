@@ -26,9 +26,10 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-artemis'
+
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     implementation 'org.springframework.cloud:spring-cloud-aws-messaging:2.2.6.RELEASE'
@@ -51,9 +52,9 @@ dependencyManagement {
 tasks.named('test') {
     useJUnitPlatform()
 }
-jar {
-    enabled = false
-    manifest {
-        attributes 'Main-Class': 'com.javabootcamp.reportingservice.ReportingServiceApplication'
-    }
-}
+//jar {
+//    enabled = false
+//    manifest {
+//        attributes 'Main-Class': 'com.javabootcamp.reportingservice.ReportingServiceApplication'
+//    }
+//}

@@ -2,17 +2,17 @@ name: Create AWS Reporting Lambda
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - ".aws/lambda.py"
-
-  pull_request:
-    branches:
-      - main
-    paths:
-      - ".aws/lambda.py"
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - ".aws/lambda.py"
+#
+#  pull_request:
+#    branches:
+#      - main
+#    paths:
+#      - ".aws/lambda.py"
 
 jobs:
   configure-aws-environment:

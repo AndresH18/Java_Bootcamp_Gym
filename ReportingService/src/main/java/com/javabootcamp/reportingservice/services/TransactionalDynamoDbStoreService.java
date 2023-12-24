@@ -4,20 +4,22 @@ import com.javabootcamp.reportingservice.data.TrainingMessage;
 import com.javabootcamp.reportingservice.data.dynamo.TrainingSummary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import software.amazon.awssdk.core.internal.waiters.ResponseOrException;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.*;
 import software.amazon.awssdk.services.dynamodb.waiters.DynamoDbWaiter;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
  * This is not recommended for use until we can perform multiple operations on a single dynamodb item on a transaction
  */
+@Deprecated
 public class TransactionalDynamoDbStoreService {
 
     /**

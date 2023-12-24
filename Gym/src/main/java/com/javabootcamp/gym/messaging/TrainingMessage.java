@@ -11,7 +11,7 @@ public record TrainingMessage(
         String year,
         String month,
         boolean delete
-) {
+) implements IMessage {
 
     public enum Month {
         JANUARY(1, "JAN"),

@@ -2,17 +2,17 @@ name: Deploy Gym microservice to AWS
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - "/Gym"
-
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "/Gym"
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - "/Gym"
+#
+#  pull_request:
+#    branches:
+#      - main
+#    paths:
+#      - "/Gym"
 
 jobs:
   #  test:

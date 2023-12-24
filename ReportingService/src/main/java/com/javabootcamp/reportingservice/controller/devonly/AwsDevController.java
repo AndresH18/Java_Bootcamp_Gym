@@ -2,7 +2,7 @@ package com.javabootcamp.reportingservice.controller.devonly;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javabootcamp.reportingservice.data.TrainingMessage;
-import com.javabootcamp.reportingservice.messaging.SqsConsumer;
+import com.javabootcamp.reportingservice.messaging.IMessageConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -14,8 +14,8 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("dev")
-@Profile("dev")
-public class DevController {
+@Profile("dev & aws")
+public class AwsDevController {
     private static final String[] YEARS = new String[]{"2019", "2020", "2021", "2022", "2023"};
     private static final String[] MONTHS = new String[]{"JAN", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"};
 
@@ -24,13 +24,13 @@ public class DevController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final SqsConsumer consumer;
+    private final IMessageConsumer<String> consumer;
 
-    public DevController(SqsConsumer consumer) {
+    public AwsDevController(IMessageConsumer<String> consumer) {
         this.consumer = consumer;
     }
 
-    @GetMapping
+    @GetMapping("sqs")
     public void get() throws Exception {
         logger.debug("dev: get");
         var m = new TrainingMessage(
