@@ -1,7 +1,7 @@
 package com.javabootcamp.gym.messaging.report;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javabootcamp.gym.configuration.prometheus.ReportingServiceMetrics;
+import com.javabootcamp.gym.messaging.IMessageSender;
 import com.javabootcamp.gym.messaging.TrainingMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +18,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
 public class ReportingServiceAsync implements IReportingService<TrainingMessage>, DisposableBean {
+    private static final String DESTINATION = "reports-queue";
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportingServiceAsync.class);
     private static final int MAX_RETRIES = 3;
     private static final int RETRY_COOLDOWN = 1;
 
-    private final ObjectMapper mapper = new ObjectMapper();
-    private final ISqsQueue sqs;
+    private final IMessageSender messageSender;
     private final ReportingServiceMetrics metrics;
 
     private final BlockingQueue<TrainingMessage> queue;
@@ -31,9 +31,8 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
     private final AtomicBoolean running;
 
     @Autowired
-    public ReportingServiceAsync(/*QueueMessagingTemplate queueMessagingTemplate, */ISqsQueue sqs, ReportingServiceMetrics metrics) {
-        this.sqs = sqs;
-//        this.queueMessagingTemplate = queueMessagingTemplate;
+    public ReportingServiceAsync(IMessageSender messageSender, ReportingServiceMetrics metrics) {
+        this.messageSender = messageSender;
         this.metrics = metrics;
         this.running = new AtomicBoolean(true);
         this.queue = new LinkedBlockingQueue<>();
@@ -51,7 +50,7 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
      * This method returns immediately
      *
      * @param message The message to be sent
-//     * @return Returns {@code true} if the message was added to the queue, {@code false} otherwise
+     *                //     * @return Returns {@code true} if the message was added to the queue, {@code false} otherwise
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
@@ -92,8 +91,8 @@ public class ReportingServiceAsync implements IReportingService<TrainingMessage>
         do {
             LOGGER.info("Thread {}. Sending message. Transaction_ID={}", Thread.currentThread().getId(), transactionId);
             try {
-                var m = mapper.writeValueAsString(message);
-                sqs.sendMessage(m);
+
+                messageSender.sendMessage(DESTINATION, message);
                 success = true;
             } catch (Exception e) {
                 LOGGER.error("Thread %d. Failed to send message. Attempt %d. Retrying in %d. Transaction_ID=%s"

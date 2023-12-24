@@ -1,12 +1,12 @@
-package com.javabootcamp.gym.configuration;
+package com.javabootcamp.gym.configuration.aws;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Protocol;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
-import com.javabootcamp.gym.messaging.report.ISqsQueue;
-import com.javabootcamp.gym.messaging.report.SqsQueue;
+import com.javabootcamp.gym.messaging.IMessageSender;
+import com.javabootcamp.gym.messaging.report.SqsMessageSender;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.context.annotation.Bean;
@@ -36,8 +36,8 @@ public class SqsConfiguration {
 
     @Bean
     @Profile("aws")
-    public ISqsQueue awsQueue(SqsClient client) {
-        var queue = new SqsQueue(client, endpoint, queueName);
+    public IMessageSender awsQueue(SqsClient client) {
+        var queue = new SqsMessageSender(client, endpoint);
         return queue;
     }
 

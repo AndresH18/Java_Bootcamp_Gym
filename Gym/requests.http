@@ -39,7 +39,7 @@ PATCH http://localhost:8080/trainees/mauricio.markson/status?active=true
 
 ### change password
 
-PUT http://localhost:8080/trainees/change-password
+PUT http://localhost:8081trainees/change-password
 Content-Type: application/json
 
 {
@@ -109,10 +109,10 @@ GET http://localhost:8080/training-types?size=5&page=2
 
 # Actuators
 ### Health
-GET http://localhost:8080/actuator/health
+GET http://localhost:8081/actuator/health
 
 ### DB Health
-GET http://localhost:8080/actuator/db-health
+GET http://localhost:8081/actuator/db-health
 
 ### Loggers
 GET http://localhost:8080/actuator/loggers
