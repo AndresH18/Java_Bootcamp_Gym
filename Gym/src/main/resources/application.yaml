@@ -9,6 +9,8 @@ spring:
     properties:
       hibernate:
         dialect:
+  config:
+    import: "optional:configserver:"
 
   artemis:
     broker-url: "tcp://localhost:61616"

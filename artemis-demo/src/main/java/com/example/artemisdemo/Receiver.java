@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.artemisdemo;
 
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
