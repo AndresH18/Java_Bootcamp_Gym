@@ -1,7 +1,8 @@
-package com.javabootcamp.reportingservice.services;
+package com.javabootcamp.reportingservice.services.aws;
 
 import com.javabootcamp.reportingservice.data.TrainingMessage;
 import com.javabootcamp.reportingservice.data.dynamo.TrainingSummary;
+import com.javabootcamp.reportingservice.services.IStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -50,7 +51,6 @@ public class DynamoStoreService implements IStoreService<TrainingMessage>, Dispo
         var training = updateTraining(message, message::duration);
 
         table.updateItem(training);
-
     }
 
 
