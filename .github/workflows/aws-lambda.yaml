@@ -1,4 +1,4 @@
-name: Create AWS Reporting Lambda
+name: AWS Create Reporting Lambda
 
 on:
   workflow_dispatch:

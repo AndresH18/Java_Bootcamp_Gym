@@ -1,4 +1,4 @@
-name: Environment Configuration
+name: Aws EC2 Environment Configuration
 
 on:
   workflow_dispatch:

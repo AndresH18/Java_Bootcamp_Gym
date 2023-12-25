@@ -12,7 +12,7 @@
 spring:
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://localhost;databaseName=gym_crm;Trusted_Connection=True;TrustServerCertificate=true;
+    url: jdbc:sqlserver://192.168.68.53;databaseName=gym_crm;Trusted_Connection=True;TrustServerCertificate=true;
     username: gym_admin
     password: gym_administrator
   jpa:

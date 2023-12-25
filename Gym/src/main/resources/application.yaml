@@ -13,8 +13,9 @@ spring:
     import: "optional:configserver:"
 
   artemis:
-    broker-url: "tcp://localhost:61616"
+#    broker-url: "tcp://localhost:61616"
 #    broker-url: "tcp://artemis-server:61616"
+    broker-url: "tcp://gym-artemis-container-compose:61616"
     mode: native
     user: artemis # ${ARTEMIS_USER}
     password: artemis # ${ARTEMIS_PASSWORD}

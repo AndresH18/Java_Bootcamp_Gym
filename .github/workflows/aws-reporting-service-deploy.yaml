@@ -1,4 +1,4 @@
-name: Deploy Reporting Service microservice to AWS
+name: AWS Reporting Service Deploy
 
 on:
   workflow_dispatch:

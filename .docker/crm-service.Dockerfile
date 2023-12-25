@@ -10,7 +10,7 @@ RUN ls -la
 
 # Build the application JAR
 RUN chmod +x ./gradlew
-RUN ./gradlew bootJar # --no-daemon
+RUN ./gradlew bootJar
 RUN ls build/libs
 RUN ARTIFACT_FILE=$(find build/libs -name "*.jar" -type f) && \
     mkdir /app && \
