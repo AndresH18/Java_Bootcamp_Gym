@@ -1,13 +1,49 @@
+# to delete created images from cli, use 'docker-compose down --rmi all'
+
 version: "3"
 
 services:
   crm-service:
-#    image: gym-crm:latest
-    container_name: gym-crm-container-v2
+    # image: gym-crm:latest
+    container_name: gym-crm-container-compose
     build:
-      context: .docker
-      dockerfile: crm-service.Dockerfile
+      dockerfile: .docker/crm-service.Dockerfile
+      args:
+        SPRING_PROFILE: dev
+    expose:
+      - 8081
+    ports:
+      - "8081:8081"
+    networks:
+      - gym-network
+
+  reporting-service:
+    container_name: gym-reporting-container-compose
+    build:
+      dockerfile: .docker/reporting-service.Dockerfile
+      args:
+        SPRING_PROFILE: dev
+    networks:
+      - gym-network
+
+  queue-server:
+    image: apache/activemq-artemis:latest
+    container_name: gym-artemis-container-compose
+    expose:
+      - 61616
+      - 8161
+    # this service does not publish ports outside the network, but for testing we can publish them
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+    environment:
+      ARTEMIS_USER: artemis
+      ARTEMIS_PASSWORD: artemis
+    networks:
+      - gym-network
 
 networks:
   gym-network:
     driver: bridge
+    # noinspection ComposeUnknownKeys
+    name: gym-network-compose
