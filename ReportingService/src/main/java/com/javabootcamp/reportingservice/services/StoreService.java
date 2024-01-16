@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 public class StoreService implements IStoreService<TrainingMessage> {
     private static final Logger LOGGER = LoggerFactory.getLogger(StoreService.class);
 
-
     private final MongoTemplate template;
 
     @Autowired
