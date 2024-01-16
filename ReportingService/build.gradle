@@ -5,10 +5,11 @@ plugins {
 }
 
 group = 'com.javabootcamp'
-version = '1.0.0'
+version = '1.0.1'
 
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
@@ -36,6 +37,7 @@ dependencies {
 
     implementation(platform('software.amazon.awssdk:bom:2.21.33'))
     implementation 'software.amazon.awssdk:dynamodb-enhanced:2.20.109'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus:1.12.0'
 

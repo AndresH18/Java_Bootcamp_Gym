@@ -1,7 +1,6 @@
 # Use a base image with JDK and Gradle installed
 FROM gradle:latest as builder
 
-
 # Set the working directory in the container
 WORKDIR /src
 
@@ -9,9 +8,7 @@ COPY /eureka-server ./
 RUN ls -la
 
 # Build the application JAR
-RUN chmod +x ./gradlew
-RUN ./gradlew bootJar
-RUN ls build/libs
+RUN gradle bootJar
 RUN ARTIFACT_FILE=$(find build/libs -name "*.jar" -type f) && \
     mkdir /app && \
     mv "$ARTIFACT_FILE" /app/discovery-service.jar
