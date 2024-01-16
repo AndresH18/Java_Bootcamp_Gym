@@ -1,5 +1,7 @@
 package com.javabootcamp.reportingservice.data;
 
+import java.util.Objects;
+
 public record TrainingMessage(
         String trainerUsername,
         String trainerFirstName,
@@ -12,7 +14,19 @@ public record TrainingMessage(
 ) {
 
     public TrainingMessage {
-        year = year.toUpperCase();
-        month = month.toUpperCase();
+        year = Objects.requireNonNull(year, "year must not be null").toUpperCase();
+        month = Objects.requireNonNull(month, "month must not be null").toUpperCase();
     }
 }
+/*
+{
+  "trainerUsername": "",
+  "trainerFirstName": "",
+  "trainerLastName" : "",
+  "active": true,
+  "duration": 2,
+  "year": "2024",
+  "month": "JAN",
+  "delete": false
+}
+ */

@@ -15,6 +15,16 @@ spring:
     user: artemis # ${ARTEMIS_USER}
     password: artemis # ${ARTEMIS_PASSWORD}
 
+  data:
+    mongodb:
+      database: gym-trainings
+#      host: localhost
+      host: gym-mongodb-compose
+      port: 27017
+#      username:
+#      password:
+
+
 server:
   port: 8082
 

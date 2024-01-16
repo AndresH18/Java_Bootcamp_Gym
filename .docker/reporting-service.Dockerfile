@@ -1,7 +1,6 @@
 # Use a base image with JDK and Gradle installed
 FROM gradle:latest as builder
 
-
 # Set the working directory in the container
 WORKDIR /src
 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @DynamoDbBean
+@Deprecated
 public class SummaryItem {
     private Map<String, Integer> monthSummary;
 

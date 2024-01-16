@@ -3,28 +3,33 @@
 version: "3"
 
 services:
-  crm-service:
-    # image: gym-crm:latest
-    container_name: gym-crm-container-compose
-    build:
-      dockerfile: .docker/crm-service.Dockerfile
-      args:
-        SPRING_PROFILE: dev
-    expose:
-      - 8081
-    ports:
-      - "8081:8081"
-    networks:
-      - gym-network
+#  crm-service:
+#    # image: gym-crm:latest
+#    container_name: gym-crm-container-compose
+#    build:
+#      dockerfile: .docker/crm-service.Dockerfile
+#      args:
+#        SPRING_PROFILE: dev
+#    expose:
+#      - 8081
+#    ports:
+#      - "8081:8081"
+#    networks:
+#      - gym-network
+#    depends_on:
+#      - queue-server
 
   reporting-service:
     container_name: gym-reporting-container-compose
     build:
       dockerfile: .docker/reporting-service.Dockerfile
       args:
-        SPRING_PROFILE: dev
+        SPRING_PROFILE: default
     networks:
       - gym-network
+    depends_on:
+      - queue-server
+      - mongo-db
 
   queue-server:
     image: apache/activemq-artemis:latest
@@ -32,7 +37,7 @@ services:
     expose:
       - 61616
       - 8161
-    # this service does not publish ports outside the network, but for testing we can publish them
+    # this service does not need to publish ports, we can publish them for testing
     ports:
       - "8161:8161"
       - "61616:61616"
@@ -41,6 +46,13 @@ services:
       ARTEMIS_PASSWORD: artemis
     networks:
       - gym-network
+
+  mongo-db:
+    image: mongodb/mongodb-community-server:latest
+    container_name: gym-mongodb-compose
+    networks:
+      - gym-network
+
 
 networks:
   gym-network:

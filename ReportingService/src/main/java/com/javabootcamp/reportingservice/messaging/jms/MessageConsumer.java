@@ -1,10 +1,13 @@
-package com.javabootcamp.reportingservice.messaging;
+package com.javabootcamp.reportingservice.messaging.jms;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javabootcamp.reportingservice.configuration.prometheus.ConsumerMetrics;
 import com.javabootcamp.reportingservice.data.TrainingMessage;
+import com.javabootcamp.reportingservice.messaging.IMessageConsumer;
 import com.javabootcamp.reportingservice.services.IStoreService;
+import jakarta.jms.JMSException;
+import jakarta.jms.MessageFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,7 @@ public class MessageConsumer implements IMessageConsumer<String> {
 
     @Override
     @JmsListener(destination = DESTINATION)
-    public void consumeMessage(String message) {
+    public void consumeMessage(String message) throws JMSException {
         LOGGER.info("Received Messages: {}", message);
         metrics.incrementMessagesReceived();
         try {
@@ -39,12 +42,12 @@ public class MessageConsumer implements IMessageConsumer<String> {
 
             if (!storeService.store(trainingMessage)) {
                 LOGGER.warn("Could not store message");
-                throw new RuntimeException("Could not store message");
+                throw new JMSException("Could not store message");
             }
 
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException | RuntimeException e) {
             LOGGER.error("Failed to parse message", e);
-            throw new RuntimeException("Error parsing json", e);
+            throw new MessageFormatException("Error parsing json");
         }
     }
 }
